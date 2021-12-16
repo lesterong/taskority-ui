@@ -1,13 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap');
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply text-gray-100;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  @apply font-display font-bold text-3xl;
+}
+
+h2 {
+  @apply font-display font-bold text-xl;
+}
+
+h3 {
+  @apply font-sans font-medium;
+}
+
+h4 {
+  @apply font-display font-semibold text-sm;
+}
+
+h5 {
+  @apply font-display font-semibold text-xs;
+}
+
+p {
+  @apply font-sans font-normal;
+}
+
+nav {
+  @apply bg-gray-500;
 }
