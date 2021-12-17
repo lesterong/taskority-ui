@@ -39,8 +39,8 @@ const Navbar = ({handleTasks, handleFilters}: {handleTasks: handleProps, handleF
             />
 
             <Button 
-              onClick={() => console.log("testing")}
-              tier="btn-secondary mobile-btn"
+              onClick={handleFilters.open}
+              tier="btn-secondary mobile-btn dropdown"
               icon={settings}
             />
 

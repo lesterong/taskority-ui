@@ -23,7 +23,9 @@ const FilterModal = ({closeModal, isOpenModal, title}: modalProps) => {
         <form className="filters-form">
           <div className="form-title">
             <h1> {title} </h1>
-            <img className="cursor-pointer" src={close} onClick={closeModal}/> 
+            <button onClick={closeModal}>
+              <img src={close} onClick={closeModal}/> 
+            </button>
           </div>
           
           <fieldset>  

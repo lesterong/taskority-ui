@@ -26,7 +26,9 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
         <form className="task-form" onSubmit={closeModal}>
           <div className="form-title">
             <h1> {title} </h1>
-            <img className="cursor-pointer" src={close} onClick={closeModal}/> 
+            <button onClick={closeModal}>
+              <img src={close} onClick={closeModal}/> 
+            </button>
           </div>
           
           <input 
