@@ -11,9 +11,9 @@
 }
 
 .btn-primary {
-  @apply bg-blue-100 border border-transparent p-3 rounded-lg transition-colors duration-100 h-[50px];
-  @apply hover:bg-blue-200;
-  @apply active:bg-blue-300;
+  @apply bg-sky-100 border border-transparent p-3 rounded-lg transition-colors duration-100 h-[50px];
+  @apply hover:bg-sky-200;
+  @apply active:bg-sky-300;
 }
 
 .btn-secondary {
@@ -68,7 +68,7 @@ btn div img {
 
 /* pseudo pseudo selector */
 [data-reach-menu-item][data-selected] {
-  @apply bg-blue-100;
+  @apply bg-sky-100;
 }
 
 [data-reach-menu-item][aria-disabled] {

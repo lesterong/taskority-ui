@@ -72,7 +72,7 @@ const Home = () => {
         </div>
         
         {tasksToShow.map(task => 
-          <Card key={task.id} task={task} onChange={handleChecked} />
+          <Card key={task.id} task={task} onChange={handleChecked} query={query}/>
         )}
       </div>
     </div>

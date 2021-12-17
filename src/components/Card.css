@@ -13,3 +13,11 @@
 .task-complete {
   @apply line-through text-gray-500;
 }
+
+mark {
+  @apply text-gray-900 bg-sky-200;
+}
+
+.task-complete mark {
+  @apply text-gray-500;
+}
