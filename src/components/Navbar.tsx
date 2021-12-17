@@ -29,14 +29,12 @@ const Navbar = ({handleAddTask, handleCloseModal, isOpenModal}: NavbarProps) => 
               onClick={() => console.log("testing")}
               tier="btn-secondary"
               icon={search}
-              text=""
             />
 
             <Button 
               onClick={() => console.log("testing")}
               tier="btn-secondary mobile-btn"
               icon={settings}
-              text=""
             />
 
             <Button 
@@ -50,7 +48,6 @@ const Navbar = ({handleAddTask, handleCloseModal, isOpenModal}: NavbarProps) => 
               onClick={() => console.log("testing")}
               tier="btn-secondary desktop-btn"
               icon={logout}
-              text=""
             />
 
             <Button 
@@ -64,7 +61,6 @@ const Navbar = ({handleAddTask, handleCloseModal, isOpenModal}: NavbarProps) => 
               onClick={handleAddTask}
               tier="btn-primary mobile-btn"
               icon={addTask}
-              text=""
             />
 
             <Modal 

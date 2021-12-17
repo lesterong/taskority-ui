@@ -1,5 +1,5 @@
 .btn-container {
-  @apply flex py-1 px-1;
+  @apply flex;
 }
 
 .btn-container img {
@@ -7,13 +7,13 @@
 }
 
 .btn-primary {
-  @apply bg-blue-100 p-2 rounded-lg transition-colors duration-100 h-[50px];
+  @apply bg-blue-100 border border-transparent p-3 rounded-lg transition-colors duration-100 h-[50px];
   @apply hover:bg-blue-200;
   @apply active:bg-blue-300;
 }
 
 .btn-secondary {
-  @apply bg-white border p-2 rounded-lg transition-colors duration-100 h-[50px];
+  @apply bg-white border p-3 rounded-lg transition-colors duration-100 h-[50px];
   @apply hover:bg-gray-100;
   @apply active:bg-gray-200;
 }

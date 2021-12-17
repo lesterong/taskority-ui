@@ -61,14 +61,12 @@ const Modal = ({closeModal, isOpenModal, title}: modalProps) => {
             <Button 
                 onClick={() => console.log("testing")}
                 tier="btn-primary"
-                icon=""
                 text='Save'
                 type='submit'
             />
             <Button 
                 onClick={() => console.log("testing")}
                 tier="btn-secondary"
-                icon=""
                 text='Cancel'
             />
           </div>
