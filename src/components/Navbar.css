@@ -17,3 +17,7 @@ nav {
 .nav-links {
   @apply flex justify-end h-full align-middle space-x-2 flex-grow;
 }
+
+.search-bar {
+  @apply h-[50px] rounded-lg;
+}

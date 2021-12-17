@@ -14,7 +14,6 @@ const FilterModal = ({closeModal, isOpenModal, title}: modalProps) => {
   return (
     <div>
       <Dialog 
-        className="modal" 
         isOpen={isOpenModal} 
         onDismiss={closeModal}
         aria-label={title}
