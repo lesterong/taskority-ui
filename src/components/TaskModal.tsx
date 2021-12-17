@@ -58,7 +58,7 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
             </textarea>
           </label>
 
-          <div>
+          <div className="form-action">
             <Button 
                 onClick={() => console.log("testing")}
                 tier="btn-primary"

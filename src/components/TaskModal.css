@@ -1,15 +1,3 @@
-.task-form {
-  @apply flex flex-col space-y-3; 
-}
-
-.form-title {
-  @apply flex justify-between pb-1;
-}
-
-.task-form input, .task-form select, .task-form textarea {
-  @apply w-full px-0;
-}
-
 .task-form input[name="title"] {
   @apply font-display font-bold text-xl placeholder:text-gray-300;
 }

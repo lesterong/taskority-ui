@@ -1,9 +1,13 @@
 .btn-container {
-  @apply flex;
+  @apply flex justify-center;
 }
 
 .btn-container img {
   @apply mx-auto;
+}
+
+.btn-container p {
+  @apply pl-1;
 }
 
 .btn-primary {

@@ -9,3 +9,23 @@
 [data-reach-dialog-content] {
   @apply bg-white max-w-3xl p-6 sm:min-w-[600px] min-w-full;
 }
+
+form {
+  @apply flex flex-col space-y-3; 
+}
+
+.form-title {
+  @apply flex justify-between pb-1;
+}
+
+form input, form select, form textarea {
+  @apply w-full px-0;
+}
+
+.form-action {
+  @apply flex space-x-2;
+}
+
+.form-action button {
+  @apply w-full mt-2;
+}

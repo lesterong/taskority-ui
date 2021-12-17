@@ -1,7 +1,7 @@
 import './Button.css'
 
 type ButtonProps = {
-  onClick: any;
+  onClick?: any;
   tier: string;
   icon?: any;
   text?: string;
