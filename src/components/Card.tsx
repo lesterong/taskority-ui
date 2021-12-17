@@ -13,8 +13,9 @@ type taskProps = {
 };
 
 const Card = ({task, onChange}: {task: taskProps, onChange: any}) => {
-  const status: string = task.completed ? 'task-complete' : ''
+  const statusClass: string = task.completed ? 'task-complete' : ''
   const [showTask, setShowTask] = useState(false);
+  const [status, setStatus] = useState(task.completed);
 
   return (
     <>
@@ -22,11 +23,12 @@ const Card = ({task, onChange}: {task: taskProps, onChange: any}) => {
         <div className='card-checkbox'>
           <input 
             type="checkbox"
-            onChange={onChange}
+            checked={status}
+            onChange={(event) => setStatus(!status)}
           />
         </div>
         <div className='card-body' onClick={() => setShowTask(true)}>
-          <h2 className={status}> {task.title} </h2>
+          <h2 className={statusClass}> {task.title} </h2>
           <h3> {task.duedate} {task.duetime} </h3>
           <h5> {task.tag} </h5>
         </div>

@@ -1,0 +1,31 @@
+.login-header {
+  @apply flex bg-white space-x-2 py-4 justify-center mb-3;
+}
+
+.login-header img {
+  @apply h-14
+}
+
+.login-header h1 {
+  @apply text-5xl;
+}
+
+.login-container {
+  @apply container max-w-xl mx-auto px-4;
+}
+
+.login-container * {
+  @apply w-full;
+}
+
+.login-container h1 {
+  @apply pb-3;
+}
+
+.login-container form {
+  @apply flex flex-col;
+}
+
+.login-container label input {
+  @apply rounded-lg placeholder:text-gray-300 mb-3;
+}

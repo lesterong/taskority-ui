@@ -3,6 +3,7 @@ import taskService from '../services/tasks'
 import Card from '../components/Card';
 import Navbar from '../components/Navbar';
 import Search from '../components/Search';
+import './Home.css'
 import Notification from '../components/Notification';
 
 const Home = () => {

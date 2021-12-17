@@ -1,0 +1,11 @@
+.main-container {
+  @apply container max-w-4xl mx-auto px-4;
+}
+
+.main-title {
+  @apply flex justify-between items-center mt-2;
+}
+
+.main-title input {
+  @apply rounded-lg
+}
