@@ -5,7 +5,7 @@ import search from '../assets/search.svg';
 import addTask from '../assets/addTask.svg';
 import logout from '../assets/logout.svg';
 import settings from '../assets/settings.svg';
-import Modal from '../components/Modal';
+import TaskModal from './TaskModal';
 import './Navbar.css';
 
 type NavbarProps = {
@@ -14,7 +14,13 @@ type NavbarProps = {
   isOpenModal: boolean;
 };
 
-const Navbar = ({handleAddTask, handleCloseModal, isOpenModal}: NavbarProps) => {
+type handleTasksProps = {
+  open: any;
+  close: any;
+  isOpen: boolean;
+}
+
+const Navbar = ({handleTasks}: {handleTasks: handleTasksProps}) => {
   return (
     <div className='nav-container'>
       <nav>
@@ -51,21 +57,21 @@ const Navbar = ({handleAddTask, handleCloseModal, isOpenModal}: NavbarProps) => 
             />
 
             <Button 
-              onClick={handleAddTask}
+              onClick={handleTasks.open}
               tier="btn-primary desktop-btn"
               icon={addTask}
               text="Add Task"
             />
 
             <Button 
-              onClick={handleAddTask}
+              onClick={handleTasks.open}
               tier="btn-primary mobile-btn"
               icon={addTask}
             />
 
-            <Modal 
-              closeModal={handleCloseModal}
-              isOpenModal={isOpenModal}
+            <TaskModal 
+              closeModal={handleTasks.close}
+              isOpenModal={handleTasks.isOpen}
               title="Add Task"
             />
         </div>

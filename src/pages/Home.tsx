@@ -6,7 +6,7 @@ import Notification from '../components/Notification';
 
 const Home = () => {
   const [tasks, setTasks] = useState<any[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
 
   const hook = () => {
     taskService
@@ -21,22 +21,24 @@ const Home = () => {
     // send put request to change to completed
   };
 
-  const handleAddTask = () => {
-    setShowModal(true);
-    console.log(showModal);
+  const openTaskModal = () => {
+    setShowTaskModal(true);
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-    console.log(showModal);
-  }
+  const closeTaskModal = () => {
+    setShowTaskModal(false);
+  };
+
+  const handleTasks = {
+    'open': openTaskModal,
+    'close': closeTaskModal,
+    'isOpen': showTaskModal,
+  };
 
   return (
     <div>
-      <Navbar 
-        handleAddTask={handleAddTask}
-        handleCloseModal={handleCloseModal}
-        isOpenModal={showModal}
+      <Navbar
+        handleTasks={handleTasks}
       />
       <div className='container max-w-4xl mx-auto px-4'>
         {tasks.map(task => 

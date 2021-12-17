@@ -1,5 +1,6 @@
 import { Dialog } from "@reach/dialog";
 import './Modal.css';
+import './TaskModal.css';
 import Button from "./Button";
 import close from '../assets/close.svg';
 
@@ -12,7 +13,7 @@ type modalProps = {
   title: string;
 };
 
-const Modal = ({closeModal, isOpenModal, title}: modalProps) => {  
+const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {  
   return (
     <div>
       <Dialog 
@@ -77,4 +78,4 @@ const Modal = ({closeModal, isOpenModal, title}: modalProps) => {
   );
 }
 
-export default Modal;
+export default TaskModal;
