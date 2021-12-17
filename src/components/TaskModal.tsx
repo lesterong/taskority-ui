@@ -11,9 +11,18 @@ type modalProps = {
   closeModal: any;
   isOpenModal: boolean;
   title: string;
+  displayTask?: {
+    id: number;
+    title: string;
+    description: string;
+    duedate: string;
+    duetime: string;
+    tag: string;
+    completed: boolean;
+  };
 };
 
-const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {  
+const TaskModal = ({closeModal, isOpenModal, title, displayTask}: modalProps) => { 
   return (
     <div>
       <Dialog 
@@ -21,7 +30,6 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
         onDismiss={closeModal}
         aria-label={title}
       >
-        
         <form className="task-form" onSubmit={closeModal}>
           <div className="form-title">
             <h1> {title} </h1>
@@ -29,18 +37,33 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
               <img src={close} onClick={closeModal}/> 
             </button>
           </div>
-          
+
+          {displayTask?.completed 
+            ? <p> This task is completed. </p>
+            : <p> This task is still active. </p>
+          }
+
           <input 
             type="text"
             placeholder="Add a title..."
             name="title"
+            value={displayTask?.title}
+            onChange={(event) => console.log(event.target.value)}
           />
           
           <label>
             Due
             <input 
-              type="datetime-local"
+              type="date"
               name="due"
+              onChange={(event) => console.log(event.target.value)}
+              value={displayTask?.duedate}
+            />
+            <input 
+              type="time"
+              name="due"
+              onChange={(event) => console.log(event.target.value)}
+              value={displayTask?.duetime}
             />
           </label>
 
@@ -54,9 +77,7 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
 
           <label>
             Description
-            <textarea>
-              
-            </textarea>
+            <textarea value={displayTask?.description} onChange={(event) => console.log(event.target)}/>
           </label>
 
           <div className="form-action">
@@ -69,7 +90,7 @@ const TaskModal = ({closeModal, isOpenModal, title}: modalProps) => {
             <Button 
                 onClick={() => console.log("testing")}
                 tier="btn-secondary"
-                text='Cancel'
+                text={title.includes("Add") ? "Cancel" : "Delete"}
             />
           </div>
         </form>

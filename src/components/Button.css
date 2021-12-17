@@ -7,7 +7,7 @@
 }
 
 .btn-container p {
-  @apply pl-1;
+  @apply px-1;
 }
 
 .btn-primary {

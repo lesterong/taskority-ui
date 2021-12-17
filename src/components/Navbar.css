@@ -11,7 +11,11 @@ nav {
 }
 
 .nav-logo img {
-  @apply h-8;
+  @apply h-12 pr-1;
+}
+
+.nav-logo h1 {
+  @apply xs:block hidden;
 }
 
 .nav-links {

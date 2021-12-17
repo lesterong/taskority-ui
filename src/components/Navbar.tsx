@@ -21,8 +21,8 @@ const Navbar = ({handleTasks, handleFilters, handleSearch}:
       <div className='nav-container'>
         <nav>
         <div className="nav-logo">
-          <img src={logo} />
-          Logo
+          <img src={logo} alt="Taskority"/>
+          <h1> Taskority </h1>
         </div>
 
         <div>

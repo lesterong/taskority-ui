@@ -3,5 +3,13 @@
 }
 
 .card-checkbox input {
-  @apply rounded focus:ring-0
+  @apply rounded focus:ring-0;
+}
+
+.card-body {
+  @apply w-full cursor-pointer;
+}
+
+.task-complete {
+  @apply line-through text-gray-500;
 }

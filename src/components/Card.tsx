@@ -1,30 +1,43 @@
-import './Card.css'
+import { useState } from 'react';
+import TaskModal from './TaskModal';
+import './Card.css';
 
 type taskProps = {
   id: number;
   title: string;
   description: string;
-  duedate: any;
+  duedate: string;
+  duetime: string;
   tag: string;
   completed: boolean;
 };
 
 const Card = ({task, onChange}: {task: taskProps, onChange: any}) => {
+  const status: string = task.completed ? 'task-complete' : ''
+  const [showTask, setShowTask] = useState(false);
+
   return (
-    <div className='card'>
-      <div className='card-checkbox'>
-        <input 
-          type="checkbox"
-          onChange={onChange}
-        />
+    <>
+      <div className='card'>
+        <div className='card-checkbox'>
+          <input 
+            type="checkbox"
+            onChange={onChange}
+          />
+        </div>
+        <div className='card-body' onClick={() => setShowTask(true)}>
+          <h2 className={status}> {task.title} </h2>
+          <h3> {task.duedate} {task.duetime} </h3>
+          <h5> {task.tag} </h5>
+        </div>
       </div>
-      <div className='card-body'>
-        <h2> {task.title} </h2>
-        <h3> {task.duedate} </h3>
-        <h5> {task.tag} </h5>
-      </div>
-    </div>
-    
+      <TaskModal 
+          closeModal={() => setShowTask(false)}
+          isOpenModal={showTask}
+          title="View Task"
+          displayTask={task}
+      />
+    </>
   );
 };
 
