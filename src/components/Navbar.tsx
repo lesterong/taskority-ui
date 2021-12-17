@@ -69,21 +69,22 @@ const Navbar = ({handleTasks, handleFilters}: {handleTasks: handleProps, handleF
               tier="btn-primary mobile-btn"
               icon={addTask}
             />
-
-            <TaskModal 
-              closeModal={handleTasks.close}
-              isOpenModal={handleTasks.isOpen}
-              title="Add Task"
-            />
-
-            <FilterModal 
-              closeModal={handleFilters.close}
-              isOpenModal={handleFilters.isOpen}
-              title="Filters"
-            />
         </div>
+        
       </div>
       </nav>
+
+      <TaskModal 
+        closeModal={handleTasks.close}
+        isOpenModal={handleTasks.isOpen}
+        title="Add Task"
+      />
+
+      <FilterModal 
+        closeModal={handleFilters.close}
+        isOpenModal={handleFilters.isOpen}
+        title="Filters"
+      />
     </div>
   );
 };

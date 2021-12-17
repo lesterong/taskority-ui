@@ -19,7 +19,7 @@ form {
 }
 
 form input, form select, form textarea {
-  @apply w-full px-0;
+  @apply w-full;
 }
 
 .form-action {
