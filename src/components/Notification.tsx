@@ -3,9 +3,12 @@ type NotifProps = {
   type: string; 
 };
 
-const Notification = ({notification}: {notification: NotifProps}) => {
+const Notification = ({message, type}: NotifProps) => {
   return (
-    <p> Notification message: {notification.message} </p>
+    <div>
+    <p> Notification message: {message} </p>
+    <p> Notification type: {type}</p>
+    </div>
   );
 };
 
