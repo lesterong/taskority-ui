@@ -6,7 +6,7 @@ import logout from '../assets/logout.svg';
 type ButtonProps = {
   onClick?: any;
   tier: string;
-  icon?: any;
+  icon?: string;
   text?: string;
   type?: 'button' | 'submit' | 'reset';
 };

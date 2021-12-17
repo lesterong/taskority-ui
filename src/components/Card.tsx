@@ -12,7 +12,7 @@ type taskProps = {
   completed: boolean;
 };
 
-const Card = ({task, onChange}: {task: taskProps, onChange: any}) => {
+const Card = ({task, onChange}: {task: taskProps, onChange: (event: Event) => void}) => {
   const statusClass: string = task.completed ? 'task-complete' : ''
   const [showTask, setShowTask] = useState(false);
   const [status, setStatus] = useState(task.completed);

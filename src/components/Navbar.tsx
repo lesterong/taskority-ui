@@ -9,14 +9,18 @@ import TaskModal from './TaskModal';
 import FilterModal from './FilterModal';
 import './Navbar.css';
 
-type handleProps = {
-  open: any;
-  close: any;
+type toggleProps = {
+  open: () => void;
+  close: () => void;
   isOpen: boolean;
 }
 
-const Navbar = ({handleTasks, handleFilters, handleSearch}: 
-  {handleTasks: handleProps, handleFilters: handleProps, handleSearch: any}) => {
+type toggleSearchProps = {
+  toggle: () => void;
+}
+
+const Navbar = ({toggleTasks, toggleFilters, toggleSearch}: 
+  {toggleTasks: toggleProps, toggleFilters: toggleProps, toggleSearch: toggleSearchProps}) => {
     return (
       <div className='nav-container'>
         <nav>
@@ -28,19 +32,19 @@ const Navbar = ({handleTasks, handleFilters, handleSearch}:
         <div>
           <div className="nav-links">
               <Button 
-                onClick={handleSearch.toggle}
+                onClick={toggleSearch.toggle}
                 tier="btn-secondary"
                 icon={search}
               />
 
               <Button 
-                onClick={handleFilters.open}
+                onClick={toggleFilters.open}
                 tier="btn-secondary mobile-btn dropdown"
                 icon={settings}
               />
 
               <Button 
-                onClick={handleFilters.open}
+                onClick={toggleFilters.open}
                 tier="btn-secondary desktop-btn"
                 icon={filter}
                 text=""
@@ -53,14 +57,14 @@ const Navbar = ({handleTasks, handleFilters, handleSearch}:
               />
 
               <Button 
-                onClick={handleTasks.open}
+                onClick={toggleTasks.open}
                 tier="btn-primary desktop-btn"
                 icon={addTask}
                 text="Add Task"
               />
 
               <Button 
-                onClick={handleTasks.open}
+                onClick={toggleTasks.open}
                 tier="btn-primary mobile-btn"
                 icon={addTask}
               />
@@ -69,14 +73,14 @@ const Navbar = ({handleTasks, handleFilters, handleSearch}:
         </nav>
 
         <TaskModal 
-          closeModal={handleTasks.close}
-          isOpenModal={handleTasks.isOpen}
+          closeModal={toggleTasks.close}
+          isOpenModal={toggleTasks.isOpen}
           title="Add Task"
         />
 
         <FilterModal 
-          closeModal={handleFilters.close}
-          isOpenModal={handleFilters.isOpen}
+          closeModal={toggleFilters.close}
+          isOpenModal={toggleFilters.isOpen}
           title="Filters"
         />
       </div>

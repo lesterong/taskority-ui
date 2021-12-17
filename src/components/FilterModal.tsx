@@ -5,7 +5,7 @@ import Button from "./Button";
 import close from '../assets/close.svg';
 
 type modalProps = {
-  closeModal: any;
+  closeModal: () => void;
   isOpenModal: boolean;
   title: string;
 };

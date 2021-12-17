@@ -8,7 +8,7 @@ import close from '../assets/close.svg';
 // handleSubmit form
 
 type modalProps = {
-  closeModal: any;
+  closeModal: () => void;
   isOpenModal: boolean;
   title: string;
   displayTask?: {
@@ -38,10 +38,10 @@ const TaskModal = ({closeModal, isOpenModal, title, displayTask}: modalProps) =>
             </button>
           </div>
 
-          {displayTask?.completed 
+          {displayTask && (displayTask?.completed 
             ? <p> This task is completed. </p>
             : <p> This task is still active. </p>
-          }
+          )}
 
           <input 
             type="text"

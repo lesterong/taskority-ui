@@ -12,6 +12,8 @@ const Home = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
 
+  const [query, setQuery] = useState('');
+
   const hook = () => {
     taskService
       .getAll()
@@ -25,36 +27,51 @@ const Home = () => {
     // send put request to change to completed
   };
 
-  const handleTasks = {
+  const toggleTasks = {
     'open': () => setShowTaskModal(true),
     'close': () => setShowTaskModal(false),
     'isOpen': showTaskModal,
   };
 
-  const handleFilters = {
+  const toggleFilters = {
     'open': () => setShowFilterModal(true),
     'close': () => setShowFilterModal(false),
     'isOpen': showFilterModal,
   }
 
-  const handleSearch = {
-    'toggle': () => setShowSearch(!showSearch),
+  const toggleSearch = {
+    'toggle': () => {
+      setQuery('');
+      setShowSearch(!showSearch);
+    },
   }
-  console.log(showSearch);
+
+  const handleSearch = {
+    'onChange': (event: any) => setQuery(event.target.value),
+    'query': query,
+  }
+
+  const tasksToShow = query === ''
+    ? tasks
+    : tasks.filter(task => task.title.toLowerCase().includes(query.toLowerCase()));
+
   return (
     <div>
       <Navbar
-        handleTasks={handleTasks}
-        handleFilters={handleFilters}
-        handleSearch={handleSearch}
+        toggleTasks={toggleTasks}
+        toggleFilters={toggleFilters}
+        toggleSearch={toggleSearch}
       />
       <div className='main-container'>
         <div className='main-title'>
-          <p>Your Tasks</p>
-          {showSearch && <Search />}
+          {query === ""
+            ? <p> All Tasks </p>
+            : <p> '{query}' in All Tasks </p>
+          }
+          {showSearch && <Search handleSearch={handleSearch}/>}
         </div>
         
-        {tasks.map(task => 
+        {tasksToShow.map(task => 
           <Card key={task.id} task={task} onChange={handleChecked} />
         )}
       </div>

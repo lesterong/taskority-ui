@@ -3,9 +3,13 @@
 }
 
 .main-title {
-  @apply flex justify-between items-center mt-2;
+  @apply flex justify-between mt-2 xs:items-center xs:flex-row flex-col-reverse;
 }
 
 .main-title input {
-  @apply rounded-lg
+  @apply rounded-lg xs:mb-0 mb-3;
+}
+
+.main-title p {
+  @apply text-left;
 }
