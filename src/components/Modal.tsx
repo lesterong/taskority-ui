@@ -1,8 +1,10 @@
 import { Dialog } from "@reach/dialog";
-import './Modal.css'
-import Button from "./Button"
+import './Modal.css';
+import Button from "./Button";
+import close from '../assets/close.svg';
 
 // show warning if there is already stuff keyed in
+// handleSubmit form
 
 type modalProps = {
   closeModal: any;
@@ -17,21 +19,27 @@ const Modal = ({closeModal, isOpenModal, title}: modalProps) => {
         className="modal" 
         isOpen={isOpenModal} 
         onDismiss={closeModal}
-        aria-label="Task"
+        aria-label={title}
       >
-        <h1> {title} </h1>
-        <form onSubmit={closeModal}>
-          <div>
+        
+        <form className="task-form" onSubmit={closeModal}>
+          <div className="form-title">
+            <h1> {title} </h1>
+            <img className="cursor-pointer" src={close} onClick={closeModal}/> 
+          </div>
+          
           <input 
             type="text"
             placeholder="Add a title..."
             name="title"
           />
-          </div>
           
           <label>
             Due
-            <input type="datetime-local"/>
+            <input 
+              type="datetime-local"
+              name="due"
+            />
           </label>
 
           <label>
@@ -41,19 +49,29 @@ const Modal = ({closeModal, isOpenModal, title}: modalProps) => {
               <option> That </option>
             </select>
           </label>
-          <Button 
-              onClick={() => console.log("testing")}
-              tier="btn-primary"
-              icon=""
-              text='Save'
-              type='submit'
-          />
-          <Button 
-              onClick={() => console.log("testing")}
-              tier="btn-secondary"
-              icon=""
-              text='Cancel'
-          />
+
+          <label>
+            Description
+            <textarea>
+              
+            </textarea>
+          </label>
+
+          <div>
+            <Button 
+                onClick={() => console.log("testing")}
+                tier="btn-primary"
+                icon=""
+                text='Save'
+                type='submit'
+            />
+            <Button 
+                onClick={() => console.log("testing")}
+                tier="btn-secondary"
+                icon=""
+                text='Cancel'
+            />
+          </div>
         </form>
 
       </Dialog>
