@@ -37,11 +37,6 @@ const Home = () => {
 
   useEffect(hook, []);
 
-  const handleChecked = (event: any) => {
-    console.log(event.target.checked);
-    // send put request to change to completed
-  };
-
   const toggleFilters = {
     'open': () => setShowFilterModal(true),
     'close': () => setShowFilterModal(false),
@@ -150,6 +145,19 @@ const Home = () => {
         notify('Task deleted successfully', 'success');
       })
       .catch(error => notify("Delete unsuccessful, please try again", "failure"));
+    },
+    'handleCheckbox': (task: any) => (event: any) => {
+      const updatedTask = {
+        ...task,
+        "completed": !task.completed,
+      };
+      taskService
+        .update(task.id, updatedTask)
+        .then(returnedTask => {
+          setTasks(tasks.map(t => t === task ? returnedTask : t))
+          notify(task.completed ? 'Task undone.' : 'Task completed!', 'success');
+        })
+        .catch(error => notify("Unsuccessful, please try again", "failure"));
     }
   };
 

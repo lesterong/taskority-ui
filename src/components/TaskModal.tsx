@@ -4,8 +4,6 @@ import './TaskModal.css';
 import Button from "./Button";
 import close from '../assets/close.svg';
 
-// show warning if there is already stuff keyed in
-
 type modalProps = {
   text: string;
   handleAddTask?: any;
@@ -37,19 +35,27 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) =>
             </button>
           </div>
 
-          {task && (task?.completed 
-            ? <p> This task is completed. </p>
-            : <p> This task is still active. </p>
-          )}
+          {task &&
+            <label className="flex items-center space-x-2">
+              <input 
+                type="checkbox"
+                checked={task.completed}
+                onChange={handleUpdateTask.handleCheckbox}/>
+              {task.completed ? <p> Undo task? </p> : <p> Complete task? </p>}
+            </label>
+          }
 
-          <input 
-            type="text"
-            placeholder="Add a title..."
-            name="title"
-            value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle}
-            onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
-            required
-          />
+          <label>
+            Title
+            <input 
+              type="text"
+              placeholder="Add a title..."
+              name="title"
+              value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle}
+              onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
+              required
+            />
+          </label>
           
           <label>
             Due

@@ -31,3 +31,15 @@ h5 {
 p {
   @apply font-sans font-normal;
 }
+
+input {
+  @apply focus:ring-sky-500;
+}
+
+input[type="text"], input[type="datetime-local"], select, textarea {
+  @apply rounded-lg placeholder:text-gray-300;
+}
+
+input[type="checkbox"] {
+  @apply rounded;
+}

@@ -52,8 +52,14 @@ const Card = ({task, query, handleUpdate}:
     setShowViewTask(false);
   }
 
+  const handleCheckbox = (event: any) => {
+    handleUpdate.handleCheckbox(task)(event);
+    setStatus(!status);
+  }
+
   const handleUpdateTask = {
     ...handleUpdate,
+    'handleCheckbox': handleCheckbox,
     'handleDelete': handleDelete,
     'handleSubmit': handleSubmit,
     'handleCancel': handleCancel,
@@ -69,7 +75,7 @@ const Card = ({task, query, handleUpdate}:
           <input 
             type="checkbox"
             checked={status}
-            onChange={(event) => setStatus(!status)}
+            onChange={handleUpdateTask.handleCheckbox}
           />
         </div>
         <div className='card-body' onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>

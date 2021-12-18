@@ -2,10 +2,6 @@
   @apply bg-white flex py-3 px-4 rounded-3xl mt-3 space-x-3 items-center;
 }
 
-.card-checkbox input {
-  @apply rounded focus:ring-0;
-}
-
 .card-body {
   @apply w-full cursor-pointer;
 }
