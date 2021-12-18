@@ -20,16 +20,16 @@ type toggleSearchProps = {
 }
 
 type handleAddTaskProps = {
-  open: any;
+  open: () => void;
   isOpen: boolean;
   taskTitle: string;
-  handleTaskTitle: any;
+  handleTaskTitle: (event: Event) => void;
   taskDuedate: string;
-  handleTaskDuedate: any;
+  handleTaskDuedate: (event: Event) => void;
   taskDescription: string;
-  handleTaskDescription: any;
-  handleSubmit: any;
-  handleCancel: any;
+  handleTaskDescription: (event: Event) => void;
+  handleSubmit: (event: Event) => void;
+  handleCancel: (event: Event) => void;
 }
 
 const Navbar = ({toggleFilters, toggleSearch, handleAddTask}: 

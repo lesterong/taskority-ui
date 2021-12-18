@@ -33,7 +33,18 @@ const Card = ({task, query, handleUpdate}:
   const statusClass: string = completed ? 'task-complete' : '';
   const [status, setStatus] = useState(completed);
   const [showViewTask, setShowViewTask] = useState(false);
+
   const readableDuedate = DateTime.fromISO(duedate).toLocaleString(DateTime.DATETIME_MED);
+  const now: any = DateTime.now();
+  const due: any = DateTime.fromISO(duedate);
+  const overdue = !status 
+    ? now < due 
+      ? 'overdue' : ''
+    : ''
+  const diffObj = now.diff(due)
+  const diffDays = Math.abs(Math.trunc(diffObj.as('days')));
+  const diffHours = Math.abs(Math.trunc(diffObj.as('hours')));
+  const diffMinutes = Math.abs(Math.trunc(diffObj.as('minutes')));
 
 
   const handleCancel = () => { 
@@ -84,7 +95,21 @@ const Card = ({task, query, handleUpdate}:
             {title}
             </Highlight>
           </h2>
-          <h3> {readableDuedate} </h3>
+          <h3 className={overdue}> 
+            {readableDuedate} 
+            { !status && (now > due
+              ? diffDays < 1
+                ? diffHours < 1
+                  ? ' (Due in ' + diffMinutes + ' minutes)'
+                  : ' (Due in ' + diffHours + ' hours)'
+                : ' (Due in ' + diffDays + ' days)'
+              : diffDays < 1
+                ? diffHours < 1
+                  ? ' (Overdue by ' + diffMinutes + ' minutes)'
+                  : ' (Overdue by ' + diffHours + ' hours)'
+                : ' (Overdue by ' + diffDays + ' days)'
+            )}
+          </h3>
           <h5> {tag} </h5>
         </div>
       </div>

@@ -17,3 +17,7 @@ mark {
 .task-complete mark {
   @apply text-gray-500;
 }
+
+.overdue {
+  @apply text-red-400;
+}
