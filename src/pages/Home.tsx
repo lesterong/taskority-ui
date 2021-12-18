@@ -66,13 +66,19 @@ const Home = () => {
         <div className='main-title'>
           {query === ""
             ? <p> All Tasks </p>
-            : <p> '{query}' in All Tasks </p>
+            : <p> <b>'{query}'</b> in All Tasks </p>
           }
           {showSearch && <Search handleSearch={handleSearch}/>}
         </div>
         
-        {tasksToShow.map(task => 
-          <Card key={task.id} task={task} onChange={handleChecked} query={query}/>
+        {query && tasksToShow.length === 0
+          ? <p> No results for '<b>{query}</b>'.&nbsp;
+            <button onClick={() => setQuery('')}>
+              Search Again? 
+            </button>
+            </p>
+          : tasksToShow.map(task => 
+            <Card key={task.id} task={task} onChange={handleChecked} query={query}/>
         )}
       </div>
     </div>

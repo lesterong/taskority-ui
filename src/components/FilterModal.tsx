@@ -7,21 +7,21 @@ import close from '../assets/close.svg';
 type modalProps = {
   closeModal: () => void;
   isOpenModal: boolean;
-  title: string;
+  text: string;
 };
 
-const FilterModal = ({closeModal, isOpenModal, title}: modalProps) => {  
+const FilterModal = ({closeModal, isOpenModal, text}: modalProps) => {  
   return (
     <div>
       <Dialog 
         isOpen={isOpenModal} 
         onDismiss={closeModal}
-        aria-label={title}
+        aria-label={text}
       >
 
         <form className="filters-form">
           <div className="form-title">
-            <h1> {title} </h1>
+            <h1> {text} </h1>
             <button onClick={closeModal}>
               <img src={close} onClick={closeModal}/> 
             </button>

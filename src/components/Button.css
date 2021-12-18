@@ -48,12 +48,12 @@ btn div img {
 }
 
 [data-reach-menu-popover][hidden] {
-  @apply hidden
+  @apply hidden;
 }
 
 [data-reach-menu-list], [data-reach-menu-items] {
   @apply block rounded border border-gray-200 bg-white mt-1;
-  @apply shadow-sm whitespace-nowrap;
+  @apply shadow-sm whitespace-nowrap outline-none;
 
 }
 

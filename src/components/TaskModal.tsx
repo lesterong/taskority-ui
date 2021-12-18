@@ -10,29 +10,28 @@ import close from '../assets/close.svg';
 type modalProps = {
   closeModal: () => void;
   isOpenModal: boolean;
-  title: string;
+  text: string;
   displayTask?: {
     id: number;
     title: string;
     description: string;
     duedate: string;
-    duetime: string;
     tag: string;
     completed: boolean;
   };
 };
 
-const TaskModal = ({closeModal, isOpenModal, title, displayTask}: modalProps) => { 
+const TaskModal = ({closeModal, isOpenModal, text, displayTask}: modalProps) => { 
   return (
     <div>
       <Dialog 
         isOpen={isOpenModal} 
         onDismiss={closeModal}
-        aria-label={title}
+        aria-label={text}
       >
         <form className="task-form" onSubmit={closeModal}>
           <div className="form-title">
-            <h1> {title} </h1>
+            <h1> {text} </h1>
             <button onClick={closeModal}>
               <img src={close} onClick={closeModal}/> 
             </button>
@@ -54,16 +53,11 @@ const TaskModal = ({closeModal, isOpenModal, title, displayTask}: modalProps) =>
           <label>
             Due
             <input 
-              type="date"
+              type="datetime-local"
               name="due"
+              step="60"
               onChange={(event) => console.log(event.target.value)}
               value={displayTask?.duedate}
-            />
-            <input 
-              type="time"
-              name="due"
-              onChange={(event) => console.log(event.target.value)}
-              value={displayTask?.duetime}
             />
           </label>
 
@@ -90,7 +84,7 @@ const TaskModal = ({closeModal, isOpenModal, title, displayTask}: modalProps) =>
             <Button 
                 onClick={() => console.log("testing")}
                 tier="btn-secondary"
-                text={title.includes("Add") ? "Cancel" : "Delete"}
+                text={text.includes("Add") ? "Cancel" : "Delete"}
             />
           </div>
         </form>

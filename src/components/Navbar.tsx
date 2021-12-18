@@ -75,13 +75,13 @@ const Navbar = ({toggleTasks, toggleFilters, toggleSearch}:
         <TaskModal 
           closeModal={toggleTasks.close}
           isOpenModal={toggleTasks.isOpen}
-          title="Add Task"
+          text="Add Task"
         />
 
         <FilterModal 
           closeModal={toggleFilters.close}
           isOpenModal={toggleFilters.isOpen}
-          title="Filters"
+          text="Filters"
         />
       </div>
     );
