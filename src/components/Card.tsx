@@ -47,8 +47,14 @@ const Card = ({task, query, handleUpdate}:
     setShowViewTask(false);
   }
 
+  const handleDelete = () => {
+    handleUpdate.handleDelete(task.id);
+    setShowViewTask(false);
+  }
+
   const handleUpdateTask = {
     ...handleUpdate,
+    'handleDelete': handleDelete,
     'handleSubmit': handleSubmit,
     'handleCancel': handleCancel,
     'open': () => setShowViewTask(true),

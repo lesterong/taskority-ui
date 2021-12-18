@@ -86,7 +86,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) =>
                 type='submit'
             />
             <Button 
-                onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}
+                onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleDelete}
                 tier="btn-secondary"
                 text={text.includes("Add") ? "Cancel" : "Delete"}
             />

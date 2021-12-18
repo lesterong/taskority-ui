@@ -26,7 +26,7 @@ const Home = () => {
     setTimeout(() => {
       setNotifMessage("");
       setNotifType(null);
-    }, 5000)
+    }, 3500)
   }
 
   const hook = () => {
@@ -137,6 +137,19 @@ const Home = () => {
       setTaskDuedate('');
       setTaskDescription('');
       setTaskComplete(false);
+    },
+    'handleDelete': (id: number) => {
+      taskService
+      .remove(id)
+      .then(() => {
+        setTasks(tasks.filter(t => t.id !== id))
+        setTaskTitle('');
+        setTaskDuedate('');
+        setTaskDescription('');
+        setTaskComplete(false);
+        notify('Task deleted successfully', 'success');
+      })
+      .catch(error => notify("Delete unsuccessful, please try again", "failure"));
     }
   };
 
