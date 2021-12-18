@@ -6,13 +6,24 @@ import Search from '../components/Search';
 import './Home.css'
 import Notification from '../components/Notification';
 
+type taskProps = {
+  id: number;
+  title: string;
+  description: string;
+  duedate: string;
+  tag: string;
+  completed: boolean;
+};
+
 const Home = () => {
   const [tasks, setTasks] = useState<any[]>([]);
   const [showAddTask, setShowAddTask] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
-
+  
   const [query, setQuery] = useState('');
+  const [filters, setFilters] = useState<any[]>(['All Tasks']);
+
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDuedate, setTaskDuedate] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
@@ -36,12 +47,6 @@ const Home = () => {
   };
 
   useEffect(hook, []);
-
-  const toggleFilters = {
-    'open': () => setShowFilterModal(true),
-    'close': () => setShowFilterModal(false),
-    'isOpen': showFilterModal,
-  }
 
   const toggleSearch = {
     'toggle': () => {
@@ -107,7 +112,7 @@ const Home = () => {
       setTaskDescription(task.description);
       setTaskComplete(task.completed)
     },
-    'handleSubmit': (task: any) => (event: any) => {
+    'handleSubmit': (task: taskProps) => (event: any) => {
       const updatedTask = {
         "title": taskTitle,
         "description": taskDescription,
@@ -161,14 +166,61 @@ const Home = () => {
     }
   };
 
+  const handleFilters = {
+    'tagsArray': Array.from(new Set(tasks.map(task => task.tag))),
+    'open': () => setShowFilterModal(true),
+    'closeModal': () => setShowFilterModal(false),
+    'isOpen': showFilterModal,
+    'filters': filters,
+    'handleTagsCheckbox': (event: any) => {
+      event.target.checked 
+        ? setFilters(filters.concat(event.target.value))
+        : setFilters(filters.filter(elem => elem !== event.target.value))
+    },
+    'handleTaskStatus': (event: any) => {
+      console.log(event.target.value);
+      setFilters(filters.map(elem => 
+        elem === 'All Tasks' || elem === 'Active Tasks' || elem === 'Completed Tasks'
+        ? event.target.value
+        : elem
+      ))
+    },
+    'handleClear': () => setFilters(['All Tasks']),
+  };
+
+  const filteredTasks = (tasks: any, filters: any) => {
+    const [taskStatus, ...tagsFilter] = filters;
+    const filterStatus = taskStatus === 'All Tasks'
+      ? tasks
+      : taskStatus === 'Active Tasks'
+      ? tasks.filter((task: taskProps) => 
+        !task.completed)
+      : tasks.filter((task: taskProps) => 
+        task.completed);
+
+    let filteredResults = tagsFilter.length === 0
+      ? filterStatus
+      : []
+
+    for (let i = 0; i < tagsFilter.length; i++) {
+      const res = filterStatus.filter((task: taskProps) => task.tag === tagsFilter[i]);
+      filteredResults = filteredResults.concat(res)
+    }
+    
+    return filteredResults;
+  }
+
+  const tasksToFilter = filteredTasks(tasks, filters);
+
   const tasksToShow = query === ''
-    ? tasks
-    : tasks.filter(task => task.title.toLowerCase().includes(query.toLowerCase()));
+    ? tasksToFilter
+    : tasksToFilter.filter((task: taskProps) => 
+      task.title.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div>
       <Navbar
-        toggleFilters={toggleFilters}
+        handleFilters={handleFilters}
         toggleSearch={toggleSearch}
         handleAddTask={handleAddTask}
       />
@@ -176,25 +228,29 @@ const Home = () => {
       <div className='main-container'>
         <div className='main-title'>
           {query === ""
-            ? <p> All Tasks </p>
-            : <p> <b>'{query}'</b> in All Tasks </p>
+            ? <p> {filters[0]} </p>
+            : <p> <b>'{query}'</b> in {filters[0]} </p>
           }
           {showSearch && <Search handleSearch={handleSearch}/>}
         </div>
+
         {query && tasksToShow.length === 0
           ? <p> No results for '<b>{query}</b>'.&nbsp;
-            <button onClick={() => setQuery('')}>
-              Search Again? 
-            </button>
+              <button onClick={() => setQuery('')}>
+                Search Again? 
+              </button>
             </p>
-          : tasksToShow.map(task => 
-            <Card 
-              key={task.id} 
-              task={task} 
-              query={query}
-              handleUpdate={handleUpdate}
-            />
-        )}
+          : tasksToShow.length === 0
+            ? <p> No results found. </p> //loading here 
+            : tasksToShow.map((task: taskProps) => 
+              <Card 
+                key={task.id} 
+                task={task} 
+                query={query}
+                handleUpdate={handleUpdate}
+              />
+            )
+        }
       </div>
     </div>
     

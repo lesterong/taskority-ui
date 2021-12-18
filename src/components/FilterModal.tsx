@@ -5,16 +5,21 @@ import Button from "./Button";
 import close from '../assets/close.svg';
 
 type modalProps = {
-  closeModal: () => void;
-  isOpenModal: boolean;
+  handleFilters: any;
   text: string;
 };
 
-const FilterModal = ({closeModal, isOpenModal, text}: modalProps) => {  
+const FilterModal = ({handleFilters, text}: modalProps) => {    
+  const { tagsArray, closeModal, isOpen, filters, handleTagsCheckbox, handleTaskStatus, handleClear } = handleFilters;
+
+  const checkAll = filters[0] === 'All Tasks' ? true : false;
+  const checkActive = filters[0] === 'Active Tasks' ? true : false;
+  const checkCompleted = filters[0] === 'Completed Tasks' ? true : false;
+
   return (
     <div>
       <Dialog 
-        isOpen={isOpenModal} 
+        isOpen={isOpen} 
         onDismiss={closeModal}
         aria-label={text}
       >
@@ -23,48 +28,55 @@ const FilterModal = ({closeModal, isOpenModal, text}: modalProps) => {
           <div className="form-title">
             <h1> {text} </h1>
             <button onClick={closeModal}>
-              <img src={close} onClick={closeModal}/> 
+              <img src={close} alt="Close"/> 
             </button>
           </div>
           
-          <fieldset>  
-            <p> <b> Task Status </b></p>
-            <label>
-              <input type="radio" name="hello"/>
-              <p> All Tasks </p>
-            </label>
-            <label>
-              <input type="radio" name="hello"/>
-              <p> Active Tasks </p>
-            </label>
-            <label>
-              <input type="radio" name="hello"/>
-              <p> Completed Tasks </p>
-            </label>
+          <fieldset onChange={handleTaskStatus}>
+            <legend> <b>Task Status</b> </legend>
+            <div className="input-container">
+              <input 
+                type="radio" name="Task Status" id="All Tasks" 
+                value="All Tasks" defaultChecked={checkAll}
+              />
+              <label htmlFor="All Tasks"> All Tasks </label>
+            </div>
+
+            <div className="input-container">
+              <input 
+                type="radio" name="Task Status" id="Active Tasks"
+                value="Active Tasks" defaultChecked={checkActive}
+              />
+              <label htmlFor="Active Tasks"> Active Tasks </label>
+            </div>
+          
+            <div className="input-container">
+              <input 
+                type="radio" name="Task Status" id="Completed Tasks" 
+                value="Completed Tasks" defaultChecked={checkCompleted}
+              />
+              <label htmlFor="Completed Tasks"> Completed Tasks </label>
+            </div>
           </fieldset>
 
-          <fieldset>  
-            <p> <b> Select Tags </b></p>
-            <label>
-              <input type="checkbox" name="tags"/>
-              <p> Tag 1 </p>
-            </label>
-
-            <label>
-              <input type="checkbox" name="tags"/>
-              <p> Tag 2 </p>
-            </label>
+          <fieldset>
+            <legend> <b>Select Tags</b> </legend>  
+            {tagsArray.map((tag: any) => (
+              <div key={tag} className="input-container">
+                <input type="checkbox" name="tags" id={tag} value={tag} onChange={handleTagsCheckbox}/>
+                <label htmlFor={tag}> {tag} </label>
+              </div>
+            ))}
           </fieldset>
           
           <div className="form-action">
-            <Button 
-                onClick={() => console.log("testing")}
-                tier="btn-primary"
+              <Button 
+                onClick={closeModal}
+                tier="btn-primary md:hidden"
                 text='Apply'
-                type='submit'
-            />
+              />
             <Button 
-                onClick={() => console.log("testing")}
+                onClick={() => {handleClear()}}
                 tier="btn-secondary"
                 text='Clear'
                 type='reset'

@@ -9,15 +9,20 @@ import TaskModal from './TaskModal';
 import FilterModal from './FilterModal';
 import './Navbar.css';
 
-type toggleProps = {
-  open: () => void;
-  close: () => void;
-  isOpen: boolean;
-}
-
 type toggleSearchProps = {
   toggle: () => void;
-}
+};
+
+type handleFiltersProps = {
+  tagsArray: Array<[]>;
+  open: () => void;
+  closeModal: () => void;
+  isOpen: boolean;
+  filters: Array<[]>;
+  handleTagsCheckbox: any;
+  handleTaskStatus: any;
+  handleClear: any;
+};
 
 type handleAddTaskProps = {
   open: () => void;
@@ -32,8 +37,8 @@ type handleAddTaskProps = {
   handleCancel: (event: Event) => void;
 }
 
-const Navbar = ({toggleFilters, toggleSearch, handleAddTask}: 
-  {toggleFilters: toggleProps, toggleSearch: toggleSearchProps, handleAddTask: handleAddTaskProps}) => {
+const Navbar = ({handleFilters, toggleSearch, handleAddTask}: 
+  {handleFilters: handleFiltersProps, toggleSearch: toggleSearchProps, handleAddTask: handleAddTaskProps}) => {
     return (
       <div className='nav-container'>
         <nav>
@@ -51,13 +56,13 @@ const Navbar = ({toggleFilters, toggleSearch, handleAddTask}:
               />
 
               <Button 
-                onClick={toggleFilters.open}
+                onClick={handleFilters.open}
                 tier="btn-secondary mobile-btn dropdown"
                 icon={settings}
               />
 
               <Button 
-                onClick={toggleFilters.open}
+                onClick={handleFilters.open}
                 tier="btn-secondary desktop-btn"
                 icon={filter}
                 text=""
@@ -91,8 +96,7 @@ const Navbar = ({toggleFilters, toggleSearch, handleAddTask}:
         />
 
         <FilterModal 
-          closeModal={toggleFilters.close}
-          isOpenModal={toggleFilters.isOpen}
+          handleFilters = {handleFilters}
           text="Filters"
         />
       </div>

@@ -12,21 +12,25 @@ const Login = () => {
       <div className="login-container">
         <h1> Login </h1>
         <form>
-          <label>
+          <div>
+            <label htmlFor='email'> Email </label>
             <p>Email</p>
             <input
+              id="email"
               type="email"
               placeholder='Email'
             />
-          </label>
+          </div>
 
-          <label className='pb-3'>
-            <p>Password</p>
+          <div>
+            <label htmlFor='password'> Password </label>
             <input
+              className='mb-3'
+              id="password"
               type="password"
               placeholder='Password'
             />
-          </label>
+          </div>
 
           <Button 
             tier='btn-primary'

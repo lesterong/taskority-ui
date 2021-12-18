@@ -36,54 +36,60 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) =>
           </div>
 
           {task &&
-            <label className="flex items-center space-x-2">
+            <div className="input-container">
               <input 
                 type="checkbox"
                 checked={task.completed}
-                onChange={handleUpdateTask.handleCheckbox}/>
-              {task.completed ? <p> Undo task? </p> : <p> Complete task? </p>}
-            </label>
+                onChange={handleUpdateTask.handleCheckbox}
+                id="task-complete"
+              />
+              <label htmlFor="task-complete" className="flex items-center space-x-2">
+                {task.completed ? <p> Undo task? </p> : <p> Complete task? </p>}
+              </label>
+            </div>
           }
 
-          <label>
-            Title
+          <div>
+            <label htmlFor="title"> Title </label>
             <input 
               type="text"
               placeholder="Add a title..."
-              name="title"
+              name="title" id="title"
               value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle}
               onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
               required
             />
-          </label>
-          
-          <label>
-            Due
+          </div>
+
+          <div>
+            <label htmlFor="due"> Due </label>
             <input 
               type="datetime-local"
-              name="due"
+              name="due" id="due"
               step="60"
               value={handleUpdateTask?.taskDuedate || handleAddTask?.taskDuedate}
               onChange={handleUpdateTask?.handleTaskDuedate || handleAddTask?.handleTaskDuedate}
               required
             />
-          </label>
+          </div>
 
-          <label>
-            Tags
-            <select required>
+          <div>
+            <label htmlFor="tags"> Tags </label>
+            <select id="tags" required>
               <option> Tag 1 </option>
               <option> Tag 2 </option>
             </select>
-          </label>
-
-          <label>
-            Description
+          </div>
+          
+          <div>
+            <label htmlFor="description"> Description </label>
             <textarea 
+              className="h-[16vh]"
+              id="description"
               required
               value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription}
               onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}/>
-          </label>
+          </div>
 
           <div className="form-action">
             <Button 

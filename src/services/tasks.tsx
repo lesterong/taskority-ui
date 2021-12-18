@@ -1,8 +1,8 @@
-const baseUrl = "http://localhost:3001/tasks";
+const baseUrl = "http://localhost:3001/tasks/";
 
 const getAll = () => {
   const init = { 
-    method: 'GET' 
+    method: 'GET'
   };
   const request = fetch(baseUrl, init)
   return request

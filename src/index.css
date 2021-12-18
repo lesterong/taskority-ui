@@ -43,3 +43,7 @@ input[type="text"], input[type="datetime-local"], select, textarea {
 input[type="checkbox"] {
   @apply rounded;
 }
+
+label {
+  @apply w-full
+}

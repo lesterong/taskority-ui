@@ -38,7 +38,7 @@ const Card = ({task, query, handleUpdate}:
   const now: any = DateTime.now();
   const due: any = DateTime.fromISO(duedate);
   const overdue = !status 
-    ? now < due 
+    ? now > due 
       ? 'overdue' : ''
     : ''
   const diffObj = now.diff(due)
@@ -97,14 +97,14 @@ const Card = ({task, query, handleUpdate}:
           </h2>
           <h3 className={overdue}> 
             {readableDuedate} 
-            { !status && (now > due
-              ? diffDays < 1
-                ? diffHours < 1
+            { !status && (now < due
+              ? diffDays <= 1
+                ? diffHours <= 1
                   ? ' (Due in ' + diffMinutes + ' minutes)'
                   : ' (Due in ' + diffHours + ' hours)'
                 : ' (Due in ' + diffDays + ' days)'
-              : diffDays < 1
-                ? diffHours < 1
+              : diffDays <= 1
+                ? diffHours <= 1
                   ? ' (Overdue by ' + diffMinutes + ' minutes)'
                   : ' (Overdue by ' + diffHours + ' hours)'
                 : ' (Overdue by ' + diffDays + ' days)'
