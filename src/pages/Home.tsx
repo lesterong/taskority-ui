@@ -8,7 +8,7 @@ import Notification from '../components/Notification';
 
 const Home = () => {
   const [tasks, setTasks] = useState<any[]>([]);
-  const [showTaskModal, setShowTaskModal] = useState(false);
+  const [showAddTask, setShowAddTask] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
 
@@ -16,6 +16,7 @@ const Home = () => {
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDuedate, setTaskDuedate] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
+  const [taskComplete, setTaskComplete] = useState(false);
 
   const hook = () => {
     taskService
@@ -49,8 +50,8 @@ const Home = () => {
   }
 
   const handleAddTask = {
-    'open': () => setShowTaskModal(true),
-    'isOpen': showTaskModal,
+    'open': () => setShowAddTask(true),
+    'isOpen': showAddTask,
     'taskTitle': taskTitle,
     'handleTaskTitle': (event: any) => setTaskTitle(event.target.value),
     'taskDuedate': taskDuedate,
@@ -62,15 +63,14 @@ const Home = () => {
       setTaskTitle('');
       setTaskDuedate('');
       setTaskDescription('');
-      setShowTaskModal(false);
+      setShowAddTask(false);
       const newTask = {
         "title": taskTitle,
         "description": taskDescription,
         "duedate": taskDuedate,
         "tag": "Tag 1",
-        "completed": false
+        "completed": taskComplete,
       }
-
       taskService
         .create(newTask)
         .then(returnedTask => setTasks(tasks.concat(returnedTask)))
@@ -79,9 +79,43 @@ const Home = () => {
       setTaskTitle('');
       setTaskDuedate('');
       setTaskDescription('');
-      setShowTaskModal(false);
+      setTaskComplete(false);
+      setShowAddTask(false);
     }
   }
+
+  const handleUpdate = {
+    'taskTitle': taskTitle,
+    'handleTaskTitle': (event: any) => setTaskTitle(event.target.value),
+    'taskDuedate': taskDuedate,
+    'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
+    'taskDescription': taskDescription,
+    'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
+    'initValues': (task: any) => {
+      setTaskTitle(task.title);
+      setTaskDuedate(task.duedate);
+      setTaskDescription(task.description);
+      setTaskComplete(task.completed)
+    },
+    'handleSubmit': (task: any) => (event: any) => {
+      const updatedTask = {
+        "title": taskTitle,
+        "description": taskDescription,
+        "duedate": taskDuedate,
+        "tag": "Tag 1",
+        "completed": taskComplete,
+      }
+      taskService
+        .update(task.id, updatedTask)
+        .then(returnedTask => setTasks(tasks.map(t => t === task ? returnedTask : t)))
+      },
+    'handleCancel': () => {
+      setTaskTitle('');
+      setTaskDuedate('');
+      setTaskDescription('');
+      setTaskComplete(false);
+    }
+  };
 
   const tasksToShow = query === ''
     ? tasks
@@ -110,7 +144,12 @@ const Home = () => {
             </button>
             </p>
           : tasksToShow.map(task => 
-            <Card key={task.id} task={task} onChange={handleChecked} query={query}/>
+            <Card 
+              key={task.id} 
+              task={task} 
+              query={query}
+              handleUpdate={handleUpdate}
+            />
         )}
       </div>
     </div>

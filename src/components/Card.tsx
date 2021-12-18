@@ -26,14 +26,35 @@ const Highlight = ({query, children}: {query: string, children: string}) => {
   );
 };
 
-const Card = ({task, onChange, query}: {task: taskProps, onChange: (event: Event) => void, query: string}) => {
+const Card = ({task, query, handleUpdate}: 
+  {task: taskProps, query: string, handleUpdate: any}) => {
   const {title, duedate, tag, completed} = task;
 
   const statusClass: string = completed ? 'task-complete' : '';
-  const [showTask, setShowTask] = useState(false);
   const [status, setStatus] = useState(completed);
-  
+  const [showViewTask, setShowViewTask] = useState(false);
   const readableDuedate = DateTime.fromISO(duedate).toLocaleString(DateTime.DATETIME_MED);
+
+
+  const handleCancel = () => { 
+    handleUpdate.handleCancel();
+    setShowViewTask(false);
+  }
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+    handleUpdate.handleSubmit(task)(event);
+    setShowViewTask(false);
+  }
+
+  const handleUpdateTask = {
+    ...handleUpdate,
+    'handleSubmit': handleSubmit,
+    'handleCancel': handleCancel,
+    'open': () => setShowViewTask(true),
+    'close': () => setShowViewTask(false),
+    'isOpen': showViewTask,
+  };
 
   return (
     <>
@@ -45,7 +66,7 @@ const Card = ({task, onChange, query}: {task: taskProps, onChange: (event: Event
             onChange={(event) => setStatus(!status)}
           />
         </div>
-        <div className='card-body' onClick={() => setShowTask(true)}>
+        <div className='card-body' onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
           <h2 className={statusClass}> 
             <Highlight query={query}>
             {title}
@@ -55,11 +76,11 @@ const Card = ({task, onChange, query}: {task: taskProps, onChange: (event: Event
           <h5> {tag} </h5>
         </div>
       </div>
+
       <TaskModal 
-          closeModal={() => setShowTask(false)}
-          isOpenModal={showTask}
-          text="View Task"
-          displayTask={task}
+        text="View Task"
+        task={task}
+        handleUpdateTask={handleUpdateTask}
       />
     </>
   );

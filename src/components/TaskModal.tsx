@@ -7,11 +7,10 @@ import close from '../assets/close.svg';
 // show warning if there is already stuff keyed in
 
 type modalProps = {
-  closeModal?: any;
-  isOpenModal?: boolean;
   text: string;
   handleAddTask?: any;
-  displayTask?: {
+  handleUpdateTask?: any;
+  task?: {
     id: number;
     title: string;
     description: string;
@@ -21,24 +20,24 @@ type modalProps = {
   };
 };
 
-const TaskModal = ({closeModal, isOpenModal, text, handleAddTask, displayTask}: modalProps) => { 
+const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) => { 
   return (
     <div>
       <Dialog 
-        isOpen={isOpenModal} 
-        onDismiss={handleAddTask?.handleCancel || closeModal}
+        isOpen={handleUpdateTask?.isOpen === true || handleAddTask?.isOpen === true}
+        onDismiss={handleAddTask?.handleCancel || handleUpdateTask.handleCancel}
         aria-label={text}
       >
         
-        <form className="task-form" onSubmit={handleAddTask?.handleSubmit || closeModal}>
+        <form className="task-form" onSubmit={handleAddTask?.handleSubmit || handleUpdateTask?.handleSubmit}>
           <div className="form-title">
             <h1> {text} </h1>
-            <button onClick={closeModal}>
-              <img src={close} onClick={handleAddTask?.handleCancel || closeModal}/> 
+            <button onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}>
+              <img src={close} /> 
             </button>
           </div>
 
-          {displayTask && (displayTask?.completed 
+          {task && (task?.completed 
             ? <p> This task is completed. </p>
             : <p> This task is still active. </p>
           )}
@@ -47,9 +46,8 @@ const TaskModal = ({closeModal, isOpenModal, text, handleAddTask, displayTask}: 
             type="text"
             placeholder="Add a title..."
             name="title"
-            // value={displayTask?.title}
-            value={displayTask?.title || handleAddTask?.taskTitle}
-            onChange={handleAddTask?.handleTaskTitle || closeModal}
+            value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle}
+            onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
             required
           />
           
@@ -59,8 +57,8 @@ const TaskModal = ({closeModal, isOpenModal, text, handleAddTask, displayTask}: 
               type="datetime-local"
               name="due"
               step="60"
-              value={displayTask?.duedate || handleAddTask?.taskDuedate}
-              onChange={handleAddTask?.handleTaskDuedate || closeModal}
+              value={handleUpdateTask?.taskDuedate || handleAddTask?.taskDuedate}
+              onChange={handleUpdateTask?.handleTaskDuedate || handleAddTask?.handleTaskDuedate}
               required
             />
           </label>
@@ -77,8 +75,8 @@ const TaskModal = ({closeModal, isOpenModal, text, handleAddTask, displayTask}: 
             Description
             <textarea 
               required
-              value={displayTask?.description || handleAddTask?.taskDescription}
-              onChange={handleAddTask?.handleTaskDescription || closeModal}/>
+              value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription}
+              onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}/>
           </label>
 
           <div className="form-action">
@@ -88,7 +86,7 @@ const TaskModal = ({closeModal, isOpenModal, text, handleAddTask, displayTask}: 
                 type='submit'
             />
             <Button 
-                onClick={handleAddTask?.handleCancel || closeModal}
+                onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}
                 tier="btn-secondary"
                 text={text.includes("Add") ? "Cancel" : "Delete"}
             />

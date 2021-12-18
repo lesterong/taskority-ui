@@ -86,7 +86,6 @@ const Navbar = ({toggleFilters, toggleSearch, handleAddTask}:
         </nav>
 
         <TaskModal 
-          isOpenModal={handleAddTask.isOpen}
           text="Add Task"
           handleAddTask={handleAddTask}
         />
