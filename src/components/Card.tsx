@@ -29,7 +29,7 @@ const Highlight = ({query, children}: {query: string, children: string}) => {
 const Card = ({task, onChange, query}: {task: taskProps, onChange: (event: Event) => void, query: string}) => {
   const {title, duedate, tag, completed} = task;
 
-  const statusClass: string = completed ? 'task-complete' : ''
+  const statusClass: string = completed ? 'task-complete' : '';
   const [showTask, setShowTask] = useState(false);
   const [status, setStatus] = useState(completed);
   

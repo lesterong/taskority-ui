@@ -13,6 +13,9 @@ const Home = () => {
   const [showSearch, setShowSearch] = useState(true);
 
   const [query, setQuery] = useState('');
+  const [taskTitle, setTaskTitle] = useState('');
+  const [taskDuedate, setTaskDuedate] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
 
   const hook = () => {
     taskService
@@ -25,12 +28,6 @@ const Home = () => {
   const handleChecked = (event: any) => {
     console.log(event.target.checked);
     // send put request to change to completed
-  };
-
-  const toggleTasks = {
-    'open': () => setShowTaskModal(true),
-    'close': () => setShowTaskModal(false),
-    'isOpen': showTaskModal,
   };
 
   const toggleFilters = {
@@ -51,6 +48,41 @@ const Home = () => {
     'query': query,
   }
 
+  const handleAddTask = {
+    'open': () => setShowTaskModal(true),
+    'isOpen': showTaskModal,
+    'taskTitle': taskTitle,
+    'handleTaskTitle': (event: any) => setTaskTitle(event.target.value),
+    'taskDuedate': taskDuedate,
+    'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
+    'taskDescription': taskDescription,
+    'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
+    'handleSubmit': (event: any) => {
+      event.preventDefault();
+      setTaskTitle('');
+      setTaskDuedate('');
+      setTaskDescription('');
+      setShowTaskModal(false);
+      const newTask = {
+        "title": taskTitle,
+        "description": taskDescription,
+        "duedate": taskDuedate,
+        "tag": "Tag 1",
+        "completed": false
+      }
+
+      taskService
+        .create(newTask)
+        .then(returnedTask => setTasks(tasks.concat(returnedTask)))
+    },
+    'handleCancel': () => {
+      setTaskTitle('');
+      setTaskDuedate('');
+      setTaskDescription('');
+      setShowTaskModal(false);
+    }
+  }
+
   const tasksToShow = query === ''
     ? tasks
     : tasks.filter(task => task.title.toLowerCase().includes(query.toLowerCase()));
@@ -58,9 +90,9 @@ const Home = () => {
   return (
     <div>
       <Navbar
-        toggleTasks={toggleTasks}
         toggleFilters={toggleFilters}
         toggleSearch={toggleSearch}
+        handleAddTask={handleAddTask}
       />
       <div className='main-container'>
         <div className='main-title'>

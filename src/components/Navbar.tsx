@@ -19,8 +19,21 @@ type toggleSearchProps = {
   toggle: () => void;
 }
 
-const Navbar = ({toggleTasks, toggleFilters, toggleSearch}: 
-  {toggleTasks: toggleProps, toggleFilters: toggleProps, toggleSearch: toggleSearchProps}) => {
+type handleAddTaskProps = {
+  open: any;
+  isOpen: boolean;
+  taskTitle: string;
+  handleTaskTitle: any;
+  taskDuedate: string;
+  handleTaskDuedate: any;
+  taskDescription: string;
+  handleTaskDescription: any;
+  handleSubmit: any;
+  handleCancel: any;
+}
+
+const Navbar = ({toggleFilters, toggleSearch, handleAddTask}: 
+  {toggleFilters: toggleProps, toggleSearch: toggleSearchProps, handleAddTask: handleAddTaskProps}) => {
     return (
       <div className='nav-container'>
         <nav>
@@ -57,14 +70,14 @@ const Navbar = ({toggleTasks, toggleFilters, toggleSearch}:
               />
 
               <Button 
-                onClick={toggleTasks.open}
+                onClick={handleAddTask.open}
                 tier="btn-primary desktop-btn"
                 icon={addTask}
                 text="Add Task"
               />
 
               <Button 
-                onClick={toggleTasks.open}
+                onClick={handleAddTask.open}
                 tier="btn-primary mobile-btn"
                 icon={addTask}
               />
@@ -73,9 +86,9 @@ const Navbar = ({toggleTasks, toggleFilters, toggleSearch}:
         </nav>
 
         <TaskModal 
-          closeModal={toggleTasks.close}
-          isOpenModal={toggleTasks.isOpen}
+          isOpenModal={handleAddTask.isOpen}
           text="Add Task"
+          handleAddTask={handleAddTask}
         />
 
         <FilterModal 
