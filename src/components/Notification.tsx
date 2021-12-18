@@ -1,14 +1,16 @@
+import Alert from "@reach/alert";
+import './Notification.css'
+
 type NotifProps = {
   message: string;
-  type: string; 
+  type: "success" | "failure" | null; 
 };
 
 const Notification = ({message, type}: NotifProps) => {
   return (
-    <div>
-    <p> Notification message: {message} </p>
-    <p> Notification type: {type}</p>
-    </div>
+    <>
+      {type && <Alert className={type}> <p>{message}</p> </Alert>}
+    </>
   );
 };
 

@@ -18,6 +18,17 @@ const Home = () => {
   const [taskDescription, setTaskDescription] = useState('');
   const [taskComplete, setTaskComplete] = useState(false);
 
+  const [notifType, setNotifType] = useState<"success" | "failure" | null>(null)
+  const [notifMessage, setNotifMessage] = useState("")
+  const notify = (message: string, type: "success" | "failure") => {
+    setNotifMessage(message);
+    setNotifType(type);
+    setTimeout(() => {
+      setNotifMessage("");
+      setNotifType(null);
+    }, 5000)
+  }
+
   const hook = () => {
     taskService
       .getAll()
@@ -60,10 +71,6 @@ const Home = () => {
     'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
     'handleSubmit': (event: any) => {
       event.preventDefault();
-      setTaskTitle('');
-      setTaskDuedate('');
-      setTaskDescription('');
-      setShowAddTask(false);
       const newTask = {
         "title": taskTitle,
         "description": taskDescription,
@@ -73,7 +80,15 @@ const Home = () => {
       }
       taskService
         .create(newTask)
-        .then(returnedTask => setTasks(tasks.concat(returnedTask)))
+        .then(returnedTask => {
+          setTasks(tasks.concat(returnedTask))
+          setTaskTitle('');
+          setTaskDuedate('');
+          setTaskDescription('');
+          setShowAddTask(false);
+          notify("Task added successfully", "success");
+        })
+        .catch(error => notify("Unsuccessful, please try again", "failure"));
     },
     'handleCancel': () => {
       setTaskTitle('');
@@ -107,7 +122,15 @@ const Home = () => {
       }
       taskService
         .update(task.id, updatedTask)
-        .then(returnedTask => setTasks(tasks.map(t => t === task ? returnedTask : t)))
+        .then(returnedTask => {
+          setTasks(tasks.map(t => t === task ? returnedTask : t))
+          setTaskTitle('');
+          setTaskDuedate('');
+          setTaskDescription('');
+          setTaskComplete(false);
+          notify('Task updated successfully', 'success');
+        })
+        .catch(error => notify("Unsuccessful, please try again", "failure"));
       },
     'handleCancel': () => {
       setTaskTitle('');
@@ -128,6 +151,7 @@ const Home = () => {
         toggleSearch={toggleSearch}
         handleAddTask={handleAddTask}
       />
+      <Notification message={notifMessage} type={notifType} />
       <div className='main-container'>
         <div className='main-title'>
           {query === ""
@@ -136,7 +160,6 @@ const Home = () => {
           }
           {showSearch && <Search handleSearch={handleSearch}/>}
         </div>
-        
         {query && tasksToShow.length === 0
           ? <p> No results for '<b>{query}</b>'.&nbsp;
             <button onClick={() => setQuery('')}>
@@ -153,6 +176,7 @@ const Home = () => {
         )}
       </div>
     </div>
+    
   );
 }
 
