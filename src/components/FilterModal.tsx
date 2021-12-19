@@ -16,6 +16,8 @@ const FilterModal = ({handleFilters, text}: modalProps) => {
   const checkActive = filters[0] === 'Active Tasks' ? true : false;
   const checkCompleted = filters[0] === 'Completed Tasks' ? true : false;
 
+  const checkedTag = (tag: string) => filters.includes(tag);
+
   return (
     <div>
       <Dialog 
@@ -24,7 +26,7 @@ const FilterModal = ({handleFilters, text}: modalProps) => {
         aria-label={text}
       >
 
-        <form className="filters-form">
+        <form className="filters-form" onSubmit={(event: any) => event.preventDefault()}>
           <div className="form-title">
             <h1> {text} </h1>
             <button onClick={closeModal}>
@@ -63,7 +65,9 @@ const FilterModal = ({handleFilters, text}: modalProps) => {
             <legend> <b>Select Tags</b> </legend>  
             {tagsArray.map((tag: any) => (
               <div key={tag} className="input-container">
-                <input type="checkbox" name="tags" id={tag} value={tag} onChange={handleTagsCheckbox}/>
+                <input 
+                  type="checkbox" name="tags" id={tag} value={tag} 
+                  onChange={handleTagsCheckbox} defaultChecked={checkedTag(tag)}/>
                 <label htmlFor={tag}> {tag} </label>
               </div>
             ))}

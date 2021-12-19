@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/alert": "^0.16.0",
+    "@reach/combobox": "^0.16.5",
     "@reach/dialog": "^0.16.2",
     "@reach/menu-button": "^0.16.2",
     "@tailwindcss/forms": "^0.4.0",

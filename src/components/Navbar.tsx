@@ -31,6 +31,8 @@ type handleAddTaskProps = {
   handleTaskTitle: (event: Event) => void;
   taskDuedate: string;
   handleTaskDuedate: (event: Event) => void;
+  taskTag: string;
+  handleTaskTag: any;
   taskDescription: string;
   handleTaskDescription: (event: Event) => void;
   handleSubmit: (event: Event) => void;
@@ -93,6 +95,7 @@ const Navbar = ({handleFilters, toggleSearch, handleAddTask}:
         <TaskModal 
           text="Add Task"
           handleAddTask={handleAddTask}
+          tagsArray={handleFilters.tagsArray}
         />
 
         <FilterModal 

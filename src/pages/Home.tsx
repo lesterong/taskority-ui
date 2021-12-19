@@ -26,6 +26,7 @@ const Home = () => {
 
   const [taskTitle, setTaskTitle] = useState('');
   const [taskDuedate, setTaskDuedate] = useState('');
+  const [taskTag, setTaskTag] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskComplete, setTaskComplete] = useState(false);
 
@@ -67,6 +68,8 @@ const Home = () => {
     'handleTaskTitle': (event: any) => setTaskTitle(event.target.value),
     'taskDuedate': taskDuedate,
     'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
+    'taskTag': taskTag,
+    'handleTaskTag': (value: any) => setTaskTag(value),
     'taskDescription': taskDescription,
     'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
     'handleSubmit': (event: any) => {
@@ -75,7 +78,7 @@ const Home = () => {
         "title": taskTitle,
         "description": taskDescription,
         "duedate": taskDuedate,
-        "tag": "Tag 1",
+        "tag": taskTag,
         "completed": taskComplete,
       }
       taskService
@@ -85,6 +88,8 @@ const Home = () => {
           setTaskTitle('');
           setTaskDuedate('');
           setTaskDescription('');
+          setTaskTag('');
+          setTaskComplete(false);
           setShowAddTask(false);
           notify("Task added successfully", "success");
         })
@@ -104,12 +109,15 @@ const Home = () => {
     'handleTaskTitle': (event: any) => setTaskTitle(event.target.value),
     'taskDuedate': taskDuedate,
     'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
+    'taskTag': taskTag,
+    'handleTaskTag': (value: any) => setTaskTag(value),
     'taskDescription': taskDescription,
     'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
     'initValues': (task: any) => {
       setTaskTitle(task.title);
       setTaskDuedate(task.duedate);
       setTaskDescription(task.description);
+      setTaskTag(task.tag)
       setTaskComplete(task.completed)
     },
     'handleSubmit': (task: taskProps) => (event: any) => {
@@ -117,7 +125,7 @@ const Home = () => {
         "title": taskTitle,
         "description": taskDescription,
         "duedate": taskDuedate,
-        "tag": "Tag 1",
+        "tag": taskTag,
         "completed": taskComplete,
       }
       taskService
@@ -127,6 +135,7 @@ const Home = () => {
           setTaskTitle('');
           setTaskDuedate('');
           setTaskDescription('');
+          setTaskTag('');
           setTaskComplete(false);
           notify('Task updated successfully', 'success');
         })
@@ -136,6 +145,7 @@ const Home = () => {
       setTaskTitle('');
       setTaskDuedate('');
       setTaskDescription('');
+      setTaskTag('');
       setTaskComplete(false);
     },
     'handleDelete': (id: number) => {
@@ -146,6 +156,7 @@ const Home = () => {
         setTaskTitle('');
         setTaskDuedate('');
         setTaskDescription('');
+        setTaskTag('');
         setTaskComplete(false);
         notify('Task deleted successfully', 'success');
       })
@@ -166,8 +177,10 @@ const Home = () => {
     }
   };
 
+  const tagsArray = Array.from(new Set(tasks.map(task => task.tag)));
+
   const handleFilters = {
-    'tagsArray': Array.from(new Set(tasks.map(task => task.tag))),
+    'tagsArray': tagsArray,
     'open': () => setShowFilterModal(true),
     'closeModal': () => setShowFilterModal(false),
     'isOpen': showFilterModal,
@@ -178,7 +191,6 @@ const Home = () => {
         : setFilters(filters.filter(elem => elem !== event.target.value))
     },
     'handleTaskStatus': (event: any) => {
-      console.log(event.target.value);
       setFilters(filters.map(elem => 
         elem === 'All Tasks' || elem === 'Active Tasks' || elem === 'Completed Tasks'
         ? event.target.value
@@ -248,6 +260,7 @@ const Home = () => {
                 task={task} 
                 query={query}
                 handleUpdate={handleUpdate}
+                tagsArray={tagsArray}
               />
             )
         }

@@ -26,8 +26,8 @@ const Highlight = ({query, children}: {query: string, children: string}) => {
   );
 };
 
-const Card = ({task, query, handleUpdate}: 
-  {task: taskProps, query: string, handleUpdate: any}) => {
+const Card = ({task, query, handleUpdate, tagsArray}: 
+  {task: taskProps, query: string, handleUpdate: any, tagsArray: any}) => {
   const {title, duedate, tag, completed} = task;
 
   const statusClass: string = completed ? 'task-complete' : '';
@@ -118,6 +118,7 @@ const Card = ({task, query, handleUpdate}:
         text="View Task"
         task={task}
         handleUpdateTask={handleUpdateTask}
+        tagsArray={tagsArray}
       />
     </>
   );

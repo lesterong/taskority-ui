@@ -1,0 +1,35 @@
+:root {
+  --reach-combobox: 1;
+}
+
+.combobox-input {
+  @apply px-3 py-2 rounded-md border border-gray-500;
+}
+
+[data-reach-combobox-popover] {
+  @apply rounded-lg border border-gray-200 mt-1 shadow-sm bg-white;
+}
+
+[data-reach-combobox-list] {
+  @apply list-none m-0 p-0 select-none;
+}
+
+[data-reach-combobox-option] {
+  @apply cursor-pointer m-0 px-2 py-2;
+}
+
+[data-reach-combobox-option][aria-selected="true"] {
+  @apply bg-sky-100;
+}
+
+[data-reach-combobox-option]:hover {
+  @apply bg-sky-100;
+}
+
+[data-reach-combobox-option][aria-selected="true"]:hover {
+  @apply bg-sky-100;
+}
+
+[data-suggested-value] {
+  @apply font-bold;
+}

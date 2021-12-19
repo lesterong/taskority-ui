@@ -3,6 +3,7 @@ import './Modal.css';
 import './TaskModal.css';
 import Button from "./Button";
 import close from '../assets/close.svg';
+import Combobox from "./Combobox";
 
 type modalProps = {
   text: string;
@@ -16,9 +17,13 @@ type modalProps = {
     tag: string;
     completed: boolean;
   };
+  tagsArray: any;
 };
 
-const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) => { 
+const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: modalProps) => { 
+  // console.log('task tag: ', handleAddTask?.taskTag);
+  // console.log('handle task tag: ', handleAddTask?.handleTaskTag);
+  console.log()
   return (
     <div>
       <Dialog 
@@ -73,18 +78,16 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task}: modalProps) =>
             />
           </div>
 
-          <div>
-            <label htmlFor="tags"> Tags </label>
-            <select id="tags" required>
-              <option> Tag 1 </option>
-              <option> Tag 2 </option>
-            </select>
-          </div>
+          <Combobox 
+            arr={tagsArray}
+            value={handleUpdateTask?.taskTag || handleAddTask?.taskTag}
+            onEvent={handleAddTask?.handleTaskTag || handleUpdateTask.handleTaskTag } 
+          />
           
           <div>
             <label htmlFor="description"> Description </label>
             <textarea 
-              className="h-[16vh]"
+              className="h-[120px]"
               id="description"
               required
               value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription}
