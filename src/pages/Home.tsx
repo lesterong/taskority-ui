@@ -21,13 +21,13 @@ const Home = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
   
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState<string>('');
   const [filters, setFilters] = useState<any[]>(['All Tasks']);
 
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDuedate, setTaskDuedate] = useState('');
-  const [taskTag, setTaskTag] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
+  const [taskTitle, setTaskTitle] = useState<string>('');
+  const [taskDuedate, setTaskDuedate] = useState<string>('');
+  const [taskTag, setTaskTag] = useState<string>('');
+  const [taskDescription, setTaskDescription] = useState<string>('');
   const [taskComplete, setTaskComplete] = useState(false);
 
   const [notifType, setNotifType] = useState<"success" | "failure" | null>(null)
@@ -253,7 +253,7 @@ const Home = () => {
               </button>
             </p>
           : tasksToShow.length === 0
-            ? <p> No results found. </p> //loading here 
+            ? <p> No results found. </p>
             : tasksToShow.map((task: taskProps) => 
               <Card 
                 key={task.id} 

@@ -21,9 +21,6 @@ type modalProps = {
 };
 
 const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: modalProps) => { 
-  // console.log('task tag: ', handleAddTask?.taskTag);
-  // console.log('handle task tag: ', handleAddTask?.handleTaskTag);
-  console.log()
   return (
     <div>
       <Dialog 
@@ -60,7 +57,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
               type="text"
               placeholder="Add a title..."
               name="title" id="title"
-              value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle}
+              value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle || ""}
               onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
               required
             />
@@ -80,7 +77,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
 
           <Combobox 
             arr={tagsArray}
-            value={handleUpdateTask?.taskTag || handleAddTask?.taskTag}
+            value={handleUpdateTask?.taskTag || handleAddTask?.taskTag || ""}
             onEvent={handleAddTask?.handleTaskTag || handleUpdateTask.handleTaskTag } 
           />
           
@@ -90,7 +87,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
               className="h-[120px]"
               id="description"
               required
-              value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription}
+              value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription || ""}
               onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}/>
           </div>
 
