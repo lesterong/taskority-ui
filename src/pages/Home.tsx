@@ -20,7 +20,9 @@ const Home = () => {
   const [showAddTask, setShowAddTask] = useState(false);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showSearch, setShowSearch] = useState(true);
-  
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [compactView, setCompactView] = useState(true);
+
   const [query, setQuery] = useState<string>('');
   const [filters, setFilters] = useState<any[]>(['All Tasks']);
 
@@ -41,13 +43,28 @@ const Home = () => {
     }, 3500)
   }
 
-  const hook = () => {
+  const getTasks = () => {
     taskService
       .getAll()
       .then(initial => setTasks(initial))
   };
 
-  useEffect(hook, []);
+  useEffect(getTasks, []);
+
+  const updateWidth = () => {
+    setViewportWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth)
+  });
+
+  const toggleCompactView = {
+    'toggle': () => {setCompactView(!compactView)},
+    'isCompact': compactView,
+  };
+
+  console.log(compactView);
 
   const toggleSearch = {
     'toggle': () => {
@@ -232,8 +249,10 @@ const Home = () => {
   return (
     <div>
       <Navbar
+        viewportWidth={viewportWidth}
         handleFilters={handleFilters}
         toggleSearch={toggleSearch}
+        toggleCompactView={toggleCompactView}
         handleAddTask={handleAddTask}
       />
       <Notification message={notifMessage} type={notifType} />
@@ -261,9 +280,9 @@ const Home = () => {
                 query={query}
                 handleUpdate={handleUpdate}
                 tagsArray={tagsArray}
+                isCompact={toggleCompactView.isCompact}
               />
-            )
-        }
+            )}
       </div>
     </div>
     

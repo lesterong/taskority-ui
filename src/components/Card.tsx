@@ -26,9 +26,13 @@ const Highlight = ({query, children}: {query: string, children: string}) => {
   );
 };
 
-const Card = ({task, query, handleUpdate, tagsArray}: 
-  {task: taskProps, query: string, handleUpdate: any, tagsArray: any}) => {
+const Card = ({task, query, handleUpdate, tagsArray, isCompact}: 
+  {task: taskProps, query: string, handleUpdate: any, tagsArray: any, isCompact: boolean}) => {
   const {title, duedate, tag, completed} = task;
+
+  const cardClass = isCompact 
+    ? "card-compact"
+    : "card"
 
   const statusClass: string = completed ? 'task-complete' : '';
   const [status, setStatus] = useState(completed);
@@ -37,10 +41,10 @@ const Card = ({task, query, handleUpdate, tagsArray}:
   const readableDuedate = DateTime.fromISO(duedate).toLocaleString(DateTime.DATETIME_MED);
   const now: any = DateTime.now();
   const due: any = DateTime.fromISO(duedate);
-  const overdue = !status 
+  const overdue = !status
     ? now > due 
       ? 'overdue' : ''
-    : ''
+    : '';
   const diffObj = now.diff(due)
   const diffDays = Math.abs(Math.trunc(diffObj.as('days')));
   const diffHours = Math.abs(Math.trunc(diffObj.as('hours')));
@@ -80,8 +84,8 @@ const Card = ({task, query, handleUpdate, tagsArray}:
   };
 
   return (
-    <>
-      <div className='card'>
+    <div>
+      <div className={cardClass}>
         <div className='card-checkbox'>
           <input 
             type="checkbox"
@@ -89,7 +93,7 @@ const Card = ({task, query, handleUpdate, tagsArray}:
             onChange={handleUpdateTask.handleCheckbox}
           />
         </div>
-        <div className='card-body' onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
+        <div className="card-body" onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
           <h2 className={statusClass}> 
             <Highlight query={query}>
             {title}
@@ -97,7 +101,7 @@ const Card = ({task, query, handleUpdate, tagsArray}:
           </h2>
           <h3 className={overdue}> 
             {readableDuedate} 
-            { !status && (now < due
+            { !isCompact && !status && (now < due
               ? diffDays <= 1
                 ? diffHours <= 1
                   ? ' (Due in ' + diffMinutes + ' minutes)'
@@ -120,7 +124,7 @@ const Card = ({task, query, handleUpdate, tagsArray}:
         handleUpdateTask={handleUpdateTask}
         tagsArray={tagsArray}
       />
-    </>
+    </div>
   );
 };
 

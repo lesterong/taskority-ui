@@ -39,8 +39,18 @@ type handleAddTaskProps = {
   handleCancel: (event: Event) => void;
 }
 
-const Navbar = ({handleFilters, toggleSearch, handleAddTask}: 
-  {handleFilters: handleFiltersProps, toggleSearch: toggleSearchProps, handleAddTask: handleAddTaskProps}) => {
+type toggleCompactViewProps = {
+  toggle: () => void;
+  isCompact: boolean;
+}
+
+const Navbar = ({viewportWidth, handleFilters, toggleSearch, toggleCompactView, handleAddTask}: 
+  {viewportWidth: number, handleFilters: handleFiltersProps, toggleSearch: toggleSearchProps,
+    toggleCompactView: toggleCompactViewProps, handleAddTask: handleAddTaskProps}) => {
+    const numOfFilters: any = handleFilters.filters.length === 1
+      ? ''
+      : handleFilters.filters.length - 1;
+
     return (
       <div className='nav-container'>
         <nav>
@@ -59,15 +69,18 @@ const Navbar = ({handleFilters, toggleSearch, handleAddTask}:
 
               <Button 
                 onClick={handleFilters.open}
-                tier="btn-secondary mobile-btn dropdown"
-                icon={settings}
+                tier="btn-secondary desktop-btn"
+                icon={filter}
+                text={numOfFilters}
               />
 
               <Button 
                 onClick={handleFilters.open}
-                tier="btn-secondary desktop-btn"
-                icon={filter}
-                text=""
+                tier="btn-secondary dropdown"
+                icon={settings}
+                numOfFilters={numOfFilters}
+                viewport={viewportWidth}
+                toggleCompactView={toggleCompactView}
               />
 
               <Button 

@@ -1,5 +1,5 @@
 import {  Combobox,  ComboboxInput,  ComboboxPopover,  ComboboxList,  
-  ComboboxOption,  ComboboxOptionText } from "@reach/combobox";
+  ComboboxOption } from "@reach/combobox";
 import './Combobox.css';
 
 const TagsInput = ({arr, value, onEvent}: any) => {
@@ -27,6 +27,7 @@ const TagsInput = ({arr, value, onEvent}: any) => {
                       key={item} 
                       value={item}
                       onFocus={() => onEvent(item)}
+                      onTouchStart={() => onEvent(item)}
                     >
                     </ComboboxOption>
                   ))}

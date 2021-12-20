@@ -1,9 +1,15 @@
 .card {
-  @apply bg-white flex py-3 px-4 rounded-3xl mt-3 space-x-3 items-center;
+  @apply bg-white flex py-3 px-4 rounded-3xl mt-3 space-x-3 items-center
+  hover:bg-sky-100;
+}
+
+.card-compact {
+  @apply space-x-2 bg-white border-b py-1 px-4 flex
+  hover:bg-sky-100 items-center;
 }
 
 .card-body {
-  @apply w-full cursor-pointer;
+  @apply w-full cursor-pointer
 }
 
 .task-complete {
