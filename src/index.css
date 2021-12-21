@@ -48,3 +48,7 @@ button {
   @apply rounded-lg h-[50px] p-3 border
   transition-colors duration-100;
 }
+
+.input-container {
+  @apply flex items-center space-x-2;
+}

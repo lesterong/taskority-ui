@@ -14,6 +14,10 @@
   @apply hidden sm:block;
 }
 
+.dropdown-header {
+  @apply pl-4 mt-3 text-sm text-gray-400;
+}
+
 /* For Menu Component */
 :root {
   --reach-menu-button: 1;
@@ -32,9 +36,8 @@
 }
 
 [data-reach-menu-list], [data-reach-menu-items] {
-  @apply block rounded border border-gray-200 bg-white mt-1;
-  @apply shadow-sm whitespace-nowrap outline-none;
-
+  @apply block rounded border border-gray-200 bg-white mt-1
+  shadow-sm whitespace-nowrap outline-none;
 }
 
 [data-reach-menu-item] {
@@ -42,8 +45,7 @@
 }
 
 [data-reach-menu-item] {
-  @apply flex pl-4 pr-6 py-3 space-x-2;
-  @apply cursor-pointer;
+  @apply flex pl-4 pr-6 py-3 space-x-2 cursor-pointer;
 }
 
 /* pseudo pseudo selector */

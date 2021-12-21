@@ -5,7 +5,3 @@
 .home-header {
   @apply flex justify-between my-3 xs:items-center xs:flex-row flex-col-reverse;
 }
-
-.home-header input {
-  @apply xs:mb-0 mb-3;
-}

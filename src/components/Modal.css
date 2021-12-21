@@ -29,7 +29,3 @@ form input, form textarea {
 .form-action button {
   @apply w-full mt-2;
 }
-
-.input-container {
-  @apply flex items-center space-x-2;
-}

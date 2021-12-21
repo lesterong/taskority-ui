@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import Card from '../components/Card';
-import Search from '../components/Search';
+import Sort from '../components/Sort';
 import Navbar from '../components/Navbar';
 import Notification from '../components/Notification';
 import './Home.css'
-import taskService from '../services/tasks'
+import taskService from '../services/tasks';
+import { DateTime } from 'luxon';
 
 type taskProps = {
   id: number;
@@ -22,6 +23,9 @@ const Home = () => {
   const [compactView, setCompactView] = useState<boolean>(true);
   const [query, setQuery] = useState<string>('');
   const [filters, setFilters] = useState<Array<any>>(['All Tasks']);
+
+  const [sortBy, setSortBy] = useState<Array<string>>(['Date Created', 'Descending']);
+  const [showSortBy, setShowSortBy] = useState<boolean>(false);
 
   const [showAddTask, setShowAddTask] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
@@ -191,6 +195,12 @@ const Home = () => {
     }
   };
 
+  const handleSort = {
+    sortBy: sortBy,
+    onSelectSort: (value: string) => () => setSortBy([value, sortBy[1]]),
+    onChangeOrder: (event: any) => setSortBy([sortBy[0], event.target.value]),
+  };
+
   const tagsArray: string[] = Array.from(new Set(tasks.map(task => task.tag)));
 
   const handleFilters = {
@@ -237,10 +247,34 @@ const Home = () => {
 
   const tasksToFilter = filteredTasks(tasks, filters);
 
-  const tasksToShow = query === ''
+  const sortByDueDate = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
+    return order === 'Descending'
+      ? DateTime.fromISO(taskA.duedate) < DateTime.fromISO(taskB.duedate) ? -1 : 1
+      : DateTime.fromISO(taskA.duedate) > DateTime.fromISO(taskB.duedate) ? -1 : 1
+  };
+
+  const sortByDateCreated = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
+    return order === 'Descending'
+      ? taskA.id < taskB.id ? -1 : 1
+      : taskA.id > taskB.id ? -1 : 1
+  };
+
+  const sortByAlphabet = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
+    return order === 'Descending'
+      ? taskA.title.toLowerCase() < taskB.title.toLowerCase() ? -1 : 1
+      : taskA.title.toLowerCase() > taskB.title.toLowerCase() ? -1 : 1
+  };
+
+  const tasksToSearch = query === ''
     ? tasksToFilter
     : tasksToFilter.filter((task: taskProps) => 
       task.title.toLowerCase().includes(query.toLowerCase()));
+
+  const tasksToShow = sortBy[0] === 'Date Created'
+    ? tasksToSearch.sort(sortByDateCreated(sortBy[1]))
+    : sortBy[0] === 'Due Date'
+      ? tasksToSearch.sort(sortByDueDate(sortBy[1]))
+      : tasksToSearch.sort(sortByAlphabet(sortBy[1]));
 
   return (
     <div>
@@ -258,6 +292,7 @@ const Home = () => {
             ? <p> {filters[0]} </p>
             : <p> <b>'{query}'</b> in {filters[0]} </p>
           }
+          <Sort handleSort={handleSort} />
         </div>
 
         {query && tasksToShow.length === 0
