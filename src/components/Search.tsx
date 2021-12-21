@@ -3,7 +3,11 @@ type handleSearchProps = {
   query: string;
 };
 
-const Search = ({handleSearch}: {handleSearch: handleSearchProps}) => {
+type SearchProps = {
+  handleSearch: handleSearchProps;
+};
+
+const Search = ({handleSearch}: SearchProps) => {
   return (
     <input
       type="search"

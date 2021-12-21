@@ -9,7 +9,7 @@ type NotifProps = {
 const Notification = ({message, type}: NotifProps) => {
   return (
     <>
-      {type && <Alert className={type}> <p>{message}</p> </Alert>}
+      {type && <Alert className={"notification " + type }> <p>{message}</p> </Alert>}
     </>
   );
 };

@@ -11,15 +11,11 @@
 }
 
 .btn-primary {
-  @apply bg-sky-100 border border-transparent p-3 rounded-lg transition-colors duration-100 h-[50px];
-  @apply hover:bg-sky-200;
-  @apply active:bg-sky-300;
+  @apply bg-sky-100 border-transparent hover:bg-sky-200 active:bg-sky-300;
 }
 
 .btn-secondary {
-  @apply bg-white border p-3 rounded-lg transition-colors duration-100 h-[50px];
-  @apply hover:bg-gray-100;
-  @apply active:bg-gray-200;
+  @apply bg-white hover:bg-gray-100 active:bg-gray-200;
 }
 
 btn div img {

@@ -1,19 +1,11 @@
-.main-container {
-  @apply container max-w-4xl mx-auto px-4;
+.home-container {
+  @apply container max-w-4xl mx-auto px-4 last:mb-4;
 }
 
-.main-container:last-child {
-  @apply mb-4;
+.home-header {
+  @apply flex justify-between my-3 xs:items-center xs:flex-row flex-col-reverse;
 }
 
-.main-title {
-  @apply flex justify-between mt-2 xs:items-center xs:flex-row flex-col-reverse;
-}
-
-.main-title input {
-  @apply rounded-lg xs:mb-0 mb-3;
-}
-
-.main-title p {
-  @apply text-left;
+.home-header input {
+  @apply xs:mb-0 mb-3;
 }

@@ -14,12 +14,12 @@ form {
   @apply flex flex-col space-y-3; 
 }
 
-.form-title {
-  @apply flex justify-between pb-1;
+form input, form textarea {
+  @apply w-full;
 }
 
-form input, form select, form textarea {
-  @apply w-full;
+.form-title {
+  @apply flex justify-between pb-3 items-center border-b border-gray-400;
 }
 
 .form-action {
@@ -28,4 +28,8 @@ form input, form select, form textarea {
 
 .form-action button {
   @apply w-full mt-2;
+}
+
+.input-container {
+  @apply flex items-center space-x-2;
 }

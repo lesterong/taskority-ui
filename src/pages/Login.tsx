@@ -33,7 +33,7 @@ const Login = () => {
           </div>
 
           <Button 
-            tier='btn-primary'
+            variant='btn-primary'
             type="submit"
             text='Login'
           />

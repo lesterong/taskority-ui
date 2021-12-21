@@ -1,27 +1,7 @@
-.nav-container {
-  @apply bg-white w-full;
-}
-
 nav {
-  @apply bg-white flex mx-auto py-2 px-4 max-w-4xl justify-between;
-}
-
-.nav-logo {
-  @apply flex items-center;
-}
-
-.nav-logo img {
-  @apply h-12 pr-1;
-}
-
-.nav-logo h1 {
-  @apply xs:block hidden;
+  @apply flex mx-auto py-2 px-4 max-w-4xl justify-between;
 }
 
 .nav-links {
-  @apply flex justify-end h-full align-middle space-x-2 flex-grow;
-}
-
-.search-bar {
-  @apply h-[50px] rounded-lg;
+  @apply flex justify-end space-x-2 flex-grow;
 }

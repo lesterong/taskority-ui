@@ -1,52 +1,88 @@
 import { Dialog } from "@reach/dialog";
-import './Modal.css';
-import './TaskModal.css';
 import Button from "./Button";
+import TagsInput from "./TagsInput";
 import close from '../assets/close.svg';
-import Combobox from "./Combobox";
+import './Modal.css';
 
-type modalProps = {
-  text: string;
-  handleAddTask?: any;
-  handleUpdateTask?: any;
-  task?: {
-    id: number;
-    title: string;
-    description: string;
-    duedate: string;
-    tag: string;
-    completed: boolean;
-  };
-  tagsArray: any;
+type taskProps = {
+  id: number;
+  title: string;
+  description: string;
+  duedate: string;
+  tag: string;
+  completed: boolean;
 };
 
-const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: modalProps) => { 
+type handleAddTaskProps = {
+  open: () => void;
+  isOpen: boolean;
+  taskTitle: string;
+  handleTaskTitle: (event: Event) => void;
+  taskDuedate: string;
+  handleTaskDuedate: (event: Event) => void;
+  taskTag: string;
+  handleTaskTag: (value: string) => void;
+  taskDescription: string;
+  handleTaskDescription: (event: Event) => void;
+  handleSubmit: (event: Event) => void;
+  handleCancel: (event: Event) => void;
+};
+
+type handleUpdateTaskProps = {
+  taskTitle: string;
+  handleTaskTitle: any;
+  taskDuedate: string;
+  handleTaskDuedate: any;
+  taskTag: string;
+  handleTaskTag: any;
+  taskDescription: string;
+  handleTaskDescription: any;
+  initValues: any;
+  taskComplete: boolean;
+  handleSubmit: any;
+  handleCancel: any;
+  handleDelete: any;
+  handleCheckbox: any;
+  open: () => void;
+  close: () => void;
+  isOpen: boolean;
+};
+
+type TaskModalProps = {
+  text: string;
+  handleAddTask?: handleAddTaskProps;
+  handleUpdateTask?: handleUpdateTaskProps;
+  tagsArray: string[];
+};
+
+const TaskModal = ({text, handleAddTask, handleUpdateTask, tagsArray}: TaskModalProps) => {
   return (
     <div>
       <Dialog 
         isOpen={handleUpdateTask?.isOpen === true || handleAddTask?.isOpen === true}
-        onDismiss={handleAddTask?.handleCancel || handleUpdateTask.handleCancel}
+        onDismiss={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}
         aria-label={text}
-      >
-        
-        <form className="task-form" onSubmit={handleAddTask?.handleSubmit || handleUpdateTask?.handleSubmit}>
+      > 
+        <form onSubmit={handleAddTask?.handleSubmit || handleUpdateTask?.handleSubmit}>
           <div className="form-title">
             <h1> {text} </h1>
-            <button onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}>
-              <img src={close} /> 
-            </button>
+            <Button 
+              onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}
+              variant="btn-secondary"
+              icon={close}
+            />
           </div>
 
-          {task &&
+          {handleUpdateTask &&
             <div className="input-container">
               <input 
                 type="checkbox"
-                checked={task.completed}
-                onChange={handleUpdateTask.handleCheckbox}
+                checked={handleUpdateTask?.taskComplete}
+                onChange={handleUpdateTask?.handleCheckbox}
                 id="task-complete"
               />
               <label htmlFor="task-complete" className="flex items-center space-x-2">
-                {task.completed ? <p> Undo task? </p> : <p> Complete task? </p>}
+                {handleUpdateTask?.taskComplete ? <p> Undo task? </p> : <p> Complete task? </p>}
               </label>
             </div>
           }
@@ -54,11 +90,11 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
           <div>
             <label htmlFor="title"> Title </label>
             <input 
-              type="text"
+              className="font-display font-bold text-xl"
               placeholder="Add a title..."
-              name="title" id="title"
+              type="text" name="title" id="title"
               value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle || ""}
-              onChange={handleUpdateTask?.handleTaskTitle || handleAddTask?.handleTaskTitle}
+              onChange={handleAddTask?.handleTaskTitle || handleUpdateTask?.handleTaskTitle}
               required
             />
           </div>
@@ -66,8 +102,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
           <div>
             <label htmlFor="due"> Due </label>
             <input 
-              type="datetime-local"
-              name="due" id="due"
+              type="datetime-local" id="due"
               step="60"
               value={handleUpdateTask?.taskDuedate || handleAddTask?.taskDuedate}
               onChange={handleUpdateTask?.handleTaskDuedate || handleAddTask?.handleTaskDuedate}
@@ -75,10 +110,10 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
             />
           </div>
 
-          <Combobox 
-            arr={tagsArray}
+          <TagsInput 
+            tagsArray={tagsArray}
             value={handleUpdateTask?.taskTag || handleAddTask?.taskTag || ""}
-            onEvent={handleAddTask?.handleTaskTag || handleUpdateTask.handleTaskTag } 
+            onEvent={handleAddTask?.handleTaskTag || handleUpdateTask?.handleTaskTag} 
           />
           
           <div>
@@ -86,25 +121,21 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, task, tagsArray}: mod
             <textarea 
               className="h-[120px]"
               id="description"
-              required
               value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription || ""}
-              onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}/>
+              onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}
+              required
+            />  
           </div>
 
           <div className="form-action">
+            <Button variant="btn-primary" text='Save' type='submit' />
             <Button 
-                tier="btn-primary"
-                text='Save'
-                type='submit'
-            />
-            <Button 
-                onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleDelete}
-                tier="btn-secondary"
-                text={text.includes("Add") ? "Cancel" : "Delete"}
+              onClick={handleAddTask?.handleCancel || handleUpdateTask?.handleDelete}
+              variant="btn-secondary"
+              text={text.includes("Add") ? "Cancel" : "Delete"}
             />
           </div>
         </form>
-
       </Dialog>
     </div>
   );

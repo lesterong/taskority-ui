@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import taskService from '../services/tasks'
 import Card from '../components/Card';
-import Navbar from '../components/Navbar';
 import Search from '../components/Search';
-import './Home.css'
+import Navbar from '../components/Navbar';
 import Notification from '../components/Notification';
+import './Home.css'
+import taskService from '../services/tasks'
 
 type taskProps = {
   id: number;
@@ -16,67 +16,59 @@ type taskProps = {
 };
 
 const Home = () => {
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [showAddTask, setShowAddTask] = useState(false);
-  const [showFilterModal, setShowFilterModal] = useState(false);
-  const [showSearch, setShowSearch] = useState(true);
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-  const [compactView, setCompactView] = useState(true);
-
+  const [tasks, setTasks] = useState<Array<any>>([]);
+  const [showSearch, setShowSearch] = useState<boolean>(true);
+  const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
+  const [compactView, setCompactView] = useState<boolean>(true);
   const [query, setQuery] = useState<string>('');
-  const [filters, setFilters] = useState<any[]>(['All Tasks']);
+  const [filters, setFilters] = useState<Array<any>>(['All Tasks']);
 
+  const [showAddTask, setShowAddTask] = useState<boolean>(false);
+  const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
   const [taskTitle, setTaskTitle] = useState<string>('');
   const [taskDuedate, setTaskDuedate] = useState<string>('');
   const [taskTag, setTaskTag] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
-  const [taskComplete, setTaskComplete] = useState(false);
+  const [taskComplete, setTaskComplete] = useState<boolean>(false);
 
-  const [notifType, setNotifType] = useState<"success" | "failure" | null>(null)
-  const [notifMessage, setNotifMessage] = useState("")
-  const notify = (message: string, type: "success" | "failure") => {
+  const [notifType, setNotifType] = useState<"success" | "failure" | null>(null);
+  const [notifMessage, setNotifMessage] = useState<string>("");
+  const notify = (message: string, type: "success" | "failure" | null) => {
     setNotifMessage(message);
     setNotifType(type);
     setTimeout(() => {
       setNotifMessage("");
       setNotifType(null);
     }, 3500)
-  }
+  };
 
   const getTasks = () => {
     taskService
       .getAll()
       .then(initial => setTasks(initial))
   };
-
   useEffect(getTasks, []);
 
   const updateWidth = () => {
     setViewportWidth(window.innerWidth);
   };
-
   useEffect(() => {
     window.addEventListener("resize", updateWidth)
-  });
+  }, []);
 
-  const toggleCompactView = {
-    'toggle': () => {setCompactView(!compactView)},
+  const handleView = {
     'isCompact': compactView,
+    'toggle': () => {setCompactView(!compactView)},
   };
-
-  console.log(compactView);
-
-  const toggleSearch = {
-    'toggle': () => {
-      setQuery('');
-      setShowSearch(!showSearch);
-    },
-  }
 
   const handleSearch = {
     'onChange': (event: any) => setQuery(event.target.value),
     'query': query,
-  }
+    'toggle': () => {
+      setQuery('')
+      setShowSearch(!showSearch)
+    },
+  };
 
   const handleAddTask = {
     'open': () => setShowAddTask(true),
@@ -86,7 +78,7 @@ const Home = () => {
     'taskDuedate': taskDuedate,
     'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
     'taskTag': taskTag,
-    'handleTaskTag': (value: any) => setTaskTag(value),
+    'handleTaskTag': (value: string) => setTaskTag(value),
     'taskDescription': taskDescription,
     'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
     'handleSubmit': (event: any) => {
@@ -97,24 +89,25 @@ const Home = () => {
         "duedate": taskDuedate,
         "tag": taskTag,
         "completed": taskComplete,
-      }
+      };
       taskService
         .create(newTask)
         .then(returnedTask => {
           setTasks(tasks.concat(returnedTask))
           setTaskTitle('');
           setTaskDuedate('');
-          setTaskDescription('');
           setTaskTag('');
+          setTaskDescription('');
           setTaskComplete(false);
           setShowAddTask(false);
           notify("Task added successfully", "success");
         })
-        .catch(error => notify("Unsuccessful, please try again", "failure"));
+        .catch(() => notify("Unsuccessful, please try again", "failure"));
     },
     'handleCancel': () => {
       setTaskTitle('');
       setTaskDuedate('');
+      setTaskTag('');
       setTaskDescription('');
       setTaskComplete(false);
       setShowAddTask(false);
@@ -127,15 +120,15 @@ const Home = () => {
     'taskDuedate': taskDuedate,
     'handleTaskDuedate': (event: any) => setTaskDuedate(event.target.value),
     'taskTag': taskTag,
-    'handleTaskTag': (value: any) => setTaskTag(value),
+    'handleTaskTag': (value: string) => setTaskTag(value),
     'taskDescription': taskDescription,
     'handleTaskDescription': (event: any) => setTaskDescription(event.target.value),
-    'initValues': (task: any) => {
+    'initValues': (task: taskProps) => {
       setTaskTitle(task.title);
       setTaskDuedate(task.duedate);
       setTaskDescription(task.description);
-      setTaskTag(task.tag)
-      setTaskComplete(task.completed)
+      setTaskTag(task.tag);
+      setTaskComplete(task.completed);
     },
     'handleSubmit': (task: taskProps) => (event: any) => {
       const updatedTask = {
@@ -148,21 +141,21 @@ const Home = () => {
       taskService
         .update(task.id, updatedTask)
         .then(returnedTask => {
-          setTasks(tasks.map(t => t === task ? returnedTask : t))
+          setTasks(tasks.map(t => t === task ? returnedTask : t));
           setTaskTitle('');
           setTaskDuedate('');
-          setTaskDescription('');
           setTaskTag('');
+          setTaskDescription('');
           setTaskComplete(false);
           notify('Task updated successfully', 'success');
         })
-        .catch(error => notify("Unsuccessful, please try again", "failure"));
+        .catch(() => notify("Unsuccessful, please try again", "failure"));
       },
     'handleCancel': () => {
       setTaskTitle('');
       setTaskDuedate('');
-      setTaskDescription('');
       setTaskTag('');
+      setTaskDescription('');
       setTaskComplete(false);
     },
     'handleDelete': (id: number) => {
@@ -177,7 +170,7 @@ const Home = () => {
         setTaskComplete(false);
         notify('Task deleted successfully', 'success');
       })
-      .catch(error => notify("Delete unsuccessful, please try again", "failure"));
+      .catch(() => notify("Delete unsuccessful, please try again", "failure"));
     },
     'handleCheckbox': (task: any) => (event: any) => {
       const updatedTask = {
@@ -190,17 +183,17 @@ const Home = () => {
           setTasks(tasks.map(t => t === task ? returnedTask : t))
           notify(task.completed ? 'Task undone.' : 'Task completed!', 'success');
         })
-        .catch(error => notify("Unsuccessful, please try again", "failure"));
+        .catch(() => notify("Unsuccessful, please try again", "failure"));
     }
   };
 
-  const tagsArray = Array.from(new Set(tasks.map(task => task.tag)));
+  const tagsArray: string[] = Array.from(new Set(tasks.map(task => task.tag)));
 
   const handleFilters = {
     'tagsArray': tagsArray,
     'open': () => setShowFilterModal(true),
-    'closeModal': () => setShowFilterModal(false),
     'isOpen': showFilterModal,
+    'close': () => setShowFilterModal(false),
     'filters': filters,
     'handleTagsCheckbox': (event: any) => {
       event.target.checked 
@@ -217,7 +210,7 @@ const Home = () => {
     'handleClear': () => setFilters(['All Tasks']),
   };
 
-  const filteredTasks = (tasks: any, filters: any) => {
+  const filteredTasks = (tasks: taskProps[], filters: string[]) => {
     const [taskStatus, ...tagsFilter] = filters;
     const filterStatus = taskStatus === 'All Tasks'
       ? tasks
@@ -233,9 +226,8 @@ const Home = () => {
 
     for (let i = 0; i < tagsFilter.length; i++) {
       const res = filterStatus.filter((task: taskProps) => task.tag === tagsFilter[i]);
-      filteredResults = filteredResults.concat(res)
+      filteredResults = filteredResults.concat(res);
     }
-    
     return filteredResults;
   }
 
@@ -250,14 +242,14 @@ const Home = () => {
     <div>
       <Navbar
         viewportWidth={viewportWidth}
-        handleFilters={handleFilters}
-        toggleSearch={toggleSearch}
-        toggleCompactView={toggleCompactView}
+        handleView={handleView}
+        toggleSearch={handleSearch.toggle}
         handleAddTask={handleAddTask}
+        handleFilters={handleFilters}
       />
       <Notification message={notifMessage} type={notifType} />
-      <div className='main-container'>
-        <div className='main-title'>
+      <div className='home-container'>
+        <div className='home-header'>
           {query === ""
             ? <p> {filters[0]} </p>
             : <p> <b>'{query}'</b> in {filters[0]} </p>
@@ -273,19 +265,24 @@ const Home = () => {
             </p>
           : tasksToShow.length === 0
             ? <p> No results found. </p>
-            : tasksToShow.map((task: taskProps) => 
+            : <>
+            {handleView.isCompact && 
+              <div className='border-b border-gray-300'> </div>
+            }
+            {tasksToShow.map((task: taskProps) => 
               <Card 
                 key={task.id} 
                 task={task} 
                 query={query}
                 handleUpdate={handleUpdate}
                 tagsArray={tagsArray}
-                isCompact={toggleCompactView.isCompact}
+                isCompact={handleView.isCompact}
               />
             )}
+            </>
+          }
       </div>
     </div>
-    
   );
 }
 
