@@ -81,7 +81,7 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
           <div className="form-action">
             <Button 
               onClick={handleFilters.close}
-              variant="btn-primary md:hidden"
+              variant="btn-primary sm:hidden"
               text='Apply'
             />
             <Button 

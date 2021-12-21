@@ -2,12 +2,13 @@ import logo from '../assets/logo.svg';
 import filter from '../assets/filter.svg';
 import search from '../assets/search.svg';
 import addTask from '../assets/addTask.svg';
-import logout from '../assets/logout.svg';
 import settings from '../assets/settings.svg';
+import close from '../assets/close.svg';
 import Button from './Button';
 import ButtonSettings from './ButtonSettings';
 import TaskModal from './TaskModal';
 import FilterModal from './FilterModal';
+import Search from './Search';
 import './Navbar.css';
 
 type handleFiltersProps = {
@@ -41,26 +42,44 @@ type handleViewProps = {
   toggle: () => void;
 };
 
-const Navbar = ({viewportWidth, handleView, toggleSearch, handleFilters, handleAddTask}: 
-  {viewportWidth: number, handleFilters: handleFiltersProps, toggleSearch: () => void,
-    handleView: handleViewProps, handleAddTask: handleAddTaskProps}) => {
-    
+type handleSearchProps = {
+  query: string;
+  open: () => void;
+  isOpen: boolean;
+  close: () => void;
+  onChange: (event: any) => void;
+  handleClose: () => void;
+};
+
+type NavbarProps = {
+  viewportWidth: number;
+  handleView: handleViewProps;
+  handleFilters: handleFiltersProps;
+  handleAddTask: handleAddTaskProps;
+  handleSearch: handleSearchProps;
+};
+
+const Navbar = ({viewportWidth, handleView, handleFilters, handleAddTask, handleSearch}: NavbarProps) => {
   const numOfFilters: any = handleFilters.filters.length === 1
     ? ''
     : handleFilters.filters.length - 1;
 
+  const hideLogo = viewportWidth >= 540 ? false : true;
+
   return (
-    <div className='bg-white w-full'>
+    <div className='bg-white'>
       <nav>
-        <div className="flex items-center">
+        {(!handleSearch.isOpen || !hideLogo) &&
+        <div className="flex items-center shrink-0">
           <img src={logo} alt="Taskority" className="h-12 pr-1"/>
           <h1 className="xs:block hidden"> Taskority </h1>
         </div>
-
-        <div>
-          <div className="nav-links">
+        }
+        <div className="w-full">
+        {!handleSearch.isOpen
+          ? <div className="nav-links">
             <Button 
-              onClick={toggleSearch}
+              onClick={handleSearch.open}
               variant="btn-secondary"
               icon={search}
             />
@@ -78,7 +97,7 @@ const Navbar = ({viewportWidth, handleView, toggleSearch, handleFilters, handleA
               icon={settings}
               text={numOfFilters}
               numOfFilters={numOfFilters}
-              viewport={viewportWidth}
+              viewportWidth={viewportWidth}
               handleView={handleView}
             />
 
@@ -95,10 +114,27 @@ const Navbar = ({viewportWidth, handleView, toggleSearch, handleFilters, handleA
               icon={addTask}
             />
           </div> 
-        </div>
-      </nav>
-        <TaskModal text="Add Task" handleAddTask={handleAddTask} tagsArray={handleFilters.tagsArray}/>
-        <FilterModal text="Filters" handleFilters={handleFilters} />
+
+          : 
+          <div className='nav-links'> 
+            <Button
+              onClick={handleFilters.open}
+              variant="btn-secondary shrink-0"
+              icon={filter}
+              text={numOfFilters}
+            />
+            <Search handleSearch={handleSearch}/>
+            <Button 
+              onClick={handleSearch.handleClose}
+              variant="btn-secondary shrink-0"
+              icon={close}
+            />
+          </div>
+        }
+        </div> 
+      </nav> 
+      <TaskModal text="Add Task" handleAddTask={handleAddTask} tagsArray={handleFilters.tagsArray}/>
+      <FilterModal text="Filters" handleFilters={handleFilters} />
     </div>
   );
 };

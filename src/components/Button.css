@@ -1,25 +1,9 @@
-.btn-container {
-  @apply flex justify-center;
-}
-
-.btn-container img {
-  @apply mx-auto;
-}
-
-.btn-container p {
-  @apply px-1;
-}
-
 .btn-primary {
   @apply bg-sky-100 border-transparent hover:bg-sky-200 active:bg-sky-300;
 }
 
 .btn-secondary {
   @apply bg-white hover:bg-gray-100 active:bg-gray-200;
-}
-
-btn div img {
-  @apply mx-auto;
 }
 
 .mobile-btn {

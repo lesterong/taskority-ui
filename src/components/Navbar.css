@@ -3,5 +3,5 @@ nav {
 }
 
 .nav-links {
-  @apply flex justify-end space-x-2 flex-grow;
+  @apply flex justify-end space-x-2;
 }

@@ -17,7 +17,7 @@ type taskProps = {
 
 const Home = () => {
   const [tasks, setTasks] = useState<Array<any>>([]);
-  const [showSearch, setShowSearch] = useState<boolean>(true);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
   const [compactView, setCompactView] = useState<boolean>(true);
   const [query, setQuery] = useState<string>('');
@@ -62,13 +62,17 @@ const Home = () => {
   };
 
   const handleSearch = {
-    'onChange': (event: any) => setQuery(event.target.value),
     'query': query,
-    'toggle': () => {
-      setQuery('')
-      setShowSearch(!showSearch)
+    'open': () => setShowSearch(true),
+    'isOpen': showSearch,
+    'close': () => setShowSearch(false),
+    'onChange': (event: any) => setQuery(event.target.value),
+    'handleClose': () => {
+      setQuery('');
+      setShowSearch(false);
     },
   };
+  
 
   const handleAddTask = {
     'open': () => setShowAddTask(true),
@@ -243,9 +247,9 @@ const Home = () => {
       <Navbar
         viewportWidth={viewportWidth}
         handleView={handleView}
-        toggleSearch={handleSearch.toggle}
         handleAddTask={handleAddTask}
         handleFilters={handleFilters}
+        handleSearch={handleSearch}
       />
       <Notification message={notifMessage} type={notifType} />
       <div className='home-container'>
@@ -254,7 +258,6 @@ const Home = () => {
             ? <p> {filters[0]} </p>
             : <p> <b>'{query}'</b> in {filters[0]} </p>
           }
-          {showSearch && <Search handleSearch={handleSearch}/>}
         </div>
 
         {query && tasksToShow.length === 0

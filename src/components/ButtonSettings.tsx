@@ -17,19 +17,19 @@ type ButtonProps = {
   icon: string;
   text: string;
   numOfFilters: string;
-  viewport: number;
+  viewportWidth: number;
   handleView: handleViewProps;
 };
 
-const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewport, handleView}: ButtonProps) => {
+const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWidth, handleView}: ButtonProps) => {
   const num = numOfFilters === '' ? '' : '(' + numOfFilters + ')';
-  const mobile = viewport >= 640 ? false : true;
+  const mobile = viewportWidth >= 540 ? false : true;
 
   return (
     <Menu>
-      <MenuButton className={variant + ' btn-container'}>
-        {icon && <img src={icon} alt={text}/>}
-        {mobile && text && <p> {text} </p>}
+      <MenuButton className={variant + ' flex justify-center'}>
+        {icon && <img className="mx-auto" src={icon} alt={text}/>}
+        {mobile && text && <p className='px-1'> {text} </p>}
       </MenuButton>
       <MenuList>
         { mobile && 
