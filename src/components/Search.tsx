@@ -20,6 +20,7 @@ const Search = ({handleSearch}: SearchProps) => {
       placeholder="Search"
       value={query}
       onChange={onChange}
+      autoFocus
       onBlur={query === '' ? close : open}
     />
   );

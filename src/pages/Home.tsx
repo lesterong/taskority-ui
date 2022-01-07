@@ -25,7 +25,6 @@ const Home = () => {
   const [filters, setFilters] = useState<Array<any>>(['All Tasks']);
 
   const [sortBy, setSortBy] = useState<Array<string>>(['Date Created', 'Descending']);
-  const [showSortBy, setShowSortBy] = useState<boolean>(false);
 
   const [showAddTask, setShowAddTask] = useState<boolean>(false);
   const [showFilterModal, setShowFilterModal] = useState<boolean>(false);
@@ -149,7 +148,7 @@ const Home = () => {
       taskService
         .update(task.id, updatedTask)
         .then(returnedTask => {
-          setTasks(tasks.map(t => t === task ? returnedTask : t));
+          setTasks(tasks.map(t => t === task ? returnedTask : t))
           setTaskTitle('');
           setTaskDuedate('');
           setTaskTag('');

@@ -67,7 +67,7 @@ const Navbar = ({viewportWidth, handleView, handleFilters, handleAddTask, handle
   const hideLogo = viewportWidth >= 540 ? false : true;
 
   return (
-    <div className='bg-white'>
+    <div className='bg-white shadow-sm border-b border-gray-200'>
       <nav>
         {(!handleSearch.isOpen || !hideLogo) &&
         <div className="flex items-center shrink-0">

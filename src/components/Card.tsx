@@ -127,14 +127,14 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
               { !isCompact && !status && (now < due
                 ? diffDays <= 1
                   ? diffHours <= 1
-                    ? ' (Due in ' + diffMinutes + ' minutes)'
-                    : ' (Due in ' + diffHours + ' hours)'
-                  : ' (Due in ' + diffDays + ' days)'
+                    ? ' (In ' + diffMinutes + ' minutes)'
+                    : ' (In ' + diffHours + ' hours)'
+                  : ' (In ' + diffDays + ' days)'
                 : diffDays <= 1
                   ? diffHours <= 1
-                    ? ' (Overdue by ' + diffMinutes + ' minutes)'
-                    : ' (Overdue by ' + diffHours + ' hours)'
-                  : ' (Overdue by ' + diffDays + ' days)'
+                    ? ' (' + diffMinutes + ' minutes ago)'
+                    : ' (' + diffHours + ' hours ago)'
+                  : ' (' + diffDays + ' days ago)'
               )}
             </h3>
             <h4> {tag} </h4>

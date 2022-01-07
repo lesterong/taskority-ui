@@ -3,5 +3,5 @@
 }
 
 .home-header {
-  @apply flex justify-between my-3 xs:items-center xs:flex-row flex-col-reverse;
+  @apply flex justify-between my-3;
 }

@@ -15,7 +15,7 @@
 }
 
 .dropdown-header {
-  @apply pl-4 mt-3 text-sm text-gray-400;
+  @apply pl-4 pt-3 text-sm text-gray-400;
 }
 
 /* For Menu Component */

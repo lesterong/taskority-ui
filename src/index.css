@@ -5,7 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap');
 
 body {
-  @apply text-gray-900 bg-purple-200;
+  @apply text-gray-900 bg-white;
 }
 
 h1 {
@@ -28,16 +28,19 @@ p {
   @apply font-sans font-normal;
 }
 
-input {
-  @apply focus:ring-sky-500 focus:ring-2;
-}
 
-input[type="text"], input[type="datetime-local"], input[type="search"], select, textarea {
-  @apply rounded-lg placeholder:text-gray-400;
+input[type="text"], input[type="datetime-local"], input[type="search"], 
+input[type="email"], input[type="password"], select, textarea {
+  @apply rounded-lg placeholder:text-gray-400 py-2 px-3 border border-gray-900
+  focus:outline-none focus:border-indigo-500;
 }
 
 input[type="checkbox"] {
-  @apply rounded;
+  @apply form-checkbox rounded-md;
+}
+
+input[type="radio"] {
+  @apply form-radio;
 }
 
 label {
@@ -45,8 +48,9 @@ label {
 }
 
 button {
-  @apply rounded-lg h-[50px] p-3 border
+  @apply rounded-lg h-[50px] p-3 border outline-indigo-500
   transition-colors duration-100;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .input-container {

@@ -1,4 +1,5 @@
-import React from 'react';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { render, screen } from '@testing-library/react';
 import App from './App';
 

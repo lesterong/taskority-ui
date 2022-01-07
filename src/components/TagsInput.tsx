@@ -1,4 +1,4 @@
-import { Combobox,  ComboboxInput,  ComboboxPopover,  ComboboxList, ComboboxOption } from "@reach/combobox";
+import { Combobox,  ComboboxInput,  ComboboxPopover,  ComboboxList, ComboboxOption, ComboboxOptionText } from "@reach/combobox";
 import './TagsInput.css';
 
 type TagsInput = {
@@ -15,33 +15,38 @@ const TagsInput = ({tagsArray, value, onEvent}: any) => {
   return (
     <div>
       <p> Tags </p>
-        <Combobox openOnFocus aria-labelledby="tags">
-            <ComboboxInput
-              className="combobox-input" 
-              placeholder="Select a tag"
-              onSelect={(event: any) => onEvent(event.target.value)}
-              value={value}
-              onChange={(event: any) => onEvent(event.target.value)}
-            />
-            {tagsToShow && (
-              <ComboboxPopover>
-                {tagsToShow.length > 0
-                  ? <ComboboxList>
-                    {tagsToShow.map((item: string) => (
-                      <ComboboxOption
-                        key={item} 
-                        value={item}
-                        onMouseDown={() => onEvent(item)}
-                        onTouchStart={() => onEvent(item)}
-                      >
-                      </ComboboxOption>
-                    ))}
-                  </ComboboxList>
-                  : <div className="px-2 py-2 text-gray-400"> <p> '{value}' will be created. </p> </div>
-                }
-              </ComboboxPopover> 
-            )}
-          </Combobox>
+      <Combobox openOnFocus onSelect={(item) => onEvent(item)}>
+        <ComboboxInput 
+          className="combobox-input"
+          value={value}
+          placeholder="Select a tag"
+          onChange={(event) => onEvent(event.target.value)}
+        />
+        <ComboboxPopover>
+          <ComboboxList>
+            {(value !=='' && tagsToShow.map((elem: string) => elem.toLowerCase()).indexOf(value.toLowerCase()) === -1) &&
+              <ComboboxOption
+                value={value}
+                onMouseUp={() => onEvent(value)}
+                onTouchEnd={() => onEvent(value)}
+              >
+                <span className="text-gray-400">Create '<ComboboxOptionText/>'</span>
+              </ComboboxOption>
+            }
+            {tagsToShow
+              .sort((tag1: string, tag2: string) => tag1 < tag2 ? -1 : 1)
+              .map((item: string) => (
+              <ComboboxOption 
+                key={item}
+                value={item}
+                onMouseUp={() => onEvent(item)}
+                onTouchEnd={() => onEvent(item)}
+              />
+            ))}
+            
+          </ComboboxList>
+        </ComboboxPopover>
+      </Combobox>
     </div>
   );
 };

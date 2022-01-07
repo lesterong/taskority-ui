@@ -2,8 +2,8 @@ import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import filter from '../assets/filter.svg';
 import logout from '../assets/logout.svg';
 import view from '../assets/view.svg';
-// import darkMode from '../assets/darkMode.svg';
-// import lightMode from '../assets/lightMode.svg';
+import { Link } from "react-router-dom";
+import authService from '../services/auth';
 import './Button.css'
 
 type handleViewProps = {
@@ -25,11 +25,16 @@ const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWid
   const num = numOfFilters === '' ? '' : '(' + numOfFilters + ')';
   const mobile = viewportWidth >= 540 ? false : true;
 
+  const handleLogout = () => {
+    authService
+      .logout()
+  }
+
   return (
     <Menu>
       <MenuButton className={variant + ' flex justify-center'}>
         {icon && <img className="mx-auto" src={icon} alt={text}/>}
-        {mobile && text && <p className='px-1'> {text} </p>}
+        {mobile && text && <p className='pl-1'> {text} </p>}
       </MenuButton>
       <MenuList>
         { mobile && 
@@ -42,14 +47,12 @@ const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWid
           <img src={view} alt="View"/>
           <p>{handleView.isCompact ? "Wide" : "Compact" }</p>
         </MenuItem>
-        {/* <MenuItem onSelect={() => {}}>
-          <img src={darkMode} alt="Dark Mode"/>
-          <p>Dark Mode</p>
-        </MenuItem> */}
-        <MenuItem onSelect={() => {}}>
+        <Link to="/login">
+          <MenuItem onSelect={handleLogout}>
           <img src={logout} alt="Log Out"/>
           <p>Log Out</p>
-        </MenuItem>
+          </MenuItem>
+        </Link>
       </MenuList>
     </Menu>
   );

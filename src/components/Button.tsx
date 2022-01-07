@@ -17,7 +17,7 @@ const Button = ({onClick, variant, icon, text, type="button"}: ButtonProps) => {
     >
       <div className="flex justify-center">
         {icon && <img className="mx-auto" src={icon} alt={text}/>}
-        {text && <p className='px-1'> {text} </p>}
+        {text && <p className='pl-1'> {text} </p>}
       </div>
     </button>
   );

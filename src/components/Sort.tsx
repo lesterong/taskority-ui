@@ -10,7 +10,7 @@ const Sort = ({handleSort}: any) => {
   const {sortBy, onSelectSort, onChangeOrder} = handleSort;
   return (
     <Menu>
-      <MenuButton className="border-0 p-0 h-auto shrink-0 ml-2">
+      <MenuButton className="border-0 p-0 h-auto shrink-0 ml-2 outline-none">
         <p> Sort: {sortBy[0]} {sortBy[1] === 'Ascending' ? ' ↑' : ' ↓'}</p>
       </MenuButton>
       <MenuList>
