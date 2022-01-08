@@ -1,6 +1,6 @@
 const baseUrl = "http://localhost:8000/api";
 
-const auth = sessionStorage.getItem('token') || "";
+const auth = localStorage.getItem('token') || "";
 
 const login = (userObject: any) => {
   const init = {
@@ -13,7 +13,7 @@ const login = (userObject: any) => {
   
   const request = fetch(`${baseUrl}/login`, init);
   return request
-    .then(response => response.headers.get('Authorization'))
+    .then(response => response)
 }
 
 const signup = (userObject: any) => {
@@ -27,7 +27,7 @@ const signup = (userObject: any) => {
 
   const request = fetch(`${baseUrl}/signup`, init);
   return request
-    .then(response => response.json())
+    .then(response => response)
 }
 
 const logout = () => {
@@ -39,7 +39,6 @@ const logout = () => {
     }
   }
   const request = fetch(`${baseUrl}/logout`, init);
-  sessionStorage.clear()
   return request
 }
 

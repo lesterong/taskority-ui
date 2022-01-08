@@ -2,7 +2,6 @@ import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import filter from '../assets/filter.svg';
 import logout from '../assets/logout.svg';
 import view from '../assets/view.svg';
-import { Link } from "react-router-dom";
 import authService from '../services/auth';
 import './Button.css'
 
@@ -24,10 +23,12 @@ type ButtonProps = {
 const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWidth, handleView}: ButtonProps) => {
   const num = numOfFilters === '' ? '' : '(' + numOfFilters + ')';
   const mobile = viewportWidth >= 540 ? false : true;
-
+  
   const handleLogout = () => {
     authService
-      .logout()
+      .logout();
+    localStorage.clear()
+    window.location.href = '/'
   }
 
   return (
@@ -47,12 +48,10 @@ const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWid
           <img src={view} alt="View"/>
           <p>{handleView.isCompact ? "Wide" : "Compact" }</p>
         </MenuItem>
-        <Link to="/login">
-          <MenuItem onSelect={handleLogout}>
+        <MenuItem onSelect={handleLogout}>
           <img src={logout} alt="Log Out"/>
           <p>Log Out</p>
-          </MenuItem>
-        </Link>
+        </MenuItem>
       </MenuList>
     </Menu>
   );

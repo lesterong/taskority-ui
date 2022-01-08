@@ -4,15 +4,6 @@ import TagsInput from "./TagsInput";
 import close from '../assets/close.svg';
 import './Modal.css';
 
-type taskProps = {
-  id: number;
-  title: string;
-  description: string;
-  duedate: string;
-  tag: string;
-  completed: boolean;
-};
-
 type handleAddTaskProps = {
   open: () => void;
   isOpen: boolean;

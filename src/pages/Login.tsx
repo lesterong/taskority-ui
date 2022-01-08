@@ -15,7 +15,12 @@ const Login = () => {
     event.preventDefault();
     authService
       .login({ "user": { "email": email, "password": password } })
-      .then(data => sessionStorage.setItem('token', JSON.stringify(data)));
+      .then(data => {
+        if (data.status === 200) {
+          localStorage.setItem('token', JSON.stringify(data.headers.get('Authorization')))
+          window.location.href = '/'
+        }
+      })
   }
 
   return (

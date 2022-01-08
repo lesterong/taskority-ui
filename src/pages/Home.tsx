@@ -14,6 +14,8 @@ type taskProps = {
   duedate: string;
   tag: string;
   completed: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 const Home = () => {
@@ -76,7 +78,6 @@ const Home = () => {
     },
   };
   
-
   const handleAddTask = {
     'open': () => setShowAddTask(true),
     'isOpen': showAddTask,
@@ -254,8 +255,8 @@ const Home = () => {
 
   const sortByDateCreated = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
     return order === 'Descending'
-      ? taskA.id < taskB.id ? -1 : 1
-      : taskA.id > taskB.id ? -1 : 1
+      ? DateTime.fromISO(taskA.created_at) < DateTime.fromISO(taskB.created_at) ? -1 : 1
+      : DateTime.fromISO(taskA.created_at) > DateTime.fromISO(taskB.created_at) ? -1 : 1
   };
 
   const sortByAlphabet = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
@@ -301,7 +302,9 @@ const Home = () => {
               </button>
             </p>
           : tasksToShow.length === 0
-            ? <p> No results found. </p>
+            ? tagsArray.length === 0 
+              ? <p> No tasks created yet. </p> 
+              : <p> No results found. </p>
             : <>
             {handleView.isCompact && 
               <div className='border-b border-gray-300'> </div>

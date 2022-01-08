@@ -15,6 +15,8 @@ type taskProps = {
   duedate: string;
   tag: string;
   completed: boolean;
+  created_at: string;
+  updated_at: string;
 };
 
 type handeUpdateProps = {
@@ -123,7 +125,7 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
           </h2>
           <div className={cardDetails}>
             <h3 className={overdue}> 
-              {due.hasSame(now, 'year') ? due.toFormat('dd LLL, HH:mm') : due.toFormat('dd LLL yyyy, hh:mm a')}
+              {due.hasSame(now, 'year') ? due.toFormat('dd LLL, HH:mm a') : due.toFormat('dd LLL yyyy, hh:mm a')}
               { !isCompact && !status && (now < due
                 ? diffDays <= 1
                   ? diffHours <= 1

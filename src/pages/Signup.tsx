@@ -15,10 +15,15 @@ const Signup = () => {
     event.preventDefault()
     authService
       .signup({ "user": { "email": email, "password": password } })
-    
-    authService  
-      .login({ "user": { "email": email, "password": password } })
-      .then(data => sessionStorage.setItem('token', JSON.stringify(data)));
+      .then(data => console.log(data))
+      .then(() => {
+        authService
+          .login({ "user": { "email": email, "password": password } })
+          .then(data => {
+            localStorage.setItem('token', JSON.stringify(data.headers.get('Authorization')))
+            window.location.href = '/'
+          })
+      })
   }
 
   return (

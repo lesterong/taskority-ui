@@ -66,7 +66,7 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
             </div>
           </fieldset>
 
-          <fieldset>
+          {tagsArray.length > 0 && <fieldset>
             <legend> <b>Select Tags</b> </legend>  
             {tagsArray.map((tag: any) => (
               <div key={tag} className="input-container">
@@ -76,7 +76,7 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
                 <label htmlFor={tag}> {tag} </label>
               </div>
             ))}
-          </fieldset>
+          </fieldset> }
           
           <div className="form-action">
             <Button 

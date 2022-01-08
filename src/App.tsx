@@ -4,18 +4,24 @@ import Signup from './pages/Signup';
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      {localStorage.getItem('token') 
+      ? <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
-        <Route path="*" element={<p>There's nothing here!</p>}/>
+        <Route path="*" element={<Navigate to="/" replace/>}/>
       </Routes>
+      : <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />}/>
+      <Route path="*" element={<Navigate to="login" replace/>} />
+    </Routes>
+    }
     </BrowserRouter>
   )
 }

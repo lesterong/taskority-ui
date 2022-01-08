@@ -1,6 +1,6 @@
 const baseUrl = "http://localhost:8000/api/tasks/";
 
-const auth = sessionStorage.getItem('token') || "";
+const auth = localStorage.getItem('token') || "";
 
 const getAll = () => {
   const init = { 
