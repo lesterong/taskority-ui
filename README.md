@@ -1,7 +1,7 @@
 # Taskority UI
 [![Netlify Status](https://api.netlify.com/api/v1/badges/e9715f0e-742b-4149-a174-53107a8fcb20/deploy-status)](https://app.netlify.com/sites/taskority/deploys)
 
-This is the frontend reposity for, Taskority, a task manager to take charge of your tasks. Developed for CVWO assignment in 2021/2022, using React and TypeScript.
+This is the frontend repository for, Taskority, a task manager to take charge of your tasks. Developed for CVWO assignment in 2021/2022, using React and TypeScript.
 
 Find the deployed version [here](https://taskority.lesterong.com).
 
