@@ -62,6 +62,7 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
 
   const cardContainer = isCompact ? "card-compact" : "card";
   const cardDetails = isCompact ? "flex items-center space-x-2" : "";
+  const cardStatus = task.completed ? "title-complete" : "";
   const [status, setStatus] = useState(completed);
   const [showViewTask, setShowViewTask] = useState(false);
 
@@ -119,7 +120,7 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
           />
         </div>
         <div className="w-full cursor-pointer" onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
-          <h2 className="break-words"> 
+          <h2 className={cardStatus} style={{overflowWrap: "anywhere"}}> 
             <Highlight query={query} text={title} />
           </h2>
           <div className={cardDetails}>

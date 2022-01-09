@@ -10,7 +10,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.task-complete {
+.title-complete {
   @apply line-through text-gray-500;
 }
 
