@@ -46,7 +46,7 @@ type CardProps = {
 const Highlight = ({query, text}: HighlightProps) => {
   const queryLength: number = query.length;
   const textLength: number = text.length;
-  const firstIdx: number = text.toLowerCase().search(query.toLowerCase());
+  const firstIdx: number = text.toLowerCase().indexOf(query.toLowerCase());
   const lastIdx: number = queryLength + firstIdx;
   return (
     <>
@@ -62,7 +62,6 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
 
   const cardContainer = isCompact ? "card-compact" : "card";
   const cardDetails = isCompact ? "flex items-center space-x-2" : "";
-  const cardStatus: string = completed ? 'task-complete' : "";
   const [status, setStatus] = useState(completed);
   const [showViewTask, setShowViewTask] = useState(false);
 
@@ -120,7 +119,7 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
           />
         </div>
         <div className="w-full cursor-pointer" onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
-          <h2 className={cardStatus}> 
+          <h2 className="break-words"> 
             <Highlight query={query} text={title} />
           </h2>
           <div className={cardDetails}>
