@@ -11,7 +11,7 @@
 }
 
 form {
-  @apply flex flex-col space-y-3; 
+  @apply flex flex-col; 
 }
 
 form input, form textarea {

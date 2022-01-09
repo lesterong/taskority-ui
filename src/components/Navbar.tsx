@@ -57,9 +57,10 @@ type NavbarProps = {
   handleFilters: handleFiltersProps;
   handleAddTask: handleAddTaskProps;
   handleSearch: handleSearchProps;
+  updateAuth: (status: boolean) => void;
 };
 
-const Navbar = ({viewportWidth, handleView, handleFilters, handleAddTask, handleSearch}: NavbarProps) => {
+const Navbar = ({viewportWidth, handleView, handleFilters, handleAddTask, handleSearch, updateAuth}: NavbarProps) => {
   const numOfFilters: any = handleFilters.filters.length === 1
     ? ''
     : handleFilters.filters.length - 1;
@@ -99,6 +100,7 @@ const Navbar = ({viewportWidth, handleView, handleFilters, handleAddTask, handle
               numOfFilters={numOfFilters}
               viewportWidth={viewportWidth}
               handleView={handleView}
+              updateAuth={updateAuth}
             />
 
             <Button 

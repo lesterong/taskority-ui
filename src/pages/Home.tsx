@@ -18,7 +18,7 @@ type taskProps = {
   updated_at: string;
 };
 
-const Home = () => {
+const Home = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
   const [tasks, setTasks] = useState<Array<any>>([]);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
@@ -249,14 +249,14 @@ const Home = () => {
 
   const sortByDueDate = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
     return order === 'Descending'
-      ? DateTime.fromISO(taskA.duedate) < DateTime.fromISO(taskB.duedate) ? -1 : 1
-      : DateTime.fromISO(taskA.duedate) > DateTime.fromISO(taskB.duedate) ? -1 : 1
+      ? DateTime.fromISO(taskA.duedate) > DateTime.fromISO(taskB.duedate) ? -1 : 1
+      : DateTime.fromISO(taskA.duedate) < DateTime.fromISO(taskB.duedate) ? -1 : 1
   };
 
   const sortByDateCreated = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
     return order === 'Descending'
-      ? DateTime.fromISO(taskA.created_at) < DateTime.fromISO(taskB.created_at) ? -1 : 1
-      : DateTime.fromISO(taskA.created_at) > DateTime.fromISO(taskB.created_at) ? -1 : 1
+      ? DateTime.fromISO(taskA.created_at) > DateTime.fromISO(taskB.created_at) ? -1 : 1
+      : DateTime.fromISO(taskA.created_at) < DateTime.fromISO(taskB.created_at) ? -1 : 1
   };
 
   const sortByAlphabet = (order: string) => (taskA: taskProps, taskB: taskProps): number => {
@@ -284,6 +284,7 @@ const Home = () => {
         handleAddTask={handleAddTask}
         handleFilters={handleFilters}
         handleSearch={handleSearch}
+        updateAuth={updateAuth}
       />
       <Notification message={notifMessage} type={notifType} />
       <div className='home-container'>

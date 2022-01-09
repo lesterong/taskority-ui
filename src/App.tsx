@@ -7,21 +7,27 @@ import {
   Route,
   Navigate
 } from "react-router-dom";
+import { useState } from 'react';
 
-function App() {
+function App() {  
+  const initialState = localStorage.getItem('token') ? true : false;
+  const [authed, setAuthed] = useState<boolean>(initialState);
+  const updateAuth = (status: boolean) => setAuthed(status);
+
   return (
     <BrowserRouter>
-      {localStorage.getItem('token') 
-      ? <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Navigate to="/" replace/>}/>
+      {authed ? (
+      <Routes>
+        <Route path="/" element={<Home updateAuth={updateAuth}/>} />
+        <Route path="*" element={<Navigate to="/" />}/>
       </Routes>
-      : <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />}/>
-      <Route path="*" element={<Navigate to="login" replace/>} />
-    </Routes>
-    }
+      ) : (
+      <Routes>
+        <Route path="/login" element={<Login updateAuth={updateAuth}/>} />
+        <Route path="/signup" element={<Signup updateAuth={updateAuth} />}/>
+        <Route path="*" element={<Navigate to="login" />} />
+      </Routes>
+      )}
     </BrowserRouter>
   )
 }

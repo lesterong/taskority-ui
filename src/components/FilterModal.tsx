@@ -29,8 +29,7 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
         onDismiss={handleFilters.close}
         aria-label={text}
       >
-
-        <form onSubmit={(event: any) => event.preventDefault()}>
+        <form className="space-y-3" onSubmit={(event: any) => event.preventDefault()}>
           <div className="form-title">
             <h1> {text} </h1>
             <Button onClick={handleFilters.close} variant="btn-secondary" icon={close}/>
@@ -71,9 +70,9 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
             {tagsArray.map((tag: any) => (
               <div key={tag} className="input-container">
                 <input 
-                  type="checkbox" name="tags" id={tag} value={tag} 
+                  type="checkbox" name="tags" id={tag || "untagged"} value={tag} 
                   onClick={handleTagsCheckbox} defaultChecked={checkTags(tag)}/>
-                <label htmlFor={tag}> {tag} </label>
+                <label htmlFor={tag || "untagged"}> {tag || "Untagged"} </label>
               </div>
             ))}
           </fieldset> }

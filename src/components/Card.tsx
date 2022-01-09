@@ -124,22 +124,28 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
             <Highlight query={query} text={title} />
           </h2>
           <div className={cardDetails}>
-            <h3 className={overdue}> 
-              {due.hasSame(now, 'year') ? due.toFormat('dd LLL, HH:mm a') : due.toFormat('dd LLL yyyy, hh:mm a')}
-              { !isCompact && !status && (now < due
-                ? diffDays <= 1
-                  ? diffHours <= 1
-                    ? ' (In ' + diffMinutes + ' minutes)'
-                    : ' (In ' + diffHours + ' hours)'
-                  : ' (In ' + diffDays + ' days)'
-                : diffDays <= 1
-                  ? diffHours <= 1
-                    ? ' (' + diffMinutes + ' minutes ago)'
-                    : ' (' + diffHours + ' hours ago)'
-                  : ' (' + diffDays + ' days ago)'
-              )}
-            </h3>
-            <h4> {tag} </h4>
+            {task.duedate &&
+              <h3 className={overdue}> 
+                {due.hasSame(now, 'year') ? due.toFormat('dd LLL, HH:mm a') : due.toFormat('dd LLL yyyy, hh:mm a')}
+                {!isCompact && !status && (now < due
+                  ? diffDays <= 1
+                    ? diffHours <= 1
+                      ? ' (In ' + diffMinutes + ' minutes)'
+                      : ' (In ' + diffHours + ' hours)'
+                    : ' (In ' + diffDays + ' days)'
+                  : diffDays <= 1
+                    ? diffHours <= 1
+                      ? ' (' + diffMinutes + ' minutes ago)'
+                      : ' (' + diffHours + ' hours ago)'
+                    : ' (' + diffDays + ' days ago)'
+                )}
+              </h3> 
+            }
+            { task.tag &&
+              <div className='px-2 py-1 bg-indigo-100 rounded-full w-max'>
+                <h4> {tag} </h4>
+              </div>
+            }
           </div>
         </div>
       </div>

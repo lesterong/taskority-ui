@@ -9,8 +9,10 @@ type TagsInput = {
 
 const TagsInput = ({tagsArray, value, onEvent}: any) => {
   const tagsToShow = value === ''
-    ? tagsArray
-    : tagsArray.filter((elem: string) => elem.toLowerCase().includes(value.toLowerCase()));
+    ? tagsArray.filter((elem: string) => elem !== "")
+    : tagsArray
+      .filter((elem: string) => elem !== "")
+      .filter((elem: string) => elem.toLowerCase().includes(value.toLowerCase()));
 
   return (
     <div>
@@ -43,6 +45,9 @@ const TagsInput = ({tagsArray, value, onEvent}: any) => {
                 onTouchEnd={() => onEvent(item)}
               />
             ))}
+            {(tagsArray.length === 0 && value === '') &&
+              <p className="text-gray-400 px-2 py-2"> Create a new tag! </p>
+            }
             
           </ComboboxList>
         </ComboboxPopover>

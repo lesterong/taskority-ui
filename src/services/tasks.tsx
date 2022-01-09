@@ -1,13 +1,11 @@
 const baseUrl = "http://localhost:8000/api/tasks/";
 
-const auth = localStorage.getItem('token') || "";
-
 const getAll = () => {
   const init = { 
     method: 'GET',
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(auth)
+      'Authorization': JSON.parse(localStorage.getItem('token') || "")
     }
   };
   const request = fetch(baseUrl, init)
@@ -20,7 +18,7 @@ const create = (newObject: any) => {
     method: "POST",
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(auth)
+      'Authorization': JSON.parse(localStorage.getItem('token') || "")
     },
     body: JSON.stringify(newObject)
   };
@@ -35,7 +33,7 @@ const update = (id: number, newObject: any) => {
     method: "PUT",
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(auth)
+      'Authorization': JSON.parse(localStorage.getItem('token') || "")
     },
     body: JSON.stringify(newObject)
   };
@@ -49,7 +47,7 @@ const remove = (id: number) => {
     method: "DELETE",
     headers: { 
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(auth)
+      'Authorization': JSON.parse(localStorage.getItem('token') || "")
     }
   };
   const request = fetch(`${baseUrl}/${id}`, init);

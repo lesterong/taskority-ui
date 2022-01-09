@@ -1,16 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from '../assets/logo.svg';
 import Button from '../components/Button';
 import './auth.css';
 import authService from '../services/auth';
 
-const Login = () => {
+const Login = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
   const [email, setEmail] = useState<string>('');
+  const [emailRequired, setEmailRequired] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [invalidError, setInvalidError] = useState<boolean>(false);
   const handleEmail = (event: any) => setEmail(event.target.value);
+
   const [password, setPassword] = useState<string>('');
+  const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
   const handlePassword = (event: any) => setPassword(event.target.value);
 
+  let navigate = useNavigate();
   const handleLogin = (event: any) => {
     event.preventDefault();
     authService
@@ -18,11 +24,34 @@ const Login = () => {
       .then(data => {
         if (data.status === 200) {
           localStorage.setItem('token', JSON.stringify(data.headers.get('Authorization')))
-          window.location.href = '/'
+          updateAuth(true)
+          navigate('/')
+        } else {
+          setInvalidError(true);
         }
       })
   }
 
+  const checkEmail = (event: any) => {
+    console.log(event.target.validity.valueMissing)
+    if (event.target.validity.valueMissing) {
+      setEmailRequired(true);
+      setEmailError(false);
+    } else if (event.target.validity.typeMismatch) {
+      setEmailRequired(false);
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+      setEmailRequired(false);
+    }
+  }
+
+  const checkPassword = (event: any) => {
+    event.target.validity.valueMissing
+    ? setPasswordRequired(true)
+    : setPasswordRequired(false);
+  }
+  
   return (
     <div>
       <div className='auth-header'>
@@ -32,14 +61,30 @@ const Login = () => {
       <div className="auth-container">
         <h2 className="pb-3 text-2xl"> Login </h2>
         <form onSubmit={handleLogin}>
-          <div>
+          <div className="mb-3">
             <label htmlFor='email'> Email </label>
-            <input id="email" type="email" placeholder='Email' value={email} onChange={handleEmail}/>
+            <input
+              type="email" id="email" placeholder="Email"
+              value={email}
+              onChange={handleEmail}
+              onBlur={checkEmail}
+              required
+            />
+            {emailRequired && <h3 className="text-red-600"> Please enter an email. </h3>}
+            {emailError && <h3 className="text-red-600"> Please enter a valid email. </h3>}
           </div>
 
-          <div>
+          <div className="mb-6">
             <label htmlFor='password'> Password </label>
-            <input className='mb-3' id="password" type="password" placeholder='Password' value={password} onChange={handlePassword}/>
+            <input 
+              type="password" id="password" placeholder='Password'
+              value={password}
+              onChange={handlePassword}
+              onBlur={checkPassword}
+              required
+            />
+            {passwordRequired && <h3 className="text-red-600"> Please enter a password. </h3>}
+            {invalidError && <h3 className="text-red-600"> Incorrect email or password. </h3>}
           </div>
 
           <Button 
@@ -50,7 +95,7 @@ const Login = () => {
         </form>
 
         <Link to="/signup">
-          <h3 className='text-center pt-4'> Don't have an account? Sign Up. </h3>
+          <h3 className='text-center mt-4'> Don't have an account? Sign Up. </h3>
         </Link>
       </div>
     </div>

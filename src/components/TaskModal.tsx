@@ -54,7 +54,7 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, tagsArray}: TaskModal
         onDismiss={handleAddTask?.handleCancel || handleUpdateTask?.handleCancel}
         aria-label={text}
       > 
-        <form onSubmit={handleAddTask?.handleSubmit || handleUpdateTask?.handleSubmit}>
+        <form className="space-y-3" onSubmit={handleAddTask?.handleSubmit || handleUpdateTask?.handleSubmit}>
           <div className="form-title">
             <h1> {text} </h1>
             <Button 
@@ -79,9 +79,8 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, tagsArray}: TaskModal
           }
 
           <div>
-            <label htmlFor="title"> Title </label>
+            <label htmlFor="title"> Title* </label>
             <input 
-              className="font-display font-bold text-xl"
               placeholder="Add a title..."
               type="text" name="title" id="title"
               value={handleUpdateTask?.taskTitle || handleAddTask?.taskTitle || ""}
@@ -97,7 +96,6 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, tagsArray}: TaskModal
               step="60"
               value={handleUpdateTask?.taskDuedate || handleAddTask?.taskDuedate}
               onChange={handleUpdateTask?.handleTaskDuedate || handleAddTask?.handleTaskDuedate}
-              required
             />
           </div>
 
@@ -114,7 +112,6 @@ const TaskModal = ({text, handleAddTask, handleUpdateTask, tagsArray}: TaskModal
               id="description"
               value={handleUpdateTask?.taskDescription || handleAddTask?.taskDescription || ""}
               onChange={handleUpdateTask?.handleTaskDescription || handleAddTask?.handleTaskDescription}
-              required
             />  
           </div>
 

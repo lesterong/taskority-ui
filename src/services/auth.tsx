@@ -1,7 +1,5 @@
 const baseUrl = "http://localhost:8000/api";
 
-const auth = localStorage.getItem('token') || "";
-
 const login = (userObject: any) => {
   const init = {
     method: "POST",
@@ -10,7 +8,6 @@ const login = (userObject: any) => {
     },
     body: JSON.stringify(userObject)
   }
-  
   const request = fetch(`${baseUrl}/login`, init);
   return request
     .then(response => response)
@@ -24,7 +21,6 @@ const signup = (userObject: any) => {
     },
     body: JSON.stringify(userObject)
   }
-
   const request = fetch(`${baseUrl}/signup`, init);
   return request
     .then(response => response)
@@ -35,7 +31,7 @@ const logout = () => {
     method: "DELETE",
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(auth)
+      'Authorization': JSON.parse(localStorage.getItem('token') || "")
     }
   }
   const request = fetch(`${baseUrl}/logout`, init);

@@ -1,4 +1,5 @@
 import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
+import { useNavigate } from "react-router-dom";
 import filter from '../assets/filter.svg';
 import logout from '../assets/logout.svg';
 import view from '../assets/view.svg';
@@ -18,17 +19,20 @@ type ButtonProps = {
   numOfFilters: string;
   viewportWidth: number;
   handleView: handleViewProps;
+  updateAuth: (status: boolean) => void;
 };
 
-const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWidth, handleView}: ButtonProps) => {
+const ButtonSettings = ({onClick, variant, icon, text, numOfFilters, viewportWidth, handleView, updateAuth}: ButtonProps) => {
   const num = numOfFilters === '' ? '' : '(' + numOfFilters + ')';
   const mobile = viewportWidth >= 540 ? false : true;
   
+  let navigate = useNavigate();
   const handleLogout = () => {
     authService
       .logout();
     localStorage.clear()
-    window.location.href = '/'
+    updateAuth(false)
+    navigate('/login')
   }
 
   return (
