@@ -14,6 +14,7 @@ const Signup = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
 
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
   const handlePassword = (event: any) => setPassword(event.target.value);
 
   let navigate = useNavigate();
@@ -30,14 +31,16 @@ const Signup = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
               updateAuth(true);
               navigate('/')
             })
+        } else if (data.status === 409) {
+          setEmailDuplicate(true);
         } else {
-          setEmailDuplicate(true)
+          setPasswordRequired(false);
+          setPasswordError(true);
         }
       })
   }
 
   const checkEmail = (event: any) => {
-    console.log(event.target.validity.valueMissing)
     if (event.target.validity.valueMissing) {
       setEmailRequired(true);
       setEmailError(false);
@@ -54,11 +57,12 @@ const Signup = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
   }
 
   const checkPassword = (event: any) => {
-    event.target.validity.valueMissing
-    ? setPasswordRequired(true)
-    : setPasswordRequired(false);
+    if (event.target.validity.valueMissing) {
+      setPasswordError(false);
+      setPasswordRequired(true);
+    }
   }
-
+    
   return (
     <div>
       <div className='auth-header'>
@@ -92,6 +96,11 @@ const Signup = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
               required
             />
             {passwordRequired && <h3 className="text-red-600"> Please enter a password. </h3>}
+            {passwordError &&
+              <h3 className="text-red-600">
+                Please use a stronger password with at least 8 characters, a mix of uppercase and lowercase letters and a number.
+              </h3>
+            }
           </div>
 
           <Button 

@@ -60,9 +60,6 @@ const Highlight = ({query, text}: HighlightProps) => {
 const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
   const {title, duedate, tag, completed} = task;
 
-  const cardContainer = isCompact ? "card-compact" : "card";
-  const cardDetails = isCompact ? "flex items-center space-x-2" : "";
-  const cardStatus = task.completed ? "title-complete" : "";
   const [status, setStatus] = useState(completed);
   const [showViewTask, setShowViewTask] = useState(false);
 
@@ -111,7 +108,7 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
 
   return (
     <div>
-      <div className={cardContainer}>
+      <div className={isCompact ? "card-compact" : "card"}>
         <div className='card-checkbox'>
           <input 
             type="checkbox"
@@ -120,10 +117,10 @@ const Card = ({task, query, handleUpdate, tagsArray, isCompact}: CardProps) => {
           />
         </div>
         <div className="w-full cursor-pointer" onClick={() => {handleUpdateTask.initValues(task); setShowViewTask(true)}}>
-          <h2 className={cardStatus} style={{overflowWrap: "anywhere"}}> 
+          <h2 className={task.completed ? "title-complete" : ""} style={{overflowWrap: "anywhere"}}> 
             <Highlight query={query} text={title} />
           </h2>
-          <div className={cardDetails}>
+          <div className={isCompact ? "flex items-center space-x-2" : ""}>
             {task.duedate &&
               <h3 className={overdue}> 
                 {due.hasSame(now, 'year') ? due.toFormat('dd LLL, HH:mm a') : due.toFormat('dd LLL yyyy, hh:mm a')}
