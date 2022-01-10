@@ -49,7 +49,7 @@ label {
 
 button {
   @apply rounded-lg h-[50px] p-3 border outline-indigo-500
-  transition-colors duration-100;
+  transition-colors duration-100 border-gray-900;
   -webkit-tap-highlight-color: transparent;
 }
 
