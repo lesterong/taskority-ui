@@ -1,8 +1,8 @@
-# [[redirects]]
-#     from = "https://taskority.netlify.app/*"
-#     to = "https://taskority.lesterong.com/:splat"
-#     status = 301
-#     force = true
+[[redirects]]
+    from = "https://taskority.netlify.app/*"
+    to = "https://taskority.lesterong.com/:splat"
+    status = 301
+    force = true
 
 [[redirects]]
   from = "/*"
