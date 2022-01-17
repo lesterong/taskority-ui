@@ -1,12 +1,12 @@
 .card {
   @apply bg-white border border-gray-300 flex py-3 px-4 mt-3 space-x-3 items-center
-  hover:bg-sky-100 rounded-md;
+  hover:bg-gray-100 rounded-md;
   -webkit-tap-highlight-color: transparent;
 }
 
 .card-compact {
   @apply space-x-2 bg-white border-b border-gray-300 py-1 px-4 flex
-  hover:bg-sky-100 items-center;
+  hover:bg-gray-100 items-center;
   -webkit-tap-highlight-color: transparent;
 }
 

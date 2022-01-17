@@ -18,7 +18,6 @@
   @apply pl-4 pt-3 text-sm text-gray-400;
 }
 
-/* For Menu Component */
 :root {
   --reach-menu-button: 1;
 }
@@ -48,7 +47,6 @@
   @apply flex pl-4 pr-6 py-3 space-x-2 cursor-pointer;
 }
 
-/* pseudo pseudo selector */
 [data-reach-menu-item][data-selected] {
   @apply bg-sky-100;
 }

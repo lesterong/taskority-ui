@@ -1,42 +1,47 @@
-const baseUrl = "http://localhost:8000/api";
+type UserObject = {
+  user: {
+    email: string;
+    password: string;
+  };
+};
 
-const login = (userObject: any) => {
+const baseUrl = 'http://localhost:8000/api';
+
+const login = (userObject: UserObject) => {
   const init = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(userObject)
-  }
+    body: JSON.stringify(userObject),
+  };
   const request = fetch(`${baseUrl}/login`, init);
-  return request
-    .then(response => response)
-}
+  return request.then((response) => response);
+};
 
-const signup = (userObject: any) => {
+const signup = (userObject: UserObject) => {
   const init = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(userObject)
-  }
+    body: JSON.stringify(userObject),
+  };
   const request = fetch(`${baseUrl}/signup`, init);
-  return request
-    .then(response => response)
-}
+  return request.then((response) => response);
+};
 
 const logout = () => {
   const init = {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': JSON.parse(localStorage.getItem('token') || "")
-    }
-  }
+      Authorization: JSON.parse(localStorage.getItem('token') || ''),
+    },
+  };
   const request = fetch(`${baseUrl}/logout`, init);
-  return request
-}
+  return request;
+};
 
 const servicesObject = { login, signup, logout };
 

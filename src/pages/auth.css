@@ -1,14 +1,10 @@
 .auth-header {
-  @apply bg-white shadow-sm border-b border-gray-200
-  flex space-x-2 py-4 mb-3 items-center justify-center;
+  @apply bg-white border-b border-gray-200
+  flex space-x-2 py-3 mb-3 items-center justify-center;
 }
 
 .auth-container {
   @apply container max-w-xl mx-auto px-4;
-}
-
-.auth-container h2 {
-  @apply pb-3 text-2xl;
 }
 
 .auth-container input {

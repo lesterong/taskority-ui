@@ -1,21 +1,24 @@
-import { Dialog } from "@reach/dialog";
-import Button from "./Button";
+import { Dialog } from '@reach/dialog';
+import Button from './Button';
 import close from '../assets/close.svg';
 import './Modal.css';
+import { HandleFiltersProps } from '../types';
 
-type handleFiltersProps = {
-  tagsArray: string[];
-  open: () => void;
-  isOpen: boolean;
-  close: () => void;
-  filters: string[];
-  handleTagsCheckbox: (event: any) => void;
-  handleTaskStatus: (event: any) => void;
-  handleClear: () => void;
-};
-
-const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, text: string}) => {    
-  const { tagsArray, isOpen, filters, handleTagsCheckbox, handleTaskStatus, handleClear } = handleFilters;
+const FilterModal = ({
+  handleFilters,
+  text,
+}: {
+  handleFilters: HandleFiltersProps;
+  text: string;
+}) => {
+  const {
+    tagsArray,
+    isOpen,
+    filters,
+    handleTagsCheckbox,
+    handleTaskStatus,
+    handleClear,
+  } = handleFilters;
 
   const checkAll = filters[0] === 'All Tasks' ? true : false;
   const checkActive = filters[0] === 'Active Tasks' ? true : false;
@@ -24,68 +27,98 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
 
   return (
     <div>
-      <Dialog 
-        isOpen={isOpen} 
-        onDismiss={handleFilters.close}
-        aria-label={text}
-      >
-        <form className="space-y-3" onSubmit={(event: any) => event.preventDefault()}>
-          <div className="form-title">
+      <Dialog isOpen={isOpen} onDismiss={handleFilters.close} aria-label={text}>
+        <form
+          className='space-y-3'
+          onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+            event.preventDefault();
+          }}
+        >
+          <div className='form-title'>
             <h1> {text} </h1>
-            <Button onClick={handleFilters.close} variant="btn-secondary" icon={close}/>
+            <Button
+              onClick={handleFilters.close}
+              variant='btn-secondary'
+              alt='Close filters'
+              icon={close}
+            />
           </div>
-          
-          <fieldset onChange={handleTaskStatus}>
-            <legend> <b>Task Status</b> </legend>
-            <div className="input-container">
-              <input 
-                type="radio" name="Task Status" id="All Tasks" 
-                value="All Tasks" defaultChecked={checkAll}
-                onClick={handleTaskStatus}
+
+          <fieldset>
+            <legend>
+              <b>{'Task Status'}</b>
+            </legend>
+            <div className='input-container'>
+              <input
+                type='radio'
+                name='Task Status'
+                id='All Tasks'
+                value='All Tasks'
+                defaultChecked={checkAll}
+                onChange={handleTaskStatus}
               />
-              <label htmlFor="All Tasks"> All Tasks </label>
+              <label htmlFor='All Tasks'> All Tasks </label>
             </div>
 
-            <div className="input-container">
-              <input 
-                type="radio" name="Task Status" id="Active Tasks"
-                value="Active Tasks" defaultChecked={checkActive}
-                onClick={handleTaskStatus}
+            <div className='input-container'>
+              <input
+                type='radio'
+                name='Task Status'
+                id='Active Tasks'
+                value='Active Tasks'
+                defaultChecked={checkActive}
+                onChange={handleTaskStatus}
               />
-              <label htmlFor="Active Tasks"> Active Tasks </label>
+              <label htmlFor='Active Tasks'> Active Tasks </label>
             </div>
-          
-            <div className="input-container">
-              <input 
-                type="radio" name="Task Status" id="Completed Tasks" 
-                value="Completed Tasks" defaultChecked={checkCompleted}
-                onClick={handleTaskStatus}
+
+            <div className='input-container'>
+              <input
+                type='radio'
+                name='Task Status'
+                id='Completed Tasks'
+                value='Completed Tasks'
+                defaultChecked={checkCompleted}
+                onChange={handleTaskStatus}
               />
-              <label htmlFor="Completed Tasks"> Completed Tasks </label>
+              <label htmlFor='Completed Tasks'> Completed Tasks </label>
             </div>
           </fieldset>
 
-          {tagsArray.length > 0 && <fieldset>
-            <legend> <b>Select Tags</b> </legend>  
-            {tagsArray.map((tag: any) => (
-              <div key={tag} className="input-container">
-                <input 
-                  type="checkbox" name="tags" id={tag || "untagged"} value={tag} 
-                  onClick={handleTagsCheckbox} defaultChecked={checkTags(tag)}/>
-                <label htmlFor={tag || "untagged"}> {tag || "Untagged"} </label>
-              </div>
-            ))}
-          </fieldset> }
-          
-          <div className="form-action">
-            <Button 
+          {tagsArray.length > 0 && (
+            <fieldset>
+              <legend>
+                <b>Select Tags</b>
+              </legend>
+              {tagsArray.map((tag: string) => (
+                <div key={tag} className='input-container'>
+                  <input
+                    type='checkbox'
+                    name='tags'
+                    id={tag || 'un-tagged'}
+                    value={tag}
+                    onChange={handleTagsCheckbox}
+                    defaultChecked={checkTags(tag)}
+                  />
+                  <label htmlFor={tag || 'un-tagged'}>
+                    {tag || 'Untagged'}
+                  </label>
+                </div>
+              ))}
+            </fieldset>
+          )}
+
+          <div className='form-action'>
+            <Button
               onClick={handleFilters.close}
-              variant="btn-primary sm:hidden"
+              variant='btn-primary sm:hidden'
+              alt='Apply Filters'
               text='Apply'
             />
-            <Button 
-              onClick={() => {handleClear()}}
-              variant="btn-secondary"
+            <Button
+              onClick={() => handleClear()}
+              variant='btn-secondary'
+              alt='Clear Filters'
               text='Clear'
               type='reset'
             />
@@ -94,6 +127,6 @@ const FilterModal = ({handleFilters, text}: {handleFilters: handleFiltersProps, 
       </Dialog>
     </div>
   );
-}
+};
 
 export default FilterModal;

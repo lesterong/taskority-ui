@@ -1,39 +1,51 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.svg';
+import logoText from '../assets/logoText.svg';
 import Button from '../components/Button';
 import './auth.css';
 import authService from '../services/auth';
 
-const Login = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
+const Login = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
   const [email, setEmail] = useState<string>('');
   const [emailRequired, setEmailRequired] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [invalidError, setInvalidError] = useState<boolean>(false);
-  const handleEmail = (event: any) => setEmail(event.target.value);
+  const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
 
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
-  const handlePassword = (event: any) => setPassword(event.target.value);
+  const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   let navigate = useNavigate();
-  const handleLogin = (event: any) => {
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
     authService
-      .login({ "user": { "email": email, "password": password } })
-      .then(data => {
+      .login({ user: { email: email, password: password } })
+      .then((data) => {
         if (data.status === 200) {
-          localStorage.setItem('token', JSON.stringify(data.headers.get('Authorization')))
-          updateAuth(true)
-          navigate('/')
+          setLoading(false);
+          localStorage.setItem(
+            'token',
+            JSON.stringify(data.headers.get('Authorization')),
+          );
+          updateAuth(true);
+          navigate('/');
         } else {
+          setLoading(false);
           setInvalidError(true);
         }
-      })
-  }
+      });
+  };
 
-  const checkEmail = (event: any) => {
-    console.log(event.target.validity.valueMissing)
+  const checkEmail = (event: React.FocusEvent<HTMLInputElement>) => {
     if (event.target.validity.valueMissing) {
       setEmailRequired(true);
       setEmailError(false);
@@ -44,58 +56,73 @@ const Login = ({updateAuth}: {updateAuth: (status: boolean) => void}) => {
       setEmailError(false);
       setEmailRequired(false);
     }
-  }
+  };
 
-  const checkPassword = (event: any) => {
+  const checkPassword = (event: React.FocusEvent<HTMLInputElement>) => {
     event.target.validity.valueMissing
-    ? setPasswordRequired(true)
-    : setPasswordRequired(false);
-  }
-  
+      ? setPasswordRequired(true)
+      : setPasswordRequired(false);
+  };
+
   return (
     <div>
       <div className='auth-header'>
-        <img className="h-12" src={logo} alt="logo" />
-        <h1 className="text-4xl"> Taskority </h1>
+        <img className='h-12' src={logo} alt='logo' />
+        <img className='h-9' src={logoText} alt='Taskority' />
       </div>
-      <div className="auth-container">
-        <h2 className="pb-3 text-2xl"> Login </h2>
+      <div className='auth-container'>
+        <h1 className='pb-3 text-2xl'> Login </h1>
         <form onSubmit={handleLogin}>
-          <div className="mb-3">
+          <div className='mb-3'>
             <label htmlFor='email'> Email </label>
             <input
-              type="email" id="email" placeholder="Email"
+              type='email'
+              id='email'
+              placeholder='Email'
               value={email}
               onChange={handleEmail}
               onBlur={checkEmail}
               required
             />
-            {emailRequired && <h3 className="text-red-600"> Please enter an email. </h3>}
-            {emailError && <h3 className="text-red-600"> Please enter a valid email. </h3>}
+            {emailRequired && (
+              <h3 className='text-red-600'> Please enter an email. </h3>
+            )}
+            {emailError && (
+              <h3 className='text-red-600'> Please enter a valid email. </h3>
+            )}
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <label htmlFor='password'> Password </label>
-            <input 
-              type="password" id="password" placeholder='Password'
+            <input
+              type='password'
+              id='password'
+              placeholder='Password'
               value={password}
               onChange={handlePassword}
               onBlur={checkPassword}
               required
             />
-            {passwordRequired && <h3 className="text-red-600"> Please enter a password. </h3>}
-            {invalidError && <h3 className="text-red-600"> Incorrect email or password. </h3>}
+            {passwordRequired && (
+              <h3 className='text-red-600'> Please enter a password. </h3>
+            )}
+            {invalidError && (
+              <h3 className='text-red-600'> Incorrect email or password. </h3>
+            )}
           </div>
-
-          <Button 
+          <Button
             variant='btn-primary w-full'
-            type="submit"
+            type='submit'
+            alt='Login'
             text='Login'
+            loader={loading}
           />
         </form>
 
-        <Link to="/signup">
-          <h3 className='text-center mt-4'> Don't have an account? Sign Up. </h3>
+        <Link to='/signup'>
+          <h3 className='text-center mt-4'>
+            Don&apos;t have an account? Sign Up.
+          </h3>
         </Link>
       </div>
     </div>
