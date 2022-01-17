@@ -5,7 +5,7 @@ type UserObject = {
   };
 };
 
-const baseUrl = 'http://localhost:8000/api';
+const baseUrl = 'https://taskority-api.herokuapp.com/api';
 
 const login = (userObject: UserObject) => {
   const init = {

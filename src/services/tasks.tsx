@@ -7,7 +7,7 @@ type CreateTaskProp = {
   completed: boolean;
 };
 
-const baseUrl = 'http://localhost:8000/api/tasks/';
+const baseUrl = 'https://taskority-api.herokuapp.com/api/tasks/';
 
 const getAll = () => {
   const init = {
