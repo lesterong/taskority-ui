@@ -1,5 +1,6 @@
 import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 import { useNavigate } from 'react-router-dom';
+import { HandleViewing } from '../types/View';
 import filter from '../assets/filter.svg';
 import logout from '../assets/logout.svg';
 import view from '../assets/view.svg';
@@ -7,31 +8,24 @@ import settings from '../assets/settings.svg';
 import authService from '../services/auth';
 import './Button.css';
 
-type handleViewProps = {
-  isCompact: boolean;
-  toggle: () => void;
-};
-
-type ButtonProps = {
+type ButtonSettingsProps = {
   onClick: () => void;
-  variant: string;
   text: string;
   numOfFilters: string;
   viewportWidth: number;
-  handleView: handleViewProps;
+  handleView: HandleViewing;
   updateAuth: (status: boolean) => void;
 };
 
 const ButtonSettings = ({
   onClick,
-  variant,
   text,
   numOfFilters,
   viewportWidth,
   handleView,
   updateAuth,
-}: ButtonProps) => {
-  const num = numOfFilters === '' ? '' : '(' + numOfFilters + ')';
+}: ButtonSettingsProps) => {
+  const num = numOfFilters ? `(${numOfFilters})` : '';
   const mobile = viewportWidth < 540;
 
   let navigate = useNavigate();
@@ -44,7 +38,7 @@ const ButtonSettings = ({
 
   return (
     <Menu>
-      <MenuButton className={variant + ' flex justify-center'}>
+      <MenuButton className={`btn-secondary flex justify-center`}>
         <img className='mx-auto' src={settings} alt='Settings' />
         {mobile && text && <p className='pl-1'> {text} </p>}
       </MenuButton>
@@ -52,7 +46,7 @@ const ButtonSettings = ({
         {mobile && (
           <MenuItem className='hidden' onSelect={onClick}>
             <img src={filter} alt='Filters' />
-            <p>Filters {num} </p>
+            <p>Filters {num}</p>
           </MenuItem>
         )}
         <MenuItem onSelect={handleView.toggle}>

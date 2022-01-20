@@ -1,11 +1,4 @@
-import { TaskProps } from '../types';
-type CreateTaskProp = {
-  title: string;
-  description: string;
-  duedate: string;
-  tag: string;
-  completed: boolean;
-};
+import { TaskBase } from '../types/Task';
 
 const baseUrl = 'https://taskority-api.herokuapp.com/api/tasks/';
 
@@ -21,7 +14,7 @@ const getAll = () => {
   return request.then((response) => response.json());
 };
 
-const create = (taskObject: CreateTaskProp) => {
+const create = (taskObject: TaskBase) => {
   const init = {
     method: 'POST',
     headers: {
@@ -34,7 +27,7 @@ const create = (taskObject: CreateTaskProp) => {
   return request.then((response) => response.json());
 };
 
-const update = (id: number, taskObject: TaskProps) => {
+const update = (id: number, taskObject: TaskBase) => {
   const init = {
     method: 'PUT',
     headers: {

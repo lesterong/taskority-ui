@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { TaskProps } from '../types';
+import { Task } from '../types/Task';
+import { UpdatingAuth } from '../types/Auth';
+import {
+  sortByAlphabet,
+  sortByDueDate,
+  sortByDateCreated,
+} from '../utils/sortUtils';
 import Card from '../components/Card';
 import Sort from '../components/Sort';
 import Navbar from '../components/Navbar';
 import Notification from '../components/Notification';
 import spinner from '../assets/spinner.svg';
-import './Home.css';
 import taskService from '../services/tasks';
-import { DateTime } from 'luxon';
 
-const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
-  const [tasks, setTasks] = useState<TaskProps[]>([]);
+const Home = ({ updateAuth }: UpdatingAuth) => {
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [showSearch, setShowSearch] = useState<boolean>(false);
   const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
   const [compactView, setCompactView] = useState<boolean>(true);
@@ -82,9 +86,7 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
     },
   };
 
-  const handleAddTask = {
-    open: () => setShowAddTask(true),
-    isOpen: showAddTask,
+  const handleTask = {
     taskTitle: taskTitle,
     handleTaskTitle: (event: React.ChangeEvent<HTMLInputElement>) => {
       setTaskTitle(event.target.value);
@@ -99,6 +101,20 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
     handleTaskDescription: (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setTaskDescription(event.target.value);
     },
+    isLoading: loading,
+    clearFields: () => {
+      setTaskTitle('');
+      setTaskDuedate('');
+      setTaskTag('');
+      setTaskDescription('');
+      setTaskComplete(false);
+    },
+  };
+
+  const handleAddTask = {
+    ...handleTask,
+    open: () => setShowAddTask(true),
+    isOpen: showAddTask,
     handleSubmit: (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setLoading(true);
@@ -114,11 +130,7 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
         .then((returnedTask) => {
           setLoading(false);
           setTasks(tasks.concat(returnedTask));
-          setTaskTitle('');
-          setTaskDuedate('');
-          setTaskTag('');
-          setTaskDescription('');
-          setTaskComplete(false);
+          handleTask.clearFields();
           setShowAddTask(false);
           notify('Task added successfully', 'success');
         })
@@ -128,45 +140,27 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
         });
     },
     handleCancel: () => {
-      setTaskTitle('');
-      setTaskDuedate('');
-      setTaskTag('');
-      setTaskDescription('');
-      setTaskComplete(false);
+      handleTask.clearFields();
       setShowAddTask(false);
     },
-    isLoading: loading,
   };
 
   const handleUpdate = {
-    taskTitle: taskTitle,
-    handleTaskTitle: (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTaskTitle(event.target.value);
-    },
-    taskDuedate: taskDuedate,
-    handleTaskDuedate: (event: React.ChangeEvent<HTMLInputElement>) => {
-      setTaskDuedate(event.target.value);
-    },
-    taskTag: taskTag,
-    handleTaskTag: (value: string) => setTaskTag(value),
-    taskDescription: taskDescription,
-    handleTaskDescription: (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setTaskDescription(event.target.value);
-    },
-    initValues: (task: TaskProps) => {
+    ...handleTask,
+    initValues: (task: Task) => {
       setTaskTitle(task.title);
       setTaskDuedate(task.duedate);
       setTaskDescription(task.description);
       setTaskTag(task.tag);
       setTaskComplete(task.completed);
     },
-    handleSubmit: (task: TaskProps, close: () => void) => () => {
+    handleSubmit: (task: Task, close: () => void) => () => {
       const updatedTask = {
-        ...task,
         title: taskTitle,
         description: taskDescription,
         duedate: taskDuedate,
         tag: taskTag,
+        completed: taskComplete,
       };
       setLoading(true);
       taskService
@@ -175,11 +169,7 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
           setLoading(false);
           close();
           setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
-          setTaskTitle('');
-          setTaskDuedate('');
-          setTaskTag('');
-          setTaskDescription('');
-          setTaskComplete(false);
+          handleTask.clearFields();
           notify('Task updated successfully', 'success');
         })
         .catch(() => {
@@ -188,11 +178,7 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
         });
     },
     handleCancel: () => {
-      setTaskTitle('');
-      setTaskDuedate('');
-      setTaskTag('');
-      setTaskDescription('');
-      setTaskComplete(false);
+      handleTask.clearFields();
     },
     handleDelete: (id: number, close: () => void) => {
       setLoading(true);
@@ -202,35 +188,50 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
           setLoading(false);
           close();
           setTasks(tasks.filter((t) => t.id !== id));
-          setTaskTitle('');
-          setTaskDuedate('');
-          setTaskDescription('');
-          setTaskTag('');
-          setTaskComplete(false);
+          handleTask.clearFields();
           notify('Task deleted successfully', 'success');
         })
         .catch(() => {
           setLoading(false);
-          notify('Delete unsuccessful, please try again', 'failure');
+          notify('Unsuccessful, please try again', 'failure');
         });
     },
-    handleCheckbox: (task: TaskProps) => () => {
+    handleCheckbox: (task: Task) => () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, created_at, updated_at, ...taskParams } = task;
       const updatedTask = {
-        ...task,
+        ...taskParams,
         completed: !task.completed,
       };
       taskService
         .update(task.id, updatedTask)
         .then((returnedTask) => {
           setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
-          notify(
-            task.completed ? 'Task undone.' : 'Task completed!',
-            'success',
-          );
+          notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
         })
-        .catch(() => notify('Unsuccessful, please try again', 'failure'));
+        .catch(() => notify('Unsuccessful, please try again.', 'failure'));
     },
-    isLoading: loading,
+    handleComplete: (task: Task, close: () => void) => () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { id, created_at, updated_at, ...taskParams } = task;
+      const updatedTask = {
+        ...taskParams,
+        completed: !task.completed,
+      };
+      taskService
+        .update(task.id, updatedTask)
+        .then((returnedTask) => {
+          setLoading(false);
+          close();
+          setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
+          handleTask.clearFields();
+          notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
+        })
+        .catch(() => {
+          setLoading(false);
+          notify('Unsuccessful, please try again', 'failure');
+        });
+    },
   };
 
   const handleSort = {
@@ -267,23 +268,23 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
         ),
       );
     },
-    handleClear: () => setFilters(['All Tasks']),
+    handleClear: () => setFilters(['Active Tasks']),
   };
 
-  const filteredTasks = (tasks: TaskProps[], filters: string[]) => {
+  const filteredTasks = (tasks: Task[], filters: string[]) => {
     const [taskStatus, ...tagsFilter] = filters;
     const filterStatus =
       taskStatus === 'All Tasks'
         ? tasks
         : taskStatus === 'Active Tasks'
-        ? tasks.filter((task: TaskProps) => !task.completed)
-        : tasks.filter((task: TaskProps) => task.completed);
+        ? tasks.filter((task: Task) => !task.completed)
+        : tasks.filter((task: Task) => task.completed);
 
     let filteredResults = tagsFilter.length === 0 ? filterStatus : [];
 
     for (let i = 0; i < tagsFilter.length; i++) {
       const res = filterStatus.filter(
-        (task: TaskProps) => task.tag === tagsFilter[i],
+        (task: Task) => task.tag === tagsFilter[i],
       );
       filteredResults = filteredResults.concat(res);
     }
@@ -292,48 +293,10 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
 
   const tasksToFilter = filteredTasks(tasks, filters);
 
-  const sortByDueDate =
-    (order: string) =>
-    (taskA: TaskProps, taskB: TaskProps): number => {
-      return order === 'Descending'
-        ? DateTime.fromISO(taskA.duedate) > DateTime.fromISO(taskB.duedate)
-          ? -1
-          : 1
-        : DateTime.fromISO(taskA.duedate) < DateTime.fromISO(taskB.duedate)
-        ? -1
-        : 1;
-    };
-
-  const sortByDateCreated =
-    (order: string) =>
-    (taskA: TaskProps, taskB: TaskProps): number => {
-      return order === 'Descending'
-        ? DateTime.fromISO(taskA.created_at) >
-          DateTime.fromISO(taskB.created_at)
-          ? -1
-          : 1
-        : DateTime.fromISO(taskA.created_at) <
-          DateTime.fromISO(taskB.created_at)
-        ? -1
-        : 1;
-    };
-
-  const sortByAlphabet =
-    (order: string) =>
-    (taskA: TaskProps, taskB: TaskProps): number => {
-      return order === 'Descending'
-        ? taskA.title.toLowerCase() < taskB.title.toLowerCase()
-          ? -1
-          : 1
-        : taskA.title.toLowerCase() > taskB.title.toLowerCase()
-        ? -1
-        : 1;
-    };
-
   const tasksToSearch =
     query === ''
       ? tasksToFilter
-      : tasksToFilter.filter((task: TaskProps) =>
+      : tasksToFilter.filter((task: Task) =>
           task.title.toLowerCase().includes(query.toLowerCase()),
         );
 
@@ -365,15 +328,16 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
           <p className='text-center'> Loading Tasks. </p>
         </div>
       )}
-      <div className='home-container'>
+      <div className='container max-w-4xl mx-auto px-4 last:mb-4'>
         {!loadingTasks && (
           <>
-            <div className='home-header'>
+            <div className='flex justify-between my-3'>
               {query === '' ? (
                 <p> {filters[0]} </p>
               ) : (
                 <p>
-                  <b>&apos;{query}&apos;</b> in {filters[0]}
+                  <b className='break-all'>&apos;{query}&apos;</b>
+                  {` in ${filters[0]}`}
                 </p>
               )}
               <Sort handleSort={handleSort} />
@@ -381,7 +345,6 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
             {query && tasksToShow.length === 0 ? (
               <p>
                 No results for &apos;<b>{query}</b>.&nbsp;
-                <button onClick={() => setQuery('')}>Search Again?</button>
               </p>
             ) : tasksToShow.length === 0 ? (
               tagsArray.length === 0 ? (
@@ -392,9 +355,9 @@ const Home = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
             ) : (
               <>
                 {handleView.isCompact && (
-                  <div className='border-b border-gray-300'> </div>
+                  <div className='border-b border-gray-300' />
                 )}
-                {tasksToShow.map((task: TaskProps) => (
+                {tasksToShow.map((task: Task) => (
                   <Card
                     key={task.id}
                     task={task}

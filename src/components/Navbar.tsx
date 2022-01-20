@@ -1,8 +1,4 @@
-import {
-  HandleAddTaskProps,
-  HandleFiltersProps,
-  HandleSearchProps,
-} from '../types';
+import { NavbarProps } from '../types/Navbar';
 import logo from '../assets/logo.svg';
 import logoText from '../assets/logoText.svg';
 import filter from '../assets/filter.svg';
@@ -14,21 +10,6 @@ import ButtonSettings from './ButtonSettings';
 import AddTaskModal from './AddTaskModal';
 import FilterModal from './FilterModal';
 import Search from './Search';
-import './Navbar.css';
-
-type handleViewProps = {
-  isCompact: boolean;
-  toggle: () => void;
-};
-
-type NavbarProps = {
-  viewportWidth: number;
-  handleView: handleViewProps;
-  handleFilters: HandleFiltersProps;
-  handleAddTask: HandleAddTaskProps;
-  handleSearch: HandleSearchProps;
-  updateAuth: (status: boolean) => void;
-};
 
 const Navbar = ({
   viewportWidth,
@@ -43,11 +24,11 @@ const Navbar = ({
       ? ''
       : `${handleFilters.filters.length - 1}`;
 
-  const hideLogo = viewportWidth >= 540 ? false : true;
+  const hideLogo = viewportWidth < 540;
 
   return (
     <div className='bg-white shadow-sm border-b border-gray-200'>
-      <nav>
+      <nav className='flex mx-auto py-2 px-4 max-w-4xl justify-between'>
         {(!handleSearch.isOpen || !hideLogo) && (
           <div className='flex items-center shrink-0'>
             <img src={logo} alt='Taskority' className='h-12 pr-1' />
@@ -62,7 +43,7 @@ const Navbar = ({
         )}
         <div className='w-full'>
           {!handleSearch.isOpen ? (
-            <div className='nav-links'>
+            <div className='flex justify-end space-x-2'>
               <Button
                 onClick={handleSearch.open}
                 variant='btn-secondary'
@@ -72,7 +53,7 @@ const Navbar = ({
 
               <Button
                 onClick={handleFilters.open}
-                variant='btn-secondary desktop-btn'
+                variant='btn-secondary hidden sm:block'
                 alt='Open filters'
                 icon={filter}
                 text={numOfFilters}
@@ -80,7 +61,6 @@ const Navbar = ({
 
               <ButtonSettings
                 onClick={handleFilters.open}
-                variant='btn-secondary dropdown'
                 text={numOfFilters}
                 numOfFilters={numOfFilters}
                 viewportWidth={viewportWidth}
@@ -90,7 +70,7 @@ const Navbar = ({
 
               <Button
                 onClick={handleAddTask.open}
-                variant='btn-primary desktop-btn'
+                variant='btn-primary hidden sm:block'
                 alt='Add Task'
                 icon={addTask}
                 text='Add Task'
@@ -98,13 +78,13 @@ const Navbar = ({
 
               <Button
                 onClick={handleAddTask.open}
-                variant='btn-primary mobile-btn'
+                variant='btn-primary sm:hidden'
                 alt='Add Task'
                 icon={addTask}
               />
             </div>
           ) : (
-            <div className='nav-links'>
+            <div className='flex justify-end space-x-2'>
               <Button
                 onClick={handleFilters.open}
                 variant='btn-secondary shrink-0'
@@ -124,7 +104,6 @@ const Navbar = ({
         </div>
       </nav>
       <AddTaskModal
-        text='Add Task'
         handleAddTask={handleAddTask}
         tagsArray={handleFilters.tagsArray}
       />

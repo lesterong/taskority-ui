@@ -3,7 +3,7 @@
 }
 
 .combobox-input {
-  @apply px-3 py-2 rounded-lg border border-gray-900;
+  @apply h-[50px] px-3 py-2 rounded-lg border border-gray-900 focus:border-indigo-500 focus:outline-none;
 }
 
 [data-reach-combobox-popover] {
@@ -15,7 +15,7 @@
 }
 
 [data-reach-combobox-option] {
-  @apply cursor-pointer m-0 px-2 py-2;
+  @apply cursor-pointer m-0 p-2;
 }
 
 [data-reach-combobox-option][aria-selected="true"] {

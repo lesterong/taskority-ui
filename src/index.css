@@ -4,55 +4,65 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700&display=swap');
 
-body {
-  @apply text-gray-900 bg-white;
+@layer base {
+  body {
+    @apply text-gray-900 bg-white;
+  }
+
+  h1 {
+    @apply font-display font-bold text-3xl;
+  }
+  
+  h2 {
+    @apply font-display font-bold text-xl;
+  }
+  
+  h3 {
+    @apply font-sans font-medium text-sm text-gray-500;
+  }
+  
+  h4 {
+    @apply font-display font-semibold text-xs;
+  }
+  
+  p {
+    @apply font-sans font-normal;
+  }
+
+  label {
+    @apply w-full;
+  }
+
+  button {
+    @apply rounded-lg h-[50px] p-3 border transition-colors duration-200;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  mark {
+    @apply bg-sky-200;
+  }
+
+  input[type='password'],
+  input[type='email'],
+  input[type='search'],
+  input[type='text'],
+  input[type='datetime-local'],
+  textarea {
+    @apply h-[50px] rounded-lg py-2 px-3 border border-gray-900 bg-white
+    placeholder:text-gray-400 focus:outline-none focus:border-indigo-500;
+  }
+
+  input[type='checkbox'] {
+    @apply form-checkbox rounded-md focus:ring-indigo-500;
+  }
+
+  input[type="radio"] {
+    @apply form-radio focus:ring-indigo-500;
+  }
 }
 
-h1 {
-  @apply font-display font-bold text-3xl;
-}
-
-h2 {
-  @apply font-display font-bold text-xl;
-}
-
-h3 {
-  @apply font-sans font-medium text-sm text-gray-500;
-}
-
-h4 {
-  @apply font-display font-semibold text-xs;
-}
-
-p {
-  @apply font-sans font-normal;
-}
-
-input[type="text"], input[type="datetime-local"], input[type="search"], 
-input[type="email"], input[type="password"], select, textarea {
-  @apply rounded-lg py-2 px-3 border border-gray-900 bg-white
-  placeholder:text-gray-400
-  focus:outline-none focus:border-indigo-500;
-}
-
-input[type="checkbox"] {
-  @apply form-checkbox rounded-md;
-}
-
-input[type="radio"] {
-  @apply form-radio;
-}
-
-label {
-  @apply w-full;
-}
-
-button {
-  @apply rounded-lg h-[50px] p-3 border outline-indigo-500
-  transition-colors duration-100 border-gray-900;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.input-container {
-  @apply flex items-center space-x-2;
+@layer utilities {
+  .input-container {
+    @apply flex items-center space-x-2;
+  }
 }

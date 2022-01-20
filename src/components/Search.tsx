@@ -1,14 +1,10 @@
-import { HandleSearchProps } from '../types';
+import { HandleSearching } from '../types/Search';
 
-type SearchProps = {
-  handleSearch: HandleSearchProps;
-};
-
-const Search = ({ handleSearch }: SearchProps) => {
+const Search = ({ handleSearch }: { handleSearch: HandleSearching }) => {
   const { query, open, close, onChange } = handleSearch;
   return (
     <input
-      className='h-[50px] sm:w-[220px] w-full'
+      className='sm:w-[220px] w-full'
       type='search'
       placeholder='Search'
       value={query}

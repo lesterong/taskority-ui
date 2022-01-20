@@ -1,79 +1,28 @@
 import { Dialog } from '@reach/dialog';
-import { TaskProps } from '../types';
+import { EditingTaskModal } from '../types/TaskModal';
 import Button from './Button';
 import TagsInput from './TagsInput';
 import close from '../assets/close.svg';
+import remove from '../assets/remove.svg';
 import './Modal.css';
 
-type HandleUpdateTaskProps = {
-  taskTitle: string;
-  handleTaskTitle: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  taskDuedate: string;
-  handleTaskDuedate: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  taskTag: string;
-  handleTaskTag: (value: string) => void;
-  taskDescription: string;
-  handleTaskDescription: (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-  ) => void;
-  initValues: (task: TaskProps) => void;
-  taskComplete: boolean;
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  handleCancel: () => void;
-  handleDelete: () => void;
-  handleCheckbox: () => void;
-  open: () => void;
-  close: () => void;
-  isOpen: boolean;
-  isLoading: boolean;
-};
-
-type TaskModalProps = {
-  text: string;
-  handleUpdateTask: HandleUpdateTaskProps;
-  tagsArray: string[];
-};
-
-const EditTaskModal = ({
-  text,
-  handleUpdateTask,
-  tagsArray,
-}: TaskModalProps) => {
+const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
   return (
     <div>
       <Dialog
         isOpen={handleUpdateTask.isOpen}
         onDismiss={handleUpdateTask.handleCancel}
-        aria-label={text}
+        aria-label='Edit Task'
       >
         <form className='space-y-3' onSubmit={handleUpdateTask.handleSubmit}>
           <div className='form-title'>
-            <h1> {text} </h1>
+            <h1> Edit Task </h1>
             <Button
               onClick={handleUpdateTask.handleCancel}
               variant='btn-secondary'
               alt='Close task'
               icon={close}
             />
-          </div>
-
-          <div className='input-container'>
-            <input
-              type='checkbox'
-              checked={handleUpdateTask.taskComplete}
-              onChange={handleUpdateTask.handleCheckbox}
-              id='task-complete'
-            />
-            <label
-              htmlFor='task-complete'
-              className='flex items-center space-x-2'
-            >
-              {handleUpdateTask.taskComplete ? (
-                <p> Undo task? </p>
-              ) : (
-                <p> Complete task? </p>
-              )}
-            </label>
           </div>
 
           <div>
@@ -116,19 +65,28 @@ const EditTaskModal = ({
             />
           </div>
 
-          <div className='form-action'>
+          <div className='w-full mt-2 flex space-x-2'>
             <Button
-              variant='btn-primary'
+              variant='btn-primary flex-1'
               alt='Save task'
               text='Save'
               type='submit'
               loader={handleUpdateTask.isLoading}
             />
             <Button
+              onClick={handleUpdateTask.handleComplete}
+              variant='btn-secondary flex-1'
+              alt={
+                handleUpdateTask.taskComplete ? 'Undo task' : 'Complete task'
+              }
+              text={handleUpdateTask.taskComplete ? 'Undo' : 'Complete'}
+              loader={handleUpdateTask.isLoading}
+            />
+            <Button
               onClick={handleUpdateTask.handleDelete}
-              variant='btn-secondary'
+              variant='btn-secondary flex-none'
               alt='Delete task'
-              text='Delete'
+              icon={remove}
               loader={handleUpdateTask.isLoading}
             />
           </div>

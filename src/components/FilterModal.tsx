@@ -2,13 +2,13 @@ import { Dialog } from '@reach/dialog';
 import Button from './Button';
 import close from '../assets/close.svg';
 import './Modal.css';
-import { HandleFiltersProps } from '../types';
+import { HandleFiltering } from '../types/Filters';
 
 const FilterModal = ({
   handleFilters,
   text,
 }: {
-  handleFilters: HandleFiltersProps;
+  handleFilters: HandleFiltering;
   text: string;
 }) => {
   const {
@@ -108,16 +108,16 @@ const FilterModal = ({
             </fieldset>
           )}
 
-          <div className='form-action'>
+          <div className='w-full mt-2 flex sm:space-x-0 space-x-2'>
             <Button
               onClick={handleFilters.close}
-              variant='btn-primary sm:hidden'
+              variant='btn-primary sm:hidden flex-1'
               alt='Apply Filters'
               text='Apply'
             />
             <Button
               onClick={() => handleClear()}
-              variant='btn-secondary'
+              variant='btn-secondary flex-1'
               alt='Clear Filters'
               text='Clear'
               type='reset'

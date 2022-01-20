@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { UpdatingAuth } from '../types/Auth';
 import logo from '../assets/logo.svg';
 import logoText from '../assets/logoText.svg';
 import Button from '../components/Button';
-import './auth.css';
 import authService from '../services/auth';
 
-const Login = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
+const Login = ({ updateAuth }: UpdatingAuth) => {
   const [email, setEmail] = useState<string>('');
   const [emailRequired, setEmailRequired] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
@@ -14,11 +14,28 @@ const Login = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
+  const checkEmail = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (event.target.validity.valueMissing) {
+      setEmailRequired(true);
+      setEmailError(false);
+    } else if (event.target.validity.patternMismatch) {
+      setEmailRequired(false);
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+      setEmailRequired(false);
+    }
+  };
 
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
+  };
+  const checkPassword = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.validity.valueMissing
+      ? setPasswordRequired(true)
+      : setPasswordRequired(false);
   };
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,38 +62,20 @@ const Login = ({ updateAuth }: { updateAuth: (status: boolean) => void }) => {
       });
   };
 
-  const checkEmail = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.target.validity.valueMissing) {
-      setEmailRequired(true);
-      setEmailError(false);
-    } else if (event.target.validity.typeMismatch) {
-      setEmailRequired(false);
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-      setEmailRequired(false);
-    }
-  };
-
-  const checkPassword = (event: React.FocusEvent<HTMLInputElement>) => {
-    event.target.validity.valueMissing
-      ? setPasswordRequired(true)
-      : setPasswordRequired(false);
-  };
-
   return (
     <div>
-      <div className='auth-header'>
-        <img className='h-12' src={logo} alt='logo' />
+      <div className='bg-white border-b border-gray-200 flex py-3 mb-3 items-center justify-center'>
+        <img className='h-12 mr-2' src={logo} alt='logo' />
         <img className='h-9' src={logoText} alt='Taskority' />
       </div>
-      <div className='auth-container'>
+      <div className='container max-w-xl mx-auto px-4'>
         <h1 className='pb-3 text-2xl'> Login </h1>
         <form onSubmit={handleLogin}>
           <div className='mb-3'>
             <label htmlFor='email'> Email </label>
             <input
-              type='email'
+              type='text'
+              pattern='[^@\s]+@[^@\s]+\.[^@\s]+'
               id='email'
               placeholder='Email'
               value={email}

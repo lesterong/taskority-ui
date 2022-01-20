@@ -1,27 +1,21 @@
 import { Dialog } from '@reach/dialog';
-import { HandleAddTaskProps } from '../types';
+import { AddingTaskModal } from '../types/TaskModal';
 import Button from './Button';
 import TagsInput from './TagsInput';
 import close from '../assets/close.svg';
 import './Modal.css';
 
-type TaskModalProps = {
-  text: string;
-  handleAddTask: HandleAddTaskProps;
-  tagsArray: string[];
-};
-
-const AddTaskModal = ({ text, handleAddTask, tagsArray }: TaskModalProps) => {
+const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
   return (
     <div>
       <Dialog
         isOpen={handleAddTask.isOpen}
         onDismiss={handleAddTask.handleCancel}
-        aria-label={text}
+        aria-label='Add Task'
       >
         <form className='space-y-3' onSubmit={handleAddTask.handleSubmit}>
           <div className='form-title'>
-            <h1> {text} </h1>
+            <h1> Add Task </h1>
             <Button
               onClick={handleAddTask.handleCancel}
               variant='btn-secondary'
@@ -70,9 +64,9 @@ const AddTaskModal = ({ text, handleAddTask, tagsArray }: TaskModalProps) => {
             />
           </div>
 
-          <div className='form-action'>
+          <div className='w-full mt-2 flex space-x-2'>
             <Button
-              variant='btn-primary'
+              variant='btn-primary flex-1'
               alt='Add task'
               text='Save'
               type='submit'
@@ -80,7 +74,7 @@ const AddTaskModal = ({ text, handleAddTask, tagsArray }: TaskModalProps) => {
             />
             <Button
               onClick={handleAddTask.handleCancel}
-              variant='btn-secondary'
+              variant='btn-secondary flex-1'
               alt='Cancel add task'
               text='Cancel'
             />

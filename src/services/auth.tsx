@@ -1,9 +1,4 @@
-type UserObject = {
-  user: {
-    email: string;
-    password: string;
-  };
-};
+import { UserObject } from '../types/Auth';
 
 const baseUrl = 'https://taskority-api.herokuapp.com/api';
 
