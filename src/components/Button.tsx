@@ -1,15 +1,6 @@
+import { ButtonProps } from '../types/Button';
 import spinner from '../assets/spinner.svg';
 import './Button.css';
-
-type ButtonProps = {
-  onClick?: () => void;
-  variant: string;
-  alt: string;
-  icon?: string;
-  text?: string;
-  type?: 'button' | 'submit' | 'reset';
-  loader?: true | false;
-};
 
 const Button = ({
   onClick,

@@ -6,7 +6,7 @@ import search from '../assets/search.svg';
 import addTask from '../assets/addTask.svg';
 import close from '../assets/close.svg';
 import Button from './Button';
-import ButtonSettings from './ButtonSettings';
+import Settings from './Settings';
 import AddTaskModal from './AddTaskModal';
 import FilterModal from './FilterModal';
 import Search from './Search';
@@ -59,7 +59,7 @@ const Navbar = ({
                 text={numOfFilters}
               />
 
-              <ButtonSettings
+              <Settings
                 onClick={handleFilters.open}
                 text={numOfFilters}
                 numOfFilters={numOfFilters}

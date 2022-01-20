@@ -30,19 +30,15 @@ const Card = ({
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleUpdate.handleSubmit(task, () => setShowViewTask(false))();
+    handleUpdate.handleSubmit(task, () => setShowViewTask(false));
   };
 
   const handleDelete = () => {
     handleUpdate.handleDelete(task.id, () => setShowViewTask(false));
   };
 
-  const handleCheckbox = () => {
-    handleUpdate.handleCheckbox(task)();
-  };
-
   const handleComplete = () => {
-    handleUpdate.handleComplete(task, () => setShowViewTask(false))();
+    handleUpdate.handleComplete(task, () => setShowViewTask(false));
   };
 
   const handleUpdateTask = {
@@ -51,7 +47,6 @@ const Card = ({
     handleSubmit: handleSubmit,
     handleCancel: handleCancel,
     handleDelete: handleDelete,
-    handleCheckbox: handleCheckbox,
     handleComplete: handleComplete,
     open: () => setShowViewTask(true),
     close: () => setShowViewTask(false),
@@ -66,7 +61,7 @@ const Card = ({
             type='checkbox'
             aria-label={`Completed ${title}`}
             checked={completed}
-            onChange={handleUpdateTask.handleCheckbox}
+            onChange={handleUpdateTask.handleCheckbox(task)}
           />
         </div>
         <div

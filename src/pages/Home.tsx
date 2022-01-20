@@ -6,6 +6,7 @@ import {
   sortByDueDate,
   sortByDateCreated,
 } from '../utils/sortUtils';
+import { filterTasks } from '../utils/filterUtils';
 import Card from '../components/Card';
 import Sort from '../components/Sort';
 import Navbar from '../components/Navbar';
@@ -154,7 +155,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
       setTaskTag(task.tag);
       setTaskComplete(task.completed);
     },
-    handleSubmit: (task: Task, close: () => void) => () => {
+    handleSubmit: (task: Task, close: () => void) => {
       const updatedTask = {
         title: taskTitle,
         description: taskDescription,
@@ -211,20 +212,20 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         })
         .catch(() => notify('Unsuccessful, please try again.', 'failure'));
     },
-    handleComplete: (task: Task, close: () => void) => () => {
+    handleComplete: (task: Task, close: () => void) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { id, created_at, updated_at, ...taskParams } = task;
       const updatedTask = {
         ...taskParams,
         completed: !task.completed,
       };
+      setLoading(true);
       taskService
         .update(task.id, updatedTask)
         .then((returnedTask) => {
           setLoading(false);
           close();
           setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
-          handleTask.clearFields();
           notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
         })
         .catch(() => {
@@ -268,37 +269,16 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         ),
       );
     },
-    handleClear: () => setFilters(['Active Tasks']),
+    handleClear: () => setFilters(['All Tasks']),
   };
 
-  const filteredTasks = (tasks: Task[], filters: string[]) => {
-    const [taskStatus, ...tagsFilter] = filters;
-    const filterStatus =
-      taskStatus === 'All Tasks'
-        ? tasks
-        : taskStatus === 'Active Tasks'
-        ? tasks.filter((task: Task) => !task.completed)
-        : tasks.filter((task: Task) => task.completed);
+  const tasksToFilter = filterTasks(tasks, filters);
 
-    let filteredResults = tagsFilter.length === 0 ? filterStatus : [];
-
-    for (let i = 0; i < tagsFilter.length; i++) {
-      const res = filterStatus.filter(
-        (task: Task) => task.tag === tagsFilter[i],
+  const tasksToSearch = !query
+    ? tasksToFilter
+    : tasksToFilter.filter((task: Task) =>
+        task.title.toLowerCase().includes(query.toLowerCase()),
       );
-      filteredResults = filteredResults.concat(res);
-    }
-    return filteredResults;
-  };
-
-  const tasksToFilter = filteredTasks(tasks, filters);
-
-  const tasksToSearch =
-    query === ''
-      ? tasksToFilter
-      : tasksToFilter.filter((task: Task) =>
-          task.title.toLowerCase().includes(query.toLowerCase()),
-        );
 
   const tasksToShow =
     sortBy[0] === 'Date Created'
@@ -332,7 +312,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         {!loadingTasks && (
           <>
             <div className='flex justify-between my-3'>
-              {query === '' ? (
+              {!query ? (
                 <p> {filters[0]} </p>
               ) : (
                 <p>

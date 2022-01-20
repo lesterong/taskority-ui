@@ -3,11 +3,11 @@ import { HandleTask } from './TaskContext';
 
 export interface HandleUpdatingCard extends HandleTask {
   initValues: (task: Task) => void;
-  handleSubmit: (task: Task, close: () => void) => () => void;
+  handleSubmit: (task: Task, close: () => void) => void;
   handleCancel: () => void;
   handleDelete: (id: number, close: () => void) => void;
   handleCheckbox: (task: Task) => () => void;
-  handleComplete: (task: Task, close: () => void) => () => void;
+  handleComplete: (task: Task, close: () => void) => void;
 }
 
 export type CardProps = {

@@ -28,7 +28,6 @@ export interface HandleUpdatingTask extends HandleTask {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   handleCancel: () => void;
   handleDelete: () => void;
-  handleCheckbox: () => void;
   handleComplete: () => void;
   open: () => void;
   close: () => void;

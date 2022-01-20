@@ -10,7 +10,7 @@ const Search = ({ handleSearch }: { handleSearch: HandleSearching }) => {
       value={query}
       onChange={onChange}
       autoFocus
-      onBlur={query === '' ? close : open}
+      onBlur={!query ? close : open}
     />
   );
 };

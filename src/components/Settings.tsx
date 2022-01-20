@@ -1,6 +1,6 @@
 import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 import { useNavigate } from 'react-router-dom';
-import { HandleViewing } from '../types/View';
+import { SettingsProps } from '../types/Settings';
 import filter from '../assets/filter.svg';
 import logout from '../assets/logout.svg';
 import view from '../assets/view.svg';
@@ -8,23 +8,14 @@ import settings from '../assets/settings.svg';
 import authService from '../services/auth';
 import './Button.css';
 
-type ButtonSettingsProps = {
-  onClick: () => void;
-  text: string;
-  numOfFilters: string;
-  viewportWidth: number;
-  handleView: HandleViewing;
-  updateAuth: (status: boolean) => void;
-};
-
-const ButtonSettings = ({
+const Settings = ({
   onClick,
   text,
   numOfFilters,
   viewportWidth,
   handleView,
   updateAuth,
-}: ButtonSettingsProps) => {
+}: SettingsProps) => {
   const num = numOfFilters ? `(${numOfFilters})` : '';
   const mobile = viewportWidth < 540;
 
@@ -62,4 +53,4 @@ const ButtonSettings = ({
   );
 };
 
-export default ButtonSettings;
+export default Settings;

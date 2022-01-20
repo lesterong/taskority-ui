@@ -9,11 +9,3 @@
 [data-reach-dialog-content] {
   @apply bg-white xs:p-6 p-4 sm:min-w-[500px] min-w-full min-h-full float-right;
 }
-
-form input, form textarea {
-  @apply w-full;
-}
-
-.form-title {
-  @apply flex justify-between pb-3 items-center border-b border-gray-400;
-}

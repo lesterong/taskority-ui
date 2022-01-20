@@ -15,28 +15,30 @@ type TagsInputProps = {
 };
 
 const TagsInput = ({ tagsArray, value, onEvent }: TagsInputProps) => {
-  const tagsToShow =
-    value === ''
-      ? tagsArray.filter((elem: string) => elem !== '')
-      : tagsArray
-          .filter((elem: string) => elem !== '')
-          .filter((elem: string) =>
-            elem.toLowerCase().includes(value.toLowerCase()),
-          );
+  const tagsToShow = !value
+    ? tagsArray.filter((elem: string) => elem !== '')
+    : tagsArray
+        .filter((elem: string) => elem !== '')
+        .filter((elem: string) =>
+          elem.toLowerCase().includes(value.toLowerCase()),
+        );
 
   return (
     <div>
       <p> Tags </p>
       <Combobox openOnFocus onSelect={(item) => onEvent(item)}>
         <ComboboxInput
-          className='combobox-input'
+          className={`
+            h-[50px] px-3 py-2 rounded-lg border border-gray-900 
+            focus:border-indigo-500 focus:outline-none
+          `}
           value={value}
           placeholder='Select a tag'
           onChange={(event) => onEvent(event.target.value)}
         />
         <ComboboxPopover>
           <ComboboxList>
-            {value !== '' &&
+            {value &&
               tagsToShow
                 .map((elem: string) => elem.toLowerCase())
                 .indexOf(value.toLowerCase()) === -1 && (
@@ -62,7 +64,7 @@ const TagsInput = ({ tagsArray, value, onEvent }: TagsInputProps) => {
                   onTouchEnd={() => onEvent(item)}
                 />
               ))}
-            {tagsArray.length === 0 && value === '' && (
+            {tagsToShow.length === 0 && !value && (
               <p className='text-gray-400 px-2 py-2'> Create a new tag! </p>
             )}
           </ComboboxList>

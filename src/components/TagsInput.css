@@ -2,10 +2,6 @@
   --reach-combobox: 1;
 }
 
-.combobox-input {
-  @apply h-[50px] px-3 py-2 rounded-lg border border-gray-900 focus:border-indigo-500 focus:outline-none;
-}
-
 [data-reach-combobox-popover] {
   @apply rounded-lg border border-gray-200 mt-1 shadow-sm bg-white;
 }

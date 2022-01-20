@@ -14,7 +14,7 @@ const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
         aria-label='Add Task'
       >
         <form className='space-y-3' onSubmit={handleAddTask.handleSubmit}>
-          <div className='form-title'>
+          <div className='pb-3 flex justify-between items-center border-b border-gray-400'>
             <h1> Add Task </h1>
             <Button
               onClick={handleAddTask.handleCancel}

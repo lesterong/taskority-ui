@@ -15,7 +15,7 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
         aria-label='Edit Task'
       >
         <form className='space-y-3' onSubmit={handleUpdateTask.handleSubmit}>
-          <div className='form-title'>
+          <div className='pb-3 flex justify-between items-center border-b border-gray-400'>
             <h1> Edit Task </h1>
             <Button
               onClick={handleUpdateTask.handleCancel}
@@ -87,7 +87,6 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
               variant='btn-secondary flex-none'
               alt='Delete task'
               icon={remove}
-              loader={handleUpdateTask.isLoading}
             />
           </div>
         </form>

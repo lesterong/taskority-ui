@@ -34,7 +34,7 @@ const FilterModal = ({
             event.preventDefault();
           }}
         >
-          <div className='form-title'>
+          <div className='pb-3 flex justify-between items-center border-b border-gray-400'>
             <h1> {text} </h1>
             <Button
               onClick={handleFilters.close}

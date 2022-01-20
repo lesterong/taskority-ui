@@ -1,11 +1,7 @@
 import Alert from '@reach/alert';
+import { NotificationProps } from '../types/Notification';
 
-type NotifProps = {
-  message: string;
-  type: 'success' | 'failure' | null;
-};
-
-const Notification = ({ message, type }: NotifProps) => {
+const Notification = ({ message, type }: NotificationProps) => {
   const color = type === 'success' ? 'border-green-400' : 'border-red-400';
   return (
     <>
