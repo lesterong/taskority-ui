@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { HandleFiltering } from '../types/Filters';
 import { CloseIcon } from '../assets/CloseIcon';
 import Button from './Button';
@@ -24,6 +24,20 @@ const FilterModal = ({
   const checkCompleted = filters[0] === 'Completed Tasks' ? true : false;
   const checkTags = (tag: string) => filters.includes(tag);
 
+  const shouldReduceMotion = useReducedMotion();
+  let variants;
+  if (!shouldReduceMotion) {
+    variants = {
+      open: { x: 0 },
+      close: { x: 500 },
+    };
+  } else {
+    variants = {
+      open: { opacity: 1 },
+      close: { opacity: 1 },
+    };
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -41,9 +55,10 @@ const FilterModal = ({
           <motion.div
             className='modal-content'
             key='modal-content'
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            exit={{ x: 500 }}
+            initial='close'
+            animate='open'
+            exit='close'
+            variants={variants}
             onClick={(event) => event.stopPropagation()}
             transition={{ type: 'spring', bounce: 0, duration: 0.4, repeat: 0 }}
           >

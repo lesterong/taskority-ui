@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { AddingTaskModal } from '../types/TaskModal';
 import { CloseIcon } from '../assets/CloseIcon';
 import Button from './Button';
@@ -20,6 +20,20 @@ const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
     isLoading,
   } = handleAddTask;
 
+  const shouldReduceMotion = useReducedMotion();
+  let variants;
+  if (!shouldReduceMotion) {
+    variants = {
+      open: { x: 0 },
+      close: { x: 500 },
+    };
+  } else {
+    variants = {
+      open: { opacity: 1 },
+      close: { opacity: 0 },
+    };
+  }
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -37,9 +51,10 @@ const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
           <motion.div
             className='modal-content'
             key='modal-content'
-            initial={{ x: 500 }}
-            animate={{ x: 0 }}
-            exit={{ x: 500 }}
+            initial='close'
+            animate='open'
+            exit='close'
+            variants={variants}
             onClick={(event) => event.stopPropagation()}
             transition={{ type: 'spring', bounce: 0, duration: 0.4, repeat: 0 }}
           >
