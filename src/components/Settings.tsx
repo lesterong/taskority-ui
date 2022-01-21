@@ -10,7 +10,6 @@ import './Dropdown.css';
 
 const Settings = ({
   onClick,
-  text,
   numOfFilters,
   viewportWidth,
   handleView,
@@ -29,9 +28,9 @@ const Settings = ({
 
   return (
     <Menu>
-      <MenuButton className={`btn-secondary flex justify-center`}>
+      <MenuButton className='btn-secondary flex justify-center'>
         <SettingsIcon />
-        {mobile && text && <p className='pl-1'> {text} </p>}
+        <p className='pl-1 sm:hidden block'> {numOfFilters} </p>
       </MenuButton>
       <MenuList>
         {mobile && (

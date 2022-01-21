@@ -57,7 +57,6 @@ const Navbar = ({
 
               <Settings
                 onClick={handleFilters.open}
-                text={numOfFilters}
                 numOfFilters={numOfFilters}
                 viewportWidth={viewportWidth}
                 handleView={handleView}
