@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import { DateTime, DurationLikeObject } from 'luxon';
 import { CardProps } from '../types/Card';
 import EditTaskModal from './EditTaskModal';
 import Highlight from './Highlight';
-import './Card.css';
-import { DateTime } from 'luxon';
 
 const Card = ({
   task,
@@ -18,10 +17,9 @@ const Card = ({
   const now: DateTime = DateTime.now();
   const due: DateTime = DateTime.fromISO(duedate);
   const overdue = !completed && now > due ? 'text-red-600' : '';
-  const diffObj = now.diff(due);
-  const diffDays = Math.abs(Math.trunc(diffObj.as('days')));
-  const diffHours = Math.abs(Math.trunc(diffObj.as('hours')));
-  const diffMinutes = Math.abs(Math.trunc(diffObj.as('minutes')));
+  const durationDiff = (period: keyof DurationLikeObject) => {
+    return Math.abs(Math.trunc(now.diff(due).as(period)));
+  };
 
   const handleCancel = () => {
     handleUpdate.handleCancel();
@@ -78,7 +76,7 @@ const Card = ({
             <Highlight query={query} text={title} />
           </h2>
           <div className={isCompact ? 'flex items-center space-x-2' : ''}>
-            {task.duedate && (
+            {duedate && (
               <h3 className={overdue}>
                 {due.hasSame(now, 'year')
                   ? due.toFormat('dd LLL, HH:mm a')
@@ -86,19 +84,19 @@ const Card = ({
                 {!isCompact &&
                   !completed &&
                   (now < due
-                    ? diffDays <= 1
-                      ? diffHours <= 1
-                        ? ` (In ${diffMinutes} minutes)`
-                        : ` (In ${diffHours} hours)`
-                      : ` (In ${diffDays} days)`
-                    : diffDays <= 1
-                    ? diffHours <= 1
-                      ? ` (${diffMinutes} minutes ago)`
-                      : ` (${diffHours} hours ago)`
-                    : ` (${diffDays} days ago)`)}
+                    ? durationDiff('days') <= 1
+                      ? durationDiff('hours') <= 1
+                        ? ` (In ${durationDiff('minutes')} minutes)`
+                        : ` (In ${durationDiff('hours')} hours)`
+                      : ` (In ${durationDiff('days')} days)`
+                    : durationDiff('days') <= 1
+                    ? durationDiff('hours') <= 1
+                      ? ` (${durationDiff('minutes')} minutes ago)`
+                      : ` (${durationDiff('hours')} hours ago)`
+                    : ` (${durationDiff('days')} days ago)`)}
               </h3>
             )}
-            {task.tag && (
+            {tag && (
               <div className='px-2 py-1 bg-indigo-100 rounded-full w-max'>
                 <h4> {tag} </h4>
               </div>
@@ -106,7 +104,6 @@ const Card = ({
           </div>
         </div>
       </div>
-
       <EditTaskModal
         handleUpdateTask={handleUpdateTask}
         tagsArray={tagsArray}

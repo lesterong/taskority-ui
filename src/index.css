@@ -47,6 +47,7 @@
   input[type='search'],
   input[type='text'],
   input[type='datetime-local'],
+  input[role='combobox'],
   textarea {
     @apply h-[50px] rounded-lg py-2 px-3 border border-gray-900 bg-white
     placeholder:text-gray-400 focus:outline-none focus:border-indigo-500;
@@ -76,5 +77,34 @@
 
   .modal-content {
     @apply bg-white p-6 sm:w-[500px] w-full min-h-full float-right;
+  }
+
+  .card-base {
+    @apply bg-white hover:bg-gray-100 items-center flex border-gray-300;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card-wide {
+    @apply space-x-3 py-3 px-4 mt-3 rounded-md border;
+  }
+
+  .card-compact {
+    @apply space-x-2 py-1 px-4 border-b;
+  }
+
+  .title-complete {
+    @apply line-through text-gray-500;
+  }
+
+  .title-complete mark {
+    @apply text-gray-500;
+  }
+
+  .btn-primary {
+  @apply border-transparent bg-sky-100 hover:bg-sky-200 active:bg-sky-300;
+  }
+
+  .btn-secondary {
+    @apply border-gray-900 hover:bg-gray-100 active:bg-gray-200;
   }
 }

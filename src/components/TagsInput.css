@@ -19,7 +19,7 @@
 }
 
 [data-reach-combobox-option]:hover {
-  @apply bg-sky-100;
+  @apply bg-sky-100 first:rounded-t-md last:rounded-b-md;
 }
 
 [data-reach-combobox-option][aria-selected="true"]:hover {

@@ -3,13 +3,7 @@ import { HandleFiltering } from '../types/Filters';
 import { CloseIcon } from '../assets/CloseIcon';
 import Button from './Button';
 
-const FilterModal = ({
-  handleFilters,
-  text,
-}: {
-  handleFilters: HandleFiltering;
-  text: string;
-}) => {
+const FilterModal = ({ handleFilters }: { handleFilters: HandleFiltering }) => {
   const {
     tagsArray,
     isOpen,
@@ -19,9 +13,7 @@ const FilterModal = ({
     handleClear,
   } = handleFilters;
 
-  const checkAll = filters[0] === 'All Tasks' ? true : false;
-  const checkActive = filters[0] === 'Active Tasks' ? true : false;
-  const checkCompleted = filters[0] === 'Completed Tasks' ? true : false;
+  const checkStatus = (taskStatus: string) => filters[0].includes(taskStatus);
   const checkTags = (tag: string) => filters.includes(tag);
 
   const shouldReduceMotion = useReducedMotion();
@@ -45,7 +37,7 @@ const FilterModal = ({
           aria-modal={true}
           aria-hidden={!isOpen}
           className='modal-bg'
-          key='modal-bg'
+          key='filter-modal-bg'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -54,7 +46,7 @@ const FilterModal = ({
         >
           <motion.div
             className='modal-content'
-            key='modal-content'
+            key='filter-modal-content'
             initial='close'
             animate='open'
             exit='close'
@@ -69,7 +61,7 @@ const FilterModal = ({
               }}
             >
               <div className='pb-3 flex justify-between items-center border-b border-gray-400'>
-                <h1> {text} </h1>
+                <h1> Filters </h1>
                 <Button
                   onClick={handleFilters.close}
                   variant='btn-secondary'
@@ -80,7 +72,7 @@ const FilterModal = ({
 
               <fieldset>
                 <legend>
-                  <b>{'Task Status'}</b>
+                  <b>Task Status</b>
                 </legend>
                 <div className='input-container'>
                   <input
@@ -88,7 +80,7 @@ const FilterModal = ({
                     name='Task Status'
                     id='All Tasks'
                     value='All Tasks'
-                    defaultChecked={checkAll}
+                    defaultChecked={checkStatus('All Tasks')}
                     onChange={handleTaskStatus}
                   />
                   <label htmlFor='All Tasks'> All Tasks </label>
@@ -100,7 +92,7 @@ const FilterModal = ({
                     name='Task Status'
                     id='Active Tasks'
                     value='Active Tasks'
-                    defaultChecked={checkActive}
+                    defaultChecked={checkStatus('Active Tasks')}
                     onChange={handleTaskStatus}
                   />
                   <label htmlFor='Active Tasks'> Active Tasks </label>
@@ -112,7 +104,7 @@ const FilterModal = ({
                     name='Task Status'
                     id='Completed Tasks'
                     value='Completed Tasks'
-                    defaultChecked={checkCompleted}
+                    defaultChecked={checkStatus('Completed Tasks')}
                     onChange={handleTaskStatus}
                   />
                   <label htmlFor='Completed Tasks'> Completed Tasks </label>

@@ -1,9 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { EditingTaskModal } from '../types/TaskModal';
-import Button from './Button';
-import TagsInput from './TagsInput';
 import { CloseIcon } from '../assets/CloseIcon';
 import { DeleteIcon } from '../assets/DeleteIcon';
+import Button from './Button';
+import TagsInput from './TagsInput';
 
 const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
   const {
@@ -45,7 +45,7 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
           aria-modal={true}
           aria-hidden={!isOpen}
           className='modal-bg'
-          key='modal-bg'
+          key='edit-modal-bg'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -54,7 +54,7 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
         >
           <motion.div
             className='modal-content'
-            key='modal-content'
+            key='edit-modal-content'
             initial='close'
             animate='open'
             exit='close'

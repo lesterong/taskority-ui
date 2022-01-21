@@ -6,7 +6,7 @@ import { SettingsIcon } from '../assets/SettingsIcon';
 import { LogoutIcon } from '../assets/LogoutIcon';
 import { FilterIcon } from '../assets/FilterIcon';
 import authService from '../services/auth';
-import './Button.css';
+import './Dropdown.css';
 
 const Settings = ({
   onClick,
@@ -35,7 +35,7 @@ const Settings = ({
       </MenuButton>
       <MenuList>
         {mobile && (
-          <MenuItem className='hidden' onSelect={onClick}>
+          <MenuItem onSelect={onClick}>
             <FilterIcon />
             <p>Filters {num}</p>
           </MenuItem>

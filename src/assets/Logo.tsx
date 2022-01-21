@@ -1,5 +1,4 @@
 export const Logo = ({ style }: { style: string }) => {
-  console.log(style);
   return (
     <svg
       viewBox='0 0 24 24'

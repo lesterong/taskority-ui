@@ -1,6 +1,5 @@
 import { ButtonProps } from '../types/Button';
 import { Spinner } from '../assets/Spinner';
-import './Button.css';
 
 const Button = ({
   onClick,

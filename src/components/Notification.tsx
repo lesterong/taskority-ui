@@ -14,7 +14,7 @@ const Notification = ({ message, type }: NotificationProps) => {
           transition={{ type: 'spring', bounce: 0.1, duration: 0.2, repeat: 0 }}
           className={`
             bg-white shadow-lg border-l-4 rounded w-max px-6
-            py-3 fixed mx-auto bottom-4 left-0 right-0 z-10 ${color}
+            py-3 fixed mx-auto bottom-4 inset-x-0 z-10 ${color}
           `}
         >
           <p className='text-center'>{message}</p>

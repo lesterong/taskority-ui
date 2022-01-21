@@ -6,13 +6,8 @@ import {
   ComboboxOption,
   ComboboxOptionText,
 } from '@reach/combobox';
+import { TagsInputProps } from '../types/TagsInput';
 import './TagsInput.css';
-
-type TagsInputProps = {
-  tagsArray: string[];
-  value: string;
-  onEvent: (value: string) => void;
-};
 
 const TagsInput = ({ tagsArray, value, onEvent }: TagsInputProps) => {
   const tagsToShow = !value
@@ -28,10 +23,6 @@ const TagsInput = ({ tagsArray, value, onEvent }: TagsInputProps) => {
       <p> Tags </p>
       <Combobox openOnFocus onSelect={(item) => onEvent(item)}>
         <ComboboxInput
-          className={`
-            h-[50px] px-3 py-2 rounded-lg border border-gray-900 
-            focus:border-indigo-500 focus:outline-none
-          `}
           value={value}
           placeholder='Select a tag'
           onChange={(event) => onEvent(event.target.value)}
@@ -65,7 +56,7 @@ const TagsInput = ({ tagsArray, value, onEvent }: TagsInputProps) => {
                 />
               ))}
             {tagsToShow.length === 0 && !value && (
-              <p className='text-gray-400 px-2 py-2'> Create a new tag! </p>
+              <p className='text-gray-400 p-2'> Create a new tag! </p>
             )}
           </ComboboxList>
         </ComboboxPopover>

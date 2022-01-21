@@ -10,7 +10,7 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
   const [validateEmail, setValidateEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [emailRequired, setEmailRequired] = useState<boolean>(false);
-  const [emailError, setEmailError] = useState<boolean>(false);
+  const [emailPattern, setEmailPattern] = useState<boolean>(false);
   const [invalidError, setInvalidError] = useState<boolean>(false);
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValidateEmail(true);
@@ -20,13 +20,13 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
     if (validateEmail) {
       if (event.target.validity.valueMissing) {
         setEmailRequired(true);
-        setEmailError(false);
+        setEmailPattern(false);
       } else if (event.target.validity.patternMismatch) {
         setEmailRequired(false);
-        setEmailError(true);
+        setEmailPattern(true);
       } else {
-        setEmailError(false);
         setEmailRequired(false);
+        setEmailPattern(false);
       }
     }
   };
@@ -77,12 +77,12 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
         <LogoText style='h-9' />
       </div>
       <div className='container max-w-xl mx-auto px-4'>
-        <h1 className='pb-3 text-2xl'> Login </h1>
+        <h1 className='mb-3 text-2xl'> Login </h1>
         <form onSubmit={handleLogin}>
           <div className='mb-3'>
             <label htmlFor='email'> Email </label>
             <input
-              type='text'
+              type='email'
               pattern='[^@\s]+@[^@\s]+\.[^@\s]+'
               id='email'
               placeholder='Email'
@@ -94,7 +94,7 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
             {validateEmail && emailRequired && (
               <h3 className='text-red-600'> Please enter an email. </h3>
             )}
-            {validateEmail && emailError && (
+            {validateEmail && emailPattern && (
               <h3 className='text-red-600'> Please enter a valid email. </h3>
             )}
           </div>

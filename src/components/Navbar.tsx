@@ -103,7 +103,7 @@ const Navbar = ({
         handleAddTask={handleAddTask}
         tagsArray={handleFilters.tagsArray}
       />
-      <FilterModal text='Filters' handleFilters={handleFilters} />
+      <FilterModal handleFilters={handleFilters} />
     </div>
   );
 };

@@ -20,7 +20,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
   const [viewportWidth, setViewportWidth] = useState<number>(window.innerWidth);
   const [compactView, setCompactView] = useState<boolean>(true);
   const [query, setQuery] = useState<string>('');
-  const [filters, setFilters] = useState<string[]>(['All Tasks']);
+  const [filters, setFilters] = useState<string[]>(['Active Tasks']);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingTasks, setLoadingTasks] = useState<boolean>(true);
@@ -229,14 +229,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
             () => setTasks(tasks.map((t) => (t === task ? returnedTask : t))),
             400,
           );
-          setTimeout(
-            () =>
-              notify(
-                task.completed ? 'Task undone' : 'Task completed!',
-                'success',
-              ),
-            400,
-          );
+          notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
         })
         .catch(() => {
           setLoading(false);
@@ -279,17 +272,15 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         ),
       );
     },
-    handleClear: () => setFilters(['All Tasks']),
+    handleClear: () => setFilters(['Active Tasks']),
   };
 
   const tasksToFilter = filterTasks(tasks, filters);
-
   const tasksToSearch = !query
     ? tasksToFilter
     : tasksToFilter.filter((task: Task) =>
         task.title.toLowerCase().includes(query.toLowerCase()),
       );
-
   const tasksToShow =
     sortBy[0] === 'Date Created'
       ? tasksToSearch.sort(sortByDateCreated(sortBy[1]))
@@ -311,7 +302,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
       {loadingTasks && (
         <div className='mt-4'>
           <Spinner style='mx-auto h-12' />
-          <p className='text-center'> Loading Tasks. </p>
+          <p className='text-center'> Loading Tasks </p>
         </div>
       )}
       <div className='container max-w-4xl mx-auto px-4 last:mb-4'>

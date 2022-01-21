@@ -1,7 +1,7 @@
 import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 import { motion } from 'framer-motion';
 import { HandleSorting } from '../types/Sort';
-import './Button.css';
+import './Dropdown.css';
 
 const Sort = ({ handleSort }: { handleSort: HandleSorting }) => {
   const { sortBy, onSelectSort, onChangeOrder } = handleSort;
@@ -49,7 +49,7 @@ const Sort = ({ handleSort }: { handleSort: HandleSorting }) => {
                 Ascending
               </label>
             </div>
-            <div className='input-container hover:bg-sky-200'>
+            <div className='input-container hover:bg-sky-100 rounded-b-sm'>
               <input
                 className='ml-4'
                 type='radio'

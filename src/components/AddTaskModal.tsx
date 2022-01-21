@@ -113,7 +113,7 @@ const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
                 <Button
                   variant='btn-primary flex-1'
                   alt='Add task'
-                  text='Save'
+                  text='Add'
                   type='submit'
                   loader={isLoading}
                 />
