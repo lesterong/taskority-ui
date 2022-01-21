@@ -1,14 +1,12 @@
-import Alert from '@reach/alert';
 import { motion, AnimatePresence } from 'framer-motion';
 import { NotificationProps } from '../types/Notification';
 
 const Notification = ({ message, type }: NotificationProps) => {
   const color = type === 'success' ? 'border-green-400' : 'border-red-400';
-  const MotionAlert = motion(Alert);
   return (
     <AnimatePresence>
       {type && (
-        <MotionAlert
+        <motion.div
           key='alert'
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -20,7 +18,7 @@ const Notification = ({ message, type }: NotificationProps) => {
           `}
         >
           <p className='text-center'>{message}</p>
-        </MotionAlert>
+        </motion.div>
       )}
     </AnimatePresence>
   );

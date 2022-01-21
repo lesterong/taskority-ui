@@ -29,3 +29,4 @@ yarn
 2. TailwindCSS
 3. Reach UI
 4. Luxon
+5. Framer Motion

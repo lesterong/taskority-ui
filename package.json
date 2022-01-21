@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@reach/alert": "^0.16.0",
     "@reach/combobox": "^0.16.5",
     "@reach/menu-button": "^0.16.2",
     "@tailwindcss/forms": "^0.4.0",
@@ -31,7 +30,7 @@
     "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "DISABLE_ESLINT_PLUGIN=true react-scripts test",
-    "eject": "DISABLE_ESLINT_PLUGIN=true react-scripts eject",
+    "eject": "react-scripts eject",
     "server": "json-server -p3001 --watch db.json"
   },
   "browserslist": {
