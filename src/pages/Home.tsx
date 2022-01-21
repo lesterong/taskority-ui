@@ -46,9 +46,9 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
     setNotifMessage(message);
     setNotifType(type);
     setTimeout(() => {
-      setNotifMessage('');
       setNotifType(null);
-    }, 3500);
+      setNotifMessage('');
+    }, 4000);
   };
 
   const getTasks = () => {
@@ -190,7 +190,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
           close();
           setTasks(tasks.filter((t) => t.id !== id));
           handleTask.clearFields();
-          notify('Task deleted successfully', 'success');
+          notify('Task deleted', 'success');
         })
         .catch(() => {
           setLoading(false);
@@ -210,7 +210,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
           setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
           notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
         })
-        .catch(() => notify('Unsuccessful, please try again.', 'failure'));
+        .catch(() => notify('Unsuccessful, please try again', 'failure'));
     },
     handleComplete: (task: Task, close: () => void) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -225,8 +225,18 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         .then((returnedTask) => {
           setLoading(false);
           close();
-          setTasks(tasks.map((t) => (t === task ? returnedTask : t)));
-          notify(task.completed ? 'Task undone' : 'Task completed!', 'success');
+          setTimeout(
+            () => setTasks(tasks.map((t) => (t === task ? returnedTask : t))),
+            400,
+          );
+          setTimeout(
+            () =>
+              notify(
+                task.completed ? 'Task undone' : 'Task completed!',
+                'success',
+              ),
+            400,
+          );
         })
         .catch(() => {
           setLoading(false);
@@ -324,7 +334,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
             </div>
             {query && tasksToShow.length === 0 ? (
               <p>
-                No results for &apos;<b>{query}</b>.&nbsp;
+                No results for &apos;<b>{query}</b>&apos;.&nbsp;
               </p>
             ) : tasksToShow.length === 0 ? (
               tagsArray.length === 0 ? (

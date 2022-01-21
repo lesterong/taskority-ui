@@ -1,13 +1,27 @@
 import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
+import { motion } from 'framer-motion';
 import { HandleSorting } from '../types/Sort';
 import './Button.css';
 
 const Sort = ({ handleSort }: { handleSort: HandleSorting }) => {
   const { sortBy, onSelectSort, onChangeOrder } = handleSort;
+  const variants = {
+    Ascending: { rotate: 0 },
+    Descending: { rotate: 180 },
+  };
+
   return (
     <Menu>
-      <MenuButton className='border-0 p-0 h-auto shrink-0 ml-2 outline-none'>
-        <p>{`Sort: ${sortBy[0]} ${sortBy[1] === 'Ascending' ? '↑' : '↓'} `}</p>
+      <MenuButton className='border-0 p-0 h-auto shrink-0 ml-2 outline-none flex'>
+        <p>{`Sort: ${sortBy[0]}`}</p>
+        <motion.div
+          className='ml-1 -z-10'
+          initial={sortBy[1]}
+          animate={sortBy[1]}
+          variants={variants}
+        >
+          ↑
+        </motion.div>
       </MenuButton>
       <MenuList>
         <p className='pl-4 pt-3 text-sm text-gray-400'> Sort By </p>

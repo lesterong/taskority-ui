@@ -7,42 +7,57 @@ import Button from '../components/Button';
 import authService from '../services/auth';
 
 const Signup = ({ updateAuth }: UpdatingAuth) => {
+  const [validateEmail, setValidateEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [emailRequired, setEmailRequired] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [emailDuplicate, setEmailDuplicate] = useState<boolean>(false);
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValidateEmail(true);
     setEmail(event.target.value);
   };
   const checkEmail = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.target.validity.valueMissing) {
-      setEmailRequired(true);
-      setEmailError(false);
-      setEmailDuplicate(false);
-    } else if (event.target.validity.patternMismatch) {
-      setEmailRequired(false);
-      setEmailError(true);
-      setEmailDuplicate(false);
-    } else {
-      setEmailRequired(false);
-      setEmailError(false);
-      setEmailDuplicate(false);
+    if (validateEmail) {
+      if (event.target.validity.valueMissing) {
+        setEmailRequired(true);
+        setEmailError(false);
+        setEmailDuplicate(false);
+      } else if (event.target.validity.patternMismatch) {
+        setEmailRequired(false);
+        setEmailError(true);
+        setEmailDuplicate(false);
+      } else {
+        setEmailRequired(false);
+        setEmailError(false);
+        setEmailDuplicate(false);
+      }
     }
   };
 
+  const [validatePassword, setValidatePassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
+  const [passwordMin, setPasswordMin] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValidatePassword(true);
     setPassword(event.target.value);
   };
   const checkPassword = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.target.validity.valueMissing) {
-      setPasswordError(false);
-      setPasswordRequired(true);
-    } else {
-      setPasswordError(false);
-      setPasswordRequired(false);
+    if (validatePassword) {
+      if (event.target.validity.valueMissing) {
+        setPasswordError(false);
+        setPasswordMin(false);
+        setPasswordRequired(true);
+      } else if (password.length < 8) {
+        setPasswordError(false);
+        setPasswordMin(true);
+        setPasswordRequired(false);
+      } else {
+        setPasswordError(false);
+        setPasswordMin(false);
+        setPasswordRequired(false);
+      }
     }
   };
 
@@ -100,13 +115,13 @@ const Signup = ({ updateAuth }: UpdatingAuth) => {
               onBlur={checkEmail}
               required
             />
-            {emailRequired && (
+            {validateEmail && emailRequired && (
               <h3 className='text-red-600'> Please enter an email. </h3>
             )}
-            {emailError && (
+            {validateEmail && emailError && (
               <h3 className='text-red-600'> Please enter a valid email. </h3>
             )}
-            {emailDuplicate && (
+            {validateEmail && emailDuplicate && (
               <h3 className='text-red-600'> Email is already in use. </h3>
             )}
           </div>
@@ -122,10 +137,15 @@ const Signup = ({ updateAuth }: UpdatingAuth) => {
               onBlur={checkPassword}
               required
             />
-            {passwordRequired && (
+            {validatePassword && passwordRequired && (
               <h3 className='text-red-600'> Please enter a password. </h3>
             )}
-            {passwordError && (
+            {validatePassword && passwordMin && (
+              <h3 className='text-red-600'>
+                Password must be at least 8 characters.
+              </h3>
+            )}
+            {validatePassword && passwordError && (
               <h3 className='text-red-600'>
                 Please use a stronger password with at least 8 characters, a mix
                 of uppercase and lowercase letters and a number.

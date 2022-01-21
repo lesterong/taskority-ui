@@ -7,35 +7,43 @@ import Button from '../components/Button';
 import authService from '../services/auth';
 
 const Login = ({ updateAuth }: UpdatingAuth) => {
+  const [validateEmail, setValidateEmail] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [emailRequired, setEmailRequired] = useState<boolean>(false);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [invalidError, setInvalidError] = useState<boolean>(false);
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValidateEmail(true);
     setEmail(event.target.value);
   };
   const checkEmail = (event: React.FocusEvent<HTMLInputElement>) => {
-    if (event.target.validity.valueMissing) {
-      setEmailRequired(true);
-      setEmailError(false);
-    } else if (event.target.validity.patternMismatch) {
-      setEmailRequired(false);
-      setEmailError(true);
-    } else {
-      setEmailError(false);
-      setEmailRequired(false);
+    if (validateEmail) {
+      if (event.target.validity.valueMissing) {
+        setEmailRequired(true);
+        setEmailError(false);
+      } else if (event.target.validity.patternMismatch) {
+        setEmailRequired(false);
+        setEmailError(true);
+      } else {
+        setEmailError(false);
+        setEmailRequired(false);
+      }
     }
   };
 
+  const [validatePassword, setValidatePassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>('');
   const [passwordRequired, setPasswordRequired] = useState<boolean>(false);
   const handlePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValidatePassword(true);
     setPassword(event.target.value);
   };
   const checkPassword = (event: React.FocusEvent<HTMLInputElement>) => {
-    event.target.validity.valueMissing
-      ? setPasswordRequired(true)
-      : setPasswordRequired(false);
+    if (validatePassword) {
+      event.target.validity.valueMissing
+        ? setPasswordRequired(true)
+        : setPasswordRequired(false);
+    }
   };
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -83,10 +91,10 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
               onBlur={checkEmail}
               required
             />
-            {emailRequired && (
+            {validateEmail && emailRequired && (
               <h3 className='text-red-600'> Please enter an email. </h3>
             )}
-            {emailError && (
+            {validateEmail && emailError && (
               <h3 className='text-red-600'> Please enter a valid email. </h3>
             )}
           </div>
@@ -102,10 +110,10 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
               onBlur={checkPassword}
               required
             />
-            {passwordRequired && (
+            {validatePassword && passwordRequired && (
               <h3 className='text-red-600'> Please enter a password. </h3>
             )}
-            {invalidError && (
+            {validatePassword && invalidError && (
               <h3 className='text-red-600'> Incorrect email or password. </h3>
             )}
           </div>
