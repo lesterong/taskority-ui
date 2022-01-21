@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { AddingTaskModal } from '../types/TaskModal';
+import { CloseIcon } from '../assets/CloseIcon';
 import Button from './Button';
 import TagsInput from './TagsInput';
-import close from '../assets/close.svg';
 
 const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
   const {
@@ -50,7 +50,7 @@ const AddTaskModal = ({ handleAddTask, tagsArray }: AddingTaskModal) => {
                   onClick={handleCancel}
                   variant='btn-secondary'
                   alt='Cancel add task'
-                  icon={close}
+                  icon={<CloseIcon />}
                 />
               </div>
 

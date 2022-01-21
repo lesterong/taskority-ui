@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { EditingTaskModal } from '../types/TaskModal';
 import Button from './Button';
 import TagsInput from './TagsInput';
-import close from '../assets/close.svg';
-import remove from '../assets/remove.svg';
+import { CloseIcon } from '../assets/CloseIcon';
+import { DeleteIcon } from '../assets/DeleteIcon';
 
 const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
   const {
@@ -54,7 +54,7 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
                   onClick={handleCancel}
                   variant='btn-secondary'
                   alt='Close task'
-                  icon={close}
+                  icon={<CloseIcon />}
                 />
               </div>
 
@@ -117,7 +117,7 @@ const EditTaskModal = ({ handleUpdateTask, tagsArray }: EditingTaskModal) => {
                   onClick={handleDelete}
                   variant='btn-secondary flex-none'
                   alt='Delete task'
-                  icon={remove}
+                  icon={<DeleteIcon />}
                 />
               </div>
             </form>

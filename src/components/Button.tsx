@@ -1,5 +1,5 @@
 import { ButtonProps } from '../types/Button';
-import spinner from '../assets/spinner.svg';
+import { Spinner } from '../assets/Spinner';
 import './Button.css';
 
 const Button = ({
@@ -14,10 +14,8 @@ const Button = ({
   return (
     <button className={variant} onClick={onClick} type={type} aria-label={alt}>
       <div className='flex justify-center'>
-        {icon && <img className='mx-auto' src={icon} alt={alt} />}
-        {loader && (
-          <img className='mx-auto animate-spin' src={spinner} alt='Loading' />
-        )}
+        {icon}
+        {loader && <Spinner style='h-6' />}
         {!loader && text && <p className='pl-1'> {text} </p>}
       </div>
     </button>

@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { HandleFiltering } from '../types/Filters';
+import { CloseIcon } from '../assets/CloseIcon';
 import Button from './Button';
-import close from '../assets/close.svg';
 
 const FilterModal = ({
   handleFilters,
@@ -59,7 +59,7 @@ const FilterModal = ({
                   onClick={handleFilters.close}
                   variant='btn-secondary'
                   alt='Close filters'
-                  icon={close}
+                  icon={<CloseIcon />}
                 />
               </div>
 

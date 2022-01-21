@@ -1,10 +1,10 @@
 import { NavbarProps } from '../types/Navbar';
-import logo from '../assets/logo.svg';
-import logoText from '../assets/logoText.svg';
-import filter from '../assets/filter.svg';
-import search from '../assets/search.svg';
-import addTask from '../assets/addTask.svg';
-import close from '../assets/close.svg';
+import { Logo } from '../assets/Logo';
+import { SearchIcon } from '../assets/SearchIcon';
+import { AddIcon } from '../assets/AddIcon';
+import { CloseIcon } from '../assets/CloseIcon';
+import { FilterIcon } from '../assets/FilterIcon';
+import { LogoText } from '../assets/LogoText';
 import Button from './Button';
 import Settings from './Settings';
 import AddTaskModal from './AddTaskModal';
@@ -31,13 +31,9 @@ const Navbar = ({
       <nav className='flex mx-auto py-2 px-4 max-w-4xl justify-between'>
         {(!handleSearch.isOpen || !hideLogo) && (
           <div className='flex items-center shrink-0'>
-            <img src={logo} alt='Taskority' className='h-12 pr-1' />
+            <Logo style='h-12 pr-1' />
             <h1>
-              <img
-                className='xs:block hidden h-8'
-                src={logoText}
-                alt='Taskority'
-              />
+              <LogoText style='h-8 xs:block hidden' />
             </h1>
           </div>
         )}
@@ -48,14 +44,14 @@ const Navbar = ({
                 onClick={handleSearch.open}
                 variant='btn-secondary'
                 alt='Open search'
-                icon={search}
+                icon={<SearchIcon />}
               />
 
               <Button
                 onClick={handleFilters.open}
                 variant='btn-secondary hidden sm:block'
                 alt='Open filters'
-                icon={filter}
+                icon={<FilterIcon />}
                 text={numOfFilters}
               />
 
@@ -72,7 +68,7 @@ const Navbar = ({
                 onClick={handleAddTask.open}
                 variant='btn-primary hidden sm:block'
                 alt='Add Task'
-                icon={addTask}
+                icon={<AddIcon />}
                 text='Add Task'
               />
 
@@ -80,7 +76,7 @@ const Navbar = ({
                 onClick={handleAddTask.open}
                 variant='btn-primary sm:hidden'
                 alt='Add Task'
-                icon={addTask}
+                icon={<AddIcon />}
               />
             </div>
           ) : (
@@ -89,7 +85,7 @@ const Navbar = ({
                 onClick={handleFilters.open}
                 variant='btn-secondary shrink-0'
                 alt='Open filters'
-                icon={filter}
+                icon={<FilterIcon />}
                 text={numOfFilters}
               />
               <Search handleSearch={handleSearch} />
@@ -97,7 +93,7 @@ const Navbar = ({
                 onClick={handleSearch.handleClose}
                 variant='btn-secondary shrink-0'
                 alt='Close search'
-                icon={close}
+                icon={<CloseIcon />}
               />
             </div>
           )}

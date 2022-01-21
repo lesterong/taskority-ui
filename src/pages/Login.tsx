@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UpdatingAuth } from '../types/Auth';
-import logo from '../assets/logo.svg';
-import logoText from '../assets/logoText.svg';
+import { Logo } from '../assets/Logo';
+import { LogoText } from '../assets/LogoText';
 import Button from '../components/Button';
 import authService from '../services/auth';
 
@@ -73,8 +73,8 @@ const Login = ({ updateAuth }: UpdatingAuth) => {
   return (
     <div>
       <div className='bg-white border-b border-gray-200 flex py-3 mb-3 items-center justify-center'>
-        <img className='h-12 mr-2' src={logo} alt='logo' />
-        <img className='h-9' src={logoText} alt='Taskority' />
+        <Logo style='h-12 mr-2' />
+        <LogoText style='h-9' />
       </div>
       <div className='container max-w-xl mx-auto px-4'>
         <h1 className='pb-3 text-2xl'> Login </h1>

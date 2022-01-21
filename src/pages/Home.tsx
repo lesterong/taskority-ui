@@ -11,7 +11,7 @@ import Card from '../components/Card';
 import Sort from '../components/Sort';
 import Navbar from '../components/Navbar';
 import Notification from '../components/Notification';
-import spinner from '../assets/spinner.svg';
+import { Spinner } from '../assets/Spinner';
 import taskService from '../services/tasks';
 
 const Home = ({ updateAuth }: UpdatingAuth) => {
@@ -188,7 +188,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
         .then(() => {
           setLoading(false);
           close();
-          setTasks(tasks.filter((t) => t.id !== id));
+          setTimeout(() => setTasks(tasks.filter((t) => t.id !== id)), 400);
           handleTask.clearFields();
           notify('Task deleted', 'success');
         })
@@ -310,11 +310,7 @@ const Home = ({ updateAuth }: UpdatingAuth) => {
       <Notification message={notifMessage} type={notifType} />
       {loadingTasks && (
         <div className='mt-4'>
-          <img
-            className='mx-auto animate-spin h-12'
-            src={spinner}
-            alt='Loading'
-          />
+          <Spinner style='mx-auto h-12' />
           <p className='text-center'> Loading Tasks. </p>
         </div>
       )}

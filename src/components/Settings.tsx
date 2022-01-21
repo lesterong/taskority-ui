@@ -1,10 +1,10 @@
 import { Menu, MenuList, MenuButton, MenuItem } from '@reach/menu-button';
 import { useNavigate } from 'react-router-dom';
 import { SettingsProps } from '../types/Settings';
-import filter from '../assets/filter.svg';
-import logout from '../assets/logout.svg';
-import view from '../assets/view.svg';
-import settings from '../assets/settings.svg';
+import { ViewIcon } from '../assets/ViewIcon';
+import { SettingsIcon } from '../assets/SettingsIcon';
+import { LogoutIcon } from '../assets/LogoutIcon';
+import { FilterIcon } from '../assets/FilterIcon';
 import authService from '../services/auth';
 import './Button.css';
 
@@ -30,22 +30,22 @@ const Settings = ({
   return (
     <Menu>
       <MenuButton className={`btn-secondary flex justify-center`}>
-        <img className='mx-auto' src={settings} alt='Settings' />
+        <SettingsIcon />
         {mobile && text && <p className='pl-1'> {text} </p>}
       </MenuButton>
       <MenuList>
         {mobile && (
           <MenuItem className='hidden' onSelect={onClick}>
-            <img src={filter} alt='Filters' />
+            <FilterIcon />
             <p>Filters {num}</p>
           </MenuItem>
         )}
         <MenuItem onSelect={handleView.toggle}>
-          <img src={view} alt='View' />
+          <ViewIcon />
           <p>{handleView.isCompact ? 'Wide' : 'Compact'}</p>
         </MenuItem>
         <MenuItem onSelect={handleLogout}>
-          <img src={logout} alt='Log Out' />
+          <LogoutIcon />
           <p>Log Out</p>
         </MenuItem>
       </MenuList>
