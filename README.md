@@ -8,21 +8,21 @@ Find the deployed version [here](https://taskority.lesterong.com).
 ### Local Testing
 You can test the application locally:
 1. Clone this repository
-```
-git clone https://github.com/lesterong/cvwo-ui.git
-```
+    ```
+    git clone https://github.com/lesterong/taskority-ui.git
+    ```
 2. Navigate to directory
-```
-cd cvwo-ui
-```
+    ```
+    cd taskority-ui
+    ```
 3. Install dependencies
-```
-yarn
-```
+    ```
+    yarn
+    ```
 4. Launch the application at http://localhost:3000/
- ```
- yarn start 
- ```
+     ```
+     yarn start 
+     ```
 
 ### Tech Used
 1. React
