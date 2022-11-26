@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UpdatingAuth } from '../types/Auth';
-import { Logo } from '../assets/Logo';
-import { LogoText } from '../assets/LogoText';
 import Button from '../components/Button';
 import authService from '../services/auth';
+import LandingHeader from '../components/LandingHeader';
 
 const Signup = ({ updateAuth }: UpdatingAuth) => {
   const [validateEmail, setValidateEmail] = useState<boolean>(false);
@@ -96,10 +95,7 @@ const Signup = ({ updateAuth }: UpdatingAuth) => {
 
   return (
     <div>
-      <div className='bg-white border-b border-gray-200 flex py-3 mb-3 items-center justify-center'>
-        <Logo style='h-12 mr-2' />
-        <LogoText style='h-9' />
-      </div>
+      <LandingHeader />
       <div className='container max-w-xl mx-auto px-4'>
         <h1 className='mb-3 text-2xl'> Sign Up </h1>
         <form onSubmit={handleSignup}>
