@@ -1,6 +1,6 @@
 import { TaskBase } from '../types/Task';
 
-const baseUrl = 'https://taskority-api.herokuapp.com/api/tasks/';
+const baseUrl = 'https://taskority-api.fly.dev/api/tasks/';
 
 const getAll = () => {
   const init = {

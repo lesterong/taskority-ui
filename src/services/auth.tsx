@@ -1,6 +1,6 @@
 import { UserObject } from '../types/Auth';
 
-const baseUrl = 'https://taskority-api.herokuapp.com/api';
+const baseUrl = 'https://taskority-api.fly.dev/api';
 
 const login = (userObject: UserObject) => {
   const init = {
