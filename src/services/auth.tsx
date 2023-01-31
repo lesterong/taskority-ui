@@ -1,7 +1,6 @@
 import { UserObject } from '../types/Auth';
 
-const baseUrl = 'https://taskority-api.fly.dev/api';
-
+const baseUrl = 'disabled';
 const login = (userObject: UserObject) => {
   const init = {
     method: 'POST',

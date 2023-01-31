@@ -11,7 +11,7 @@ const Button = ({
   loader = false,
 }: ButtonProps) => {
   return (
-    <button className={variant} onClick={onClick} type={type} aria-label={alt}>
+    <button className={`${variant} disabled:bg-gray-200`} onClick={onClick} type={type} aria-label={alt} disabled={true}>
       <div className='flex justify-center'>
         {icon}
         {loader && <Spinner style='h-6' />}

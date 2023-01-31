@@ -10,20 +10,25 @@ function App() {
   const updateAuth = (status: boolean) => setAuthed(status);
 
   return (
-    <BrowserRouter>
-      {authed ? (
-        <Routes>
-          <Route path='/' element={<Home updateAuth={updateAuth} />} />
-          <Route path='*' element={<Navigate to='/' />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path='/login' element={<Login updateAuth={updateAuth} />} />
-          <Route path='/signup' element={<Signup updateAuth={updateAuth} />} />
-          <Route path='*' element={<Navigate to='login' />} />
-        </Routes>
-      )}
-    </BrowserRouter>
+    <>
+      <div className='bg-red-500 text-center py-1 text-white'>
+        ⚠️ Taskority is currently disabled, as we are in the process of migrating away from Heroku.
+      </div>
+      <BrowserRouter>
+        {authed ? (
+          <Routes>
+            <Route path='/' element={<Home updateAuth={updateAuth} />} />
+            <Route path='*' element={<Navigate to='/' />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path='/login' element={<Login updateAuth={updateAuth} />} />
+            <Route path='/signup' element={<Signup updateAuth={updateAuth} />} />
+            <Route path='*' element={<Navigate to='login' />} />
+          </Routes>
+        )}
+      </BrowserRouter>
+    </>
   );
 }
 
